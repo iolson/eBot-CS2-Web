@@ -17,7 +17,23 @@ use App\Http\Controllers\Frontend\StatsController;
 use App\Http\Controllers\Frontend\StreamController;
 use App\Http\Controllers\Frontend\WidgetController;
 use App\Http\Middleware\RequireAdmin;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+// -------------------------------------------------------------------------
+// Locale switcher
+// -------------------------------------------------------------------------
+
+Route::post('/locale', function (Request $request) {
+    $locale = $request->input('locale', 'en');
+    $supported = ['en', 'ru', 'zh_CN'];
+
+    if (in_array($locale, $supported, true)) {
+        session(['locale' => $locale]);
+    }
+
+    return back();
+})->name('locale.switch');
 
 // -------------------------------------------------------------------------
 // Public frontend routes
