@@ -91,6 +91,7 @@ All settings are in `.env`. Key eBot-specific variables:
 | `EBOT_MODE` | `lan` shows server IPs, `net` hides them | `net` |
 | `EBOT_DEMO_PATH` | Path to eBot demo directory | `../../ebot-csgo/demos` |
 | `EBOT_DEMO_DOWNLOAD` | Enable demo download button on match pages | `true` |
+| `EBOT_MAPS` | Comma-separated map pool shown during match creation | ESL Pro Tour 2026 pool (7 maps) |
 
 ## Local Development Gotchas
 
@@ -109,6 +110,17 @@ If you see database errors after changing `.env`, clear the config cache:
 ```bash
 php artisan config:clear
 ```
+
+### Updating the map pool
+When Valve rotates the active duty map pool, update `EBOT_MAPS` in `.env`:
+```
+EBOT_MAPS=de_dust2,de_inferno,de_mirage,de_nuke,de_overpass,de_ancient,de_anubis
+```
+Then clear the config cache:
+```bash
+php artisan config:clear
+```
+No code change or server redeploy required. The new pool appears immediately in the match creation form.
 
 ### APP_INSTALLED flag
 All routes redirect to `/install` until `APP_INSTALLED=true` is set in `.env`. The install wizard sets this automatically. To skip the wizard in development, set it manually:

@@ -100,17 +100,14 @@ return [
     |
     */
 
-    // ESL Pro Tour 2026 active duty map pool (Valve Active Duty Map Group).
-    // de_vertigo is excluded — not in the ESL 2026 pool.
-    'maps' => [
-        'de_dust2',
-        'de_inferno',
-        'de_overpass',
-        'de_nuke',
-        'de_ancient',
-        'de_anubis',
-        'de_mirage',
-    ],
+    // Map pool for match creation. Defaults to the ESL Pro Tour 2026 active duty pool.
+    // Override via EBOT_MAPS env var (comma-separated map names, no spaces):
+    //   EBOT_MAPS=de_dust2,de_inferno,de_mirage,de_nuke,de_overpass,de_ancient,de_anubis
+    // When Valve rotates the active duty pool, update EBOT_MAPS in .env — no code change needed.
+    'maps' => array_filter(array_map(
+        'trim',
+        explode(',', env('EBOT_MAPS', 'de_dust2,de_inferno,de_overpass,de_nuke,de_ancient,de_anubis,de_mirage'))
+    )),
 
     /*
     |--------------------------------------------------------------------------

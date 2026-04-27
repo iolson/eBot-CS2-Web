@@ -70,6 +70,8 @@ Key eBot settings: `EBOT_IP`, `EBOT_PORT`, `EBOT_WEBSOCKET_URL`, `EBOT_WEBSOCKET
 
 Demo downloads: set `EBOT_DEMO_PATH` to the directory where eBot stores `.dem.zip` files and `EBOT_DEMO_DOWNLOAD=true` to enable the per-map download button.
 
+Map pool: controlled by `EBOT_MAPS` in `.env` (comma-separated map names). Defaults to the ESL Pro Tour 2026 active duty pool (7 maps, no Vertigo). When Valve rotates the pool, update this env var and run `php artisan config:clear` — no code change or redeploy needed. Game server cfg files live in `resources/cfg/` for reference/deployment.
+
 Password reset: use `php artisan ebot:reset-password [username]` to update any user's password from the CLI (bcrypt). Web-based reset requires SMTP configuration.
 
 Database must be `ebotv3` (shared with eBot Node.js server which writes directly to it).
