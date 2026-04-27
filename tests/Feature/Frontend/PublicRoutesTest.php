@@ -128,4 +128,16 @@ describe('Stats routes', function () {
         $this->get(route('stats.player', 'STEAM_0:0:99999999'))
             ->assertNotFound();
     });
+
+    it('shows gun round statistics', function () {
+        $this->get(route('stats.gunround'))->assertOk();
+    });
+});
+
+describe('Match logs', function () {
+    it('returns 404 when log file does not exist', function () {
+        $match = Matchs::factory()->create();
+
+        $this->get(route('matchs.logs', $match))->assertNotFound();
+    });
 });
