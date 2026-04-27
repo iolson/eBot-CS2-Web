@@ -3,7 +3,9 @@
 uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
 use App\Models\Matchs;
+use App\Models\Server;
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 
 describe('Admin match controller', function () {
     beforeEach(function () {
@@ -210,13 +212,53 @@ describe('Admin match controller', function () {
         $this->assertDatabaseHas('matchs', ['id' => $match->id, 'score_a' => 14, 'score_b' => 9]);
     });
 
-    it('start returns info for not-started match', function () {
-        $match = Matchs::factory()->notStarted()->create();
+    it('start uses pre-assigned server and enables the match', function () {
+        $server = Server::factory()->create();
+        $match  = Matchs::factory()->notStarted()->create(['server_id' => $server->id]);
 
         $this->actingAs($this->admin)
             ->post(route('admin.matchs.start', $match))
             ->assertRedirect()
-            ->assertSessionHas('info');
+            ->assertSessionHas('success');
+
+        $this->assertDatabaseHas('matchs', [
+            'id'        => $match->id,
+            'server_id' => $server->id,
+            'enable'    => 1,
+            'status'    => Matchs::STATUS_STARTING,
+        ]);
+    });
+
+    it('start picks a free server when none is pre-assigned', function () {
+        // Create match without a factory-created server
+        $server = Server::factory()->create();
+        $match  = Matchs::factory()->notStarted()->create(['server_id' => null, 'ip' => null]);
+
+        $this->actingAs($this->admin)
+            ->post(route('admin.matchs.start', $match))
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        $this->assertDatabaseHas('matchs', [
+            'id'     => $match->id,
+            'enable' => 1,
+            'status' => Matchs::STATUS_STARTING,
+            'ip'     => $server->ip,
+        ]);
+    });
+
+    it('start returns error when no server is available', function () {
+        // Create a match with no server_id and ensure no servers exist
+        $match = Matchs::factory()->notStarted()->create(['server_id' => null, 'ip' => null]);
+        // Delete the server the factory may have created for other relations
+        Server::query()->delete();
+
+        $this->actingAs($this->admin)
+            ->post(route('admin.matchs.start', $match))
+            ->assertRedirect()
+            ->assertSessionHas('error');
+
+        $this->assertDatabaseHas('matchs', ['id' => $match->id, 'status' => Matchs::STATUS_NOT_STARTED]);
     });
 
     it('start rejects match not in not-started state', function () {
@@ -228,8 +270,14 @@ describe('Admin match controller', function () {
             ->assertSessionHas('error');
     });
 
-    it('stop returns info for live match', function () {
-        $match = Matchs::factory()->live()->create(['enable' => 1]);
+    it('stop sends command to eBot and returns info for live match', function () {
+        Http::fake(['*' => Http::response('', 200)]);
+
+        $match = Matchs::factory()->live()->create([
+            'enable'         => 1,
+            'config_authkey' => 'test-key',
+            'ip'             => '127.0.0.1:27015',
+        ]);
 
         $this->actingAs($this->admin)
             ->post(route('admin.matchs.stop', $match))
@@ -244,5 +292,64 @@ describe('Admin match controller', function () {
             ->post(route('admin.matchs.stop', $match))
             ->assertRedirect()
             ->assertSessionHas('error');
+    });
+
+    it('pause-unpause sends command for live match', function () {
+        Http::fake(['*' => Http::response('', 200)]);
+
+        $match = Matchs::factory()->live()->create([
+            'enable'         => 1,
+            'config_authkey' => 'test-key',
+            'ip'             => '127.0.0.1:27015',
+        ]);
+
+        $this->actingAs($this->admin)
+            ->post(route('admin.matchs.pause-unpause', $match))
+            ->assertRedirect()
+            ->assertSessionHas('info');
+    });
+
+    it('force-start sends command when in warmup', function () {
+        Http::fake(['*' => Http::response('', 200)]);
+
+        $match = Matchs::factory()->create([
+            'status'         => Matchs::STATUS_WU_1_SIDE,
+            'enable'         => 1,
+            'config_authkey' => 'test-key',
+            'ip'             => '127.0.0.1:27015',
+        ]);
+
+        $this->actingAs($this->admin)
+            ->post(route('admin.matchs.force-start', $match))
+            ->assertRedirect()
+            ->assertSessionHas('info');
+    });
+
+    it('pass-knife sends command when knife round is live', function () {
+        Http::fake(['*' => Http::response('', 200)]);
+
+        $match = Matchs::factory()->create([
+            'status'         => Matchs::STATUS_KNIFE,
+            'enable'         => 1,
+            'config_authkey' => 'test-key',
+            'ip'             => '127.0.0.1:27015',
+        ]);
+
+        $this->actingAs($this->admin)
+            ->post(route('admin.matchs.pass-knife', $match))
+            ->assertRedirect()
+            ->assertSessionHas('info');
+    });
+
+    it('startAll queues all unstarted matches with available servers', function () {
+        $server = Server::factory()->create();
+        Matchs::factory()->count(2)->notStarted()->create();
+
+        $this->actingAs($this->admin)
+            ->post(route('admin.matchs.start-all'))
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        $this->assertEquals(2, Matchs::where('status', Matchs::STATUS_STARTING)->count());
     });
 });

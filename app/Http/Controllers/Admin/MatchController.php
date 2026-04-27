@@ -7,6 +7,7 @@ use App\Models\Matchs;
 use App\Models\Season;
 use App\Models\Server;
 use App\Models\Team;
+use App\Services\EbotCommandService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -131,7 +132,7 @@ class MatchController extends Controller
     }
 
     // -------------------------------------------------------------------------
-    // Match lifecycle actions (server communication wired up in Phase 8)
+    // Match lifecycle actions
     // -------------------------------------------------------------------------
 
     public function start(Request $request, Matchs $match): RedirectResponse
@@ -140,14 +141,60 @@ class MatchController extends Controller
             return back()->with('error', __('Match cannot be started in its current state.'));
         }
 
-        // Phase 8 will send the encrypted command to the game server.
-        return back()->with('info', __('Start command queued (server integration pending).'));
+        $server = $this->resolveServer($match, $request->input('server_id'));
+
+        if ($server === null) {
+            return back()->with('error', __('No server available. Please assign a server to the match or ensure a free server exists.'));
+        }
+
+        $match->update([
+            'ip'             => $server->ip,
+            'server_id'      => $server->id,
+            'enable'         => true,
+            'status'         => Matchs::STATUS_STARTING,
+            'score_a'        => 0,
+            'score_b'        => 0,
+            'config_authkey' => $match->config_authkey ?: uniqid(mt_rand(), true),
+        ]);
+
+        return back()->with('success', __('Match queued on :server. The eBot daemon will start it shortly.', ['server' => $server->ip]));
     }
 
     public function startAll(): RedirectResponse
     {
-        // Phase 8 will iterate unstarted matches and dispatch start commands.
-        return back()->with('info', __('Start all command queued (server integration pending).'));
+        $pending = Matchs::where('status', Matchs::STATUS_NOT_STARTED)->with('server')->get();
+        $started = 0;
+
+        $usedIps = Matchs::live()->pluck('ip')->filter()->all();
+
+        $freeServers = Server::all()->filter(fn ($s) => ! in_array($s->ip, $usedIps, true))->values();
+        $serverIndex = 0;
+
+        foreach ($pending as $match) {
+            $server = $match->server ?? $freeServers[$serverIndex] ?? null;
+
+            if ($server === null) {
+                break;
+            }
+
+            if (! $match->server) {
+                $serverIndex++;
+            }
+
+            $match->update([
+                'ip'             => $server->ip,
+                'server_id'      => $server->id,
+                'enable'         => true,
+                'status'         => Matchs::STATUS_STARTING,
+                'score_a'        => 0,
+                'score_b'        => 0,
+                'config_authkey' => $match->config_authkey ?: uniqid(mt_rand(), true),
+            ]);
+
+            $started++;
+        }
+
+        return back()->with('success', __(':count match(es) queued for start.', ['count' => $started]));
     }
 
     public function stop(Matchs $match): RedirectResponse
@@ -156,7 +203,9 @@ class MatchController extends Controller
             return back()->with('error', __('Match is not currently live.'));
         }
 
-        return back()->with('info', __('Stop command queued (server integration pending).'));
+        app(EbotCommandService::class)->send($match, 'stop');
+
+        return back()->with('info', __('Stop command sent.'));
     }
 
     public function stopBack(Matchs $match): RedirectResponse
@@ -165,7 +214,9 @@ class MatchController extends Controller
             return back()->with('error', __('Match is not currently live.'));
         }
 
-        return back()->with('info', __('Stop-back command queued (server integration pending).'));
+        app(EbotCommandService::class)->send($match, 'stopback');
+
+        return back()->with('info', __('Stop-back command sent.'));
     }
 
     public function pauseUnpause(Matchs $match): RedirectResponse
@@ -174,7 +225,9 @@ class MatchController extends Controller
             return back()->with('error', __('Match is not currently live.'));
         }
 
-        return back()->with('info', __('Pause/unpause command queued (server integration pending).'));
+        app(EbotCommandService::class)->send($match, 'pauseunpause');
+
+        return back()->with('info', __('Pause/unpause command sent.'));
     }
 
     public function forceStart(Matchs $match): RedirectResponse
@@ -191,7 +244,9 @@ class MatchController extends Controller
             return back()->with('error', __('Match is not in a warmup or halftime state.'));
         }
 
-        return back()->with('info', __('Force start command queued (server integration pending).'));
+        app(EbotCommandService::class)->send($match, 'forcestart');
+
+        return back()->with('info', __('Force start command sent.'));
     }
 
     public function forceKnife(Matchs $match): RedirectResponse
@@ -200,7 +255,9 @@ class MatchController extends Controller
             return back()->with('error', __('Match is not in knife warmup state.'));
         }
 
-        return back()->with('info', __('Force knife command queued (server integration pending).'));
+        app(EbotCommandService::class)->send($match, 'forceknife');
+
+        return back()->with('info', __('Force knife command sent.'));
     }
 
     public function forceKnifeEnd(Matchs $match): RedirectResponse
@@ -209,7 +266,9 @@ class MatchController extends Controller
             return back()->with('error', __('Knife round is not in progress.'));
         }
 
-        return back()->with('info', __('Force knife end command queued (server integration pending).'));
+        app(EbotCommandService::class)->send($match, 'forceknifeend');
+
+        return back()->with('info', __('Force knife end command sent.'));
     }
 
     public function passKnife(Matchs $match): RedirectResponse
@@ -218,7 +277,29 @@ class MatchController extends Controller
             return back()->with('error', __('Knife round is not in progress.'));
         }
 
-        return back()->with('info', __('Pass knife command queued (server integration pending).'));
+        app(EbotCommandService::class)->send($match, 'passknife');
+
+        return back()->with('info', __('Pass knife command sent.'));
+    }
+
+    /**
+     * Resolve which server to use for a match start.
+     * Prefers the match's pre-assigned server, then a specific request server_id,
+     * then the first server not already hosting a live match.
+     */
+    private function resolveServer(Matchs $match, ?string $requestServerId): ?Server
+    {
+        if ($match->server_id) {
+            return $match->server;
+        }
+
+        if ($requestServerId && is_numeric($requestServerId)) {
+            return Server::find($requestServerId);
+        }
+
+        $usedIps = Matchs::live()->pluck('ip')->filter()->all();
+
+        return Server::all()->first(fn ($s) => ! in_array($s->ip, $usedIps, true));
     }
 
     public function reset(Matchs $match): RedirectResponse
