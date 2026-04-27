@@ -6,6 +6,7 @@ use App\Auth\SfGuardUserProvider;
 use App\Services\AesCtrService;
 use App\Services\EbotCommandService;
 use App\Services\JwtService;
+use App\Services\StartGgService;
 use App\Services\ToornamentService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -25,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
             config('ebot.toornament.id', ''),
             config('ebot.toornament.secret', ''),
             config('ebot.toornament.api_key', ''),
+        ));
+
+        $this->app->singleton(StartGgService::class, fn () => new StartGgService(
+            config('ebot.startgg.token', ''),
         ));
 
         $this->app->singleton(EbotCommandService::class, fn ($app) => new EbotCommandService(

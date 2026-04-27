@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MatchController as AdminMatchController;
 use App\Http\Controllers\Admin\SeasonController as AdminSeasonController;
 use App\Http\Controllers\Admin\ServerController;
+use App\Http\Controllers\Admin\StartGgController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\ToornamentController;
 use App\Http\Controllers\Admin\UserController;
@@ -149,4 +150,9 @@ Route::prefix('admin')
         Route::get('toornament', [ToornamentController::class, 'index'])->name('toornament.index');
         Route::post('toornament/import', [ToornamentController::class, 'import'])->name('toornament.import');
         Route::post('matchs/{match}/toornament-export', [ToornamentController::class, 'export'])->name('toornament.export');
+
+        // start.gg integration
+        Route::get('startgg', [StartGgController::class, 'index'])->name('startgg.index');
+        Route::post('startgg/import', [StartGgController::class, 'import'])->name('startgg.import');
+        Route::post('matchs/{match}/startgg-export', [StartGgController::class, 'export'])->name('startgg.export');
     });

@@ -127,6 +127,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | start.gg Integration
+    |--------------------------------------------------------------------------
+    |
+    | Personal API token for the start.gg tournament platform GraphQL API.
+    | Generate one at https://start.gg/admin/profile/developer
+    |
+    */
+
+    'startgg' => [
+        'token' => env('STARTGG_TOKEN'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Version
     |--------------------------------------------------------------------------
     */
