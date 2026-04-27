@@ -6,7 +6,6 @@ use App\Models\Matchs as MatchModel;
 use App\Models\Season;
 use App\Models\Server;
 use App\Models\Team;
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,13 +15,7 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        // Create a default admin user (password will be set during install wizard)
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-        ]);
-
-        // Development-only sample data
+        // Admin user is created by `php artisan ebot:install`, not here.
         if (app()->environment('local', 'testing')) {
             $season = Season::factory()->active()->create(['name' => 'Demo Season']);
             $servers = Server::factory(3)->create();

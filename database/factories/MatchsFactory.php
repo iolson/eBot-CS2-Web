@@ -15,8 +15,8 @@ class MatchsFactory extends Factory
 
     public function definition(): array
     {
-        $teamAName = $this->faker->company();
-        $teamBName = $this->faker->company();
+        $teamAName = substr($this->faker->company(), 0, 25);
+        $teamBName = substr($this->faker->company(), 0, 25);
 
         return [
             'ip' => $this->faker->ipv4().':27015',

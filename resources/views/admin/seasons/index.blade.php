@@ -46,9 +46,8 @@
                                     </a>
 
                                     {{-- Deactivate / Activate Toggle --}}
-                                    <form method="POST" action="{{ route('admin.seasons.toggle-active', $season) }}">
+                                    <form method="POST" action="{{ route('admin.seasons.deactivate', $season) }}">
                                         @csrf
-                                        @method('PATCH')
                                         <button type="submit"
                                                 class="rounded bg-gray-600 hover:bg-gray-500 px-2 py-1 text-xs text-gray-300">
                                             {{ $season->active ? __('Deactivate') : __('Activate') }}

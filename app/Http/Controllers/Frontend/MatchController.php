@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\GameMap;
 use App\Models\Matchs;
 use App\Models\PlayerHeatmap;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class MatchController extends Controller
 {
@@ -37,6 +39,30 @@ class MatchController extends Controller
         $hasHeatmap = PlayerHeatmap::where('match_id', $match->id)->exists();
 
         return view('matchs.show', compact('match', 'hasHeatmap'));
+    }
+
+    /**
+     * Serve a demo file (.dem.zip) for a map as a download.
+     */
+    public function demo(GameMap $map): BinaryFileResponse
+    {
+        if (config('ebot.demo_download') === false) {
+            abort(403, 'Demo downloads are disabled.');
+        }
+
+        $file = $map->tv_record_file;
+
+        if (! $file || str_contains($file, '/') || str_contains($file, '..')) {
+            abort(404, 'Demo file not available.');
+        }
+
+        $path = rtrim(config('ebot.demo_path'), '/').'/'.$file.'.dem.zip';
+
+        if (! file_exists($path)) {
+            abort(404, 'Demo file not found.');
+        }
+
+        return response()->download($path, $file.'.dem.zip');
     }
 
     /**

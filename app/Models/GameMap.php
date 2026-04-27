@@ -94,4 +94,11 @@ class GameMap extends Model
 
         return "{$demoPath}/{$this->tv_record_file}.dem.zip";
     }
+
+    public function hasDemoFile(): bool
+    {
+        $path = $this->getDemoPath();
+
+        return $path !== null && file_exists($path);
+    }
 }

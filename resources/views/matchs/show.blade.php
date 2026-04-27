@@ -34,7 +34,15 @@
             <div class="bg-gray-800/50 border border-gray-700 rounded-xl overflow-hidden">
                 <div class="px-6 py-4 bg-gray-800 border-b border-gray-700 flex items-center justify-between">
                     <h2 class="font-semibold text-white">{{ $map->map_name }}</h2>
-                    <span class="font-mono text-yellow-400 text-lg font-bold">{{ $map->score_1 }} – {{ $map->score_2 }}</span>
+                    <div class="flex items-center gap-3">
+                        <span class="font-mono text-yellow-400 text-lg font-bold">{{ $map->score_1 }} – {{ $map->score_2 }}</span>
+                        @if($map->hasDemoFile())
+                            <a href="{{ route('matchs.demo', $map) }}"
+                               class="rounded bg-indigo-700 hover:bg-indigo-600 px-3 py-1 text-xs text-white">
+                                {{ __('Download Demo') }}
+                            </a>
+                        @endif
+                    </div>
                 </div>
 
                 @if($map->players->isNotEmpty())

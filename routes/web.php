@@ -59,6 +59,7 @@ Route::get('/matchs/{match}/export/players', [MatchController::class, 'exportPla
 Route::get('/matchs/{match}/export/rounds', [MatchController::class, 'exportRounds'])->name('matchs.export.rounds');
 Route::get('/matchs/{match}/export/kills', [MatchController::class, 'exportKills'])->name('matchs.export.kills');
 Route::get('/matchs/{match}/export/estats', [MatchController::class, 'exportEstats'])->name('matchs.export.estats');
+Route::get('/matchs/demo/{map}', [MatchController::class, 'demo'])->name('matchs.demo');
 
 // Statistics
 Route::get('/stats', [StatsController::class, 'index'])->name('stats.index');

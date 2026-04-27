@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\GameMap;
 use App\Models\Matchs;
 use App\Models\Season;
 
@@ -139,5 +140,40 @@ describe('Match logs', function () {
         $match = Matchs::factory()->create();
 
         $this->get(route('matchs.logs', $match))->assertNotFound();
+    });
+});
+
+describe('Demo downloads', function () {
+    it('returns 403 when demo downloads are disabled', function () {
+        config(['ebot.demo_download' => false]);
+
+        $map = GameMap::factory()->create(['tv_record_file' => 'demo_123']);
+
+        $this->get(route('matchs.demo', $map))->assertForbidden();
+    });
+
+    it('returns 404 when demo file does not exist on disk', function () {
+        config(['ebot.demo_download' => true]);
+        config(['ebot.demo_path' => '/nonexistent/path']);
+
+        $map = GameMap::factory()->create(['tv_record_file' => 'demo_missing']);
+
+        $this->get(route('matchs.demo', $map))->assertNotFound();
+    });
+
+    it('returns 404 when tv_record_file is not set', function () {
+        config(['ebot.demo_download' => true]);
+
+        $map = GameMap::factory()->create(['tv_record_file' => null]);
+
+        $this->get(route('matchs.demo', $map))->assertNotFound();
+    });
+
+    it('returns 404 when tv_record_file contains path traversal', function () {
+        config(['ebot.demo_download' => true]);
+
+        $map = GameMap::factory()->create(['tv_record_file' => '../../../etc/passwd']);
+
+        $this->get(route('matchs.demo', $map))->assertNotFound();
     });
 });
