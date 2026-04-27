@@ -6,6 +6,7 @@ use App\Auth\SfGuardUserProvider;
 use App\Services\AesCtrService;
 use App\Services\EbotCommandService;
 use App\Services\JwtService;
+use App\Services\ToornamentService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -19,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
         ));
 
         $this->app->singleton(AesCtrService::class, fn () => new AesCtrService());
+
+        $this->app->singleton(ToornamentService::class, fn () => new ToornamentService(
+            config('ebot.toornament.id', ''),
+            config('ebot.toornament.secret', ''),
+            config('ebot.toornament.api_key', ''),
+        ));
 
         $this->app->singleton(EbotCommandService::class, fn ($app) => new EbotCommandService(
             $app->make(AesCtrService::class),

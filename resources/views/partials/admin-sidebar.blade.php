@@ -33,6 +33,11 @@
         {{ __('Configs') }}
     </a>
 
+    <a href="{{ url('/admin/toornament') }}"
+       class="flex items-center gap-2 rounded-md px-3 py-2 text-sm {{ request()->is('admin/toornament*') ? 'bg-gray-700 text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }}">
+        {{ __('Toornament') }}
+    </a>
+
     <p class="mt-4 px-3 text-xs font-semibold uppercase tracking-wider text-gray-500">{{ __('System') }}</p>
 
     <a href="{{ url('/admin/users') }}"

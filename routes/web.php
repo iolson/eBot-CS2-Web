@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\MatchController as AdminMatchController;
 use App\Http\Controllers\Admin\SeasonController as AdminSeasonController;
 use App\Http\Controllers\Admin\ServerController;
 use App\Http\Controllers\Admin\TeamController;
+use App\Http\Controllers\Admin\ToornamentController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -118,4 +119,9 @@ Route::prefix('admin')
 
         // Users
         Route::resource('users', UserController::class)->except(['show']);
+
+        // Toornament integration
+        Route::get('toornament', [ToornamentController::class, 'index'])->name('toornament.index');
+        Route::post('toornament/import', [ToornamentController::class, 'import'])->name('toornament.import');
+        Route::post('matchs/{match}/toornament-export', [ToornamentController::class, 'export'])->name('toornament.export');
     });

@@ -171,6 +171,17 @@
                     </button>
                 </form>
 
+                {{-- Toornament Export (only for linked matches) --}}
+                @if($match->identifier_id)
+                    <form method="POST" action="{{ route('admin.toornament.export', $match) }}">
+                        @csrf
+                        <button type="submit"
+                                class="rounded-lg bg-indigo-700 hover:bg-indigo-600 px-4 py-2 text-sm font-medium text-white">
+                            {{ __('Export to Toornament') }}
+                        </button>
+                    </form>
+                @endif
+
                 {{-- Not live, not archived, not started: Reset --}}
                 @if(! $match->isLive() && ! $match->isArchived() && $match->status !== Matchs::STATUS_NOT_STARTED)
                     <form method="POST" action="{{ route('admin.matchs.reset', $match) }}"
