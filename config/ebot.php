@@ -67,10 +67,10 @@ return [
     */
 
     'default_max_round' => (int) env('EBOT_DEFAULT_MAX_ROUND', 12),
-    'default_rules' => env('EBOT_DEFAULT_RULES', 'rules'),
-    'default_overtime_enable' => (bool) env('EBOT_DEFAULT_OVERTIME_ENABLE', false),
+    'default_rules' => env('EBOT_DEFAULT_RULES', 'esl_pro_tour'),
+    'default_overtime_enable' => (bool) env('EBOT_DEFAULT_OVERTIME_ENABLE', true),
     'default_overtime_max_round' => (int) env('EBOT_DEFAULT_OVERTIME_MAX_ROUND', 3),
-    'default_overtime_startmoney' => (int) env('EBOT_DEFAULT_OVERTIME_STARTMONEY', 16000),
+    'default_overtime_startmoney' => (int) env('EBOT_DEFAULT_OVERTIME_STARTMONEY', 12500),
 
     /*
     |--------------------------------------------------------------------------
@@ -100,12 +100,13 @@ return [
     |
     */
 
+    // ESL Pro Tour 2026 active duty map pool (Valve Active Duty Map Group).
+    // de_vertigo is excluded — not in the ESL 2026 pool.
     'maps' => [
         'de_dust2',
         'de_inferno',
         'de_overpass',
         'de_nuke',
-        'de_vertigo',
         'de_ancient',
         'de_anubis',
         'de_mirage',
