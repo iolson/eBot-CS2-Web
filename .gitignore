@@ -1,2 +1,36 @@
-config/app_user.yml
-config/databases.yml
+# Laravel
+/vendor/
+/node_modules/
+.env
+.env.backup
+.env.production
+/storage/*.key
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/public/build/
+/public/hot
+/public/storage
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Testing
+.phpunit.result.cache
+/coverage/
+
+# Build artifacts
+npm-debug.log
+yarn-error.log
+
+# Legacy Symfony config (preserved in legacy/ directory)
+legacy/config-symfony/app_user.yml
+legacy/config-symfony/databases.yml
+
+# SQLite (dev only)
+database/database.sqlite

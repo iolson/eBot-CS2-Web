@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * sfGuardGroup module helper.
+ *
+ * @author     Fabien Potencier
+ *
+ * @version    SVN: $Id: sfGuardGroupGeneratorHelper.class.php 23319 2009-10-25 12:22:23Z Kris.Wallsmith $
+ */
+class sfGuardGroupGeneratorHelper extends BaseSfGuardGroupGeneratorHelper {}

@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * sfGuardPermission module helper.
+ *
+ * @author     Fabien Potencier
+ *
+ * @version    SVN: $Id: sfGuardPermissionGeneratorHelper.class.php 23319 2009-10-25 12:22:23Z Kris.Wallsmith $
+ */
+class sfGuardPermissionGeneratorHelper extends BaseSfGuardPermissionGeneratorHelper {}
