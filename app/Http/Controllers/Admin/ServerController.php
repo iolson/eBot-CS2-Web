@@ -37,7 +37,7 @@ class ServerController extends Controller
     {
         $request->validate([
             'ip_port' => ['required', 'string', 'max:500'],
-            'rcon'    => ['required', 'string', 'max:50'],
+            'rcon' => ['required', 'string', 'max:50'],
         ]);
 
         $entries = $this->parseIpPort($request->ip_port, $request->rcon);
@@ -98,10 +98,10 @@ class ServerController extends Controller
         $hosts = [];
         if (preg_match('/^(\d{1,3}\.\d{1,3}\.\d{1,3}\.)(\d{1,3})(?:-(\d{1,3}))?$/', $hostPart, $im)) {
             $prefix = $im[1];
-            $start  = (int) $im[2];
-            $end    = isset($im[3]) && $im[3] !== '' ? (int) $im[3] : $start;
+            $start = (int) $im[2];
+            $end = isset($im[3]) && $im[3] !== '' ? (int) $im[3] : $start;
             for ($i = $start; $i <= $end; $i++) {
-                $hosts[] = $prefix . $i;
+                $hosts[] = $prefix.$i;
             }
         } else {
             $hosts[] = $hostPart;
@@ -122,7 +122,7 @@ class ServerController extends Controller
         if (str_contains($range, '-')) {
             [$start, $end] = explode('-', $range, 2);
             $start = (int) $start;
-            $end   = (int) $end;
+            $end = (int) $end;
             if ($start < $min || $end > $max || $start > $end) {
                 return [];
             }

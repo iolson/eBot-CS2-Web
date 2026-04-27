@@ -1,6 +1,6 @@
-<?php use_javascript("highcharts.js"); ?>
+<?php use_javascript('highcharts.js'); ?>
 
-<h3><?php echo __("Statistics by Weapons"); ?></h3>
+<h3><?php echo __('Statistics by Weapons'); ?></h3>
 <script>
     $(function() {
         $('#myTab a').click(function(e) {
@@ -58,7 +58,7 @@
                             plotShadow: false
                         },
                         title: {
-                            text: '<?php echo __("Weapon Statistics"); ?>'
+                            text: '<?php echo __('Weapon Statistics'); ?>'
                         },
                         tooltip: {
                             pointFormat: '{series.name}: <b>{point.percentage}%</b>',
@@ -81,11 +81,11 @@
                                 name: 'Weapon',
                                 data:
 <?php
-$weaponsJSON = array();
+$weaponsJSON = [];
 $total = 0;
 foreach ($weapons as $k => $v) {
-    $weaponsJSON[] = array($k, @$v["normal"] + @$v["hs"]);
-    $total += @$v["normal"] + @$v["hs"];
+    $weaponsJSON[] = [$k, @$v['normal'] + @$v['hs']];
+    $total += @$v['normal'] + @$v['hs'];
 }
 echo json_encode($weaponsJSON);
 ?>
@@ -102,23 +102,23 @@ echo json_encode($weaponsJSON);
                     <table class="table table-striped" style="width: auto;" id="tableWeapons">
                         <thead>
                             <tr>
-                                <th width="100"><?php echo __("Weapons"); ?></th>
-                                <th width="45"><?php echo __("Total"); ?></th>
-                                <th width="90"><?php echo __("HeadShots"); ?></th>
-                                <th width="70"><?php echo __("HS Rate"); ?></th>
-                                <th width="70"><?php echo __("Kill Rate"); ?></th>
+                                <th width="100"><?php echo __('Weapons'); ?></th>
+                                <th width="45"><?php echo __('Total'); ?></th>
+                                <th width="90"><?php echo __('HeadShots'); ?></th>
+                                <th width="70"><?php echo __('HS Rate'); ?></th>
+                                <th width="70"><?php echo __('Kill Rate'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($weapons as $k => $v): ?>
+                            <?php foreach ($weapons as $k => $v) { ?>
                                 <tr>
-                                    <td style="font-size:0px"><?php echo $k; ?><?php echo image_tag("/images/kills/csgo/" . $k . ".png", array("class" => "needTips_S", "title" => $k)); ?></td>
-                                    <td><?php echo @$v["normal"] + @$v["hs"] * 1; ?></td>
-                                    <td><?php echo @$v["hs"] * 1; ?></td>
-                                    <td><?php echo round((@$v["hs"] / (@$v["normal"] + @$v["hs"])) * 100, 2); ?>%</td>
-                                    <td><?php echo round(((@$v["hs"] + @$v["normal"]) / $total) * 100, 2); ?>%</td>
+                                    <td style="font-size:0px"><?php echo $k; ?><?php echo image_tag('/images/kills/csgo/'.$k.'.png', ['class' => 'needTips_S', 'title' => $k]); ?></td>
+                                    <td><?php echo @$v['normal'] + @$v['hs'] * 1; ?></td>
+                                    <td><?php echo @$v['hs'] * 1; ?></td>
+                                    <td><?php echo round((@$v['hs'] / (@$v['normal'] + @$v['hs'])) * 100, 2); ?>%</td>
+                                    <td><?php echo round(((@$v['hs'] + @$v['normal']) / $total) * 100, 2); ?>%</td>
                                 </tr>
-                            <?php endforeach; ?>
+                            <?php } ?>
                         </tbody>
                     </table>
                 </div>
@@ -133,21 +133,25 @@ echo json_encode($weaponsJSON);
         <div class="container-fluid">
             <div class="row-fluid">
                 <?php $c = 0; ?>
-                <?php foreach ($weaponsTOP as $k => $weapon): ?>
+                <?php foreach ($weaponsTOP as $k => $weapon) { ?>
                     <div class="span3">
-                        <h3><?php echo $k; ?> <?php echo image_tag("/images/kills/csgo/" . $k . ".png", array("class" => "needTips_S", "title" => $k)); ?></h3>
+                        <h3><?php echo $k; ?> <?php echo image_tag('/images/kills/csgo/'.$k.'.png', ['class' => 'needTips_S', 'title' => $k]); ?></h3>
 
                         <?php $count = 0; ?>
-                        <?php foreach ($weapon as $steamid => $result): ?>
-                            <a href="<?php echo url_for("player_stats", array("id" => $steamid)); ?>"><?php echo $result['pseudo']; ?></a> <?php echo $result['nb']; ?><br/>
+                        <?php foreach ($weapon as $steamid => $result) { ?>
+                            <a href="<?php echo url_for('player_stats', ['id' => $steamid]); ?>"><?php echo $result['pseudo']; ?></a> <?php echo $result['nb']; ?><br/>
                             <?php $count++; ?>
-                            <?php if ($count == 3) break; ?>
-                        <?php endforeach; ?>
+                            <?php if ($count == 3) {
+                                break;
+                            } ?>
+                        <?php } ?>
                     </div>
-                <?php $c++ ; ?>
+                <?php $c++; ?>
                 
-                <?php if ($c % 4 == 0) echo '</div><div class="row-fluid">'; ?>
-                <?php endforeach; ?>
+                <?php if ($c % 4 == 0) {
+                    echo '</div><div class="row-fluid">';
+                } ?>
+                <?php } ?>
             </div>
         </div>
     </div>

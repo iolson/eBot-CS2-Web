@@ -11,6 +11,6 @@ the message, be sure to check your "spam" and "bulk" email folders.
 </p>
 <p>
 We apologize for the inconvenience.
-</p>', array(), 'sfForkedApply') ?>
+</p>', [], 'sfForkedApply') ?>
 <?php include_partial('sfApply/continue') ?>
 </div>

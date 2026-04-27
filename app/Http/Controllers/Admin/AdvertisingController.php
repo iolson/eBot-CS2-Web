@@ -28,8 +28,8 @@ class AdvertisingController extends Controller
     {
         $data = $request->validate([
             'season_id' => ['nullable', 'integer', 'exists:seasons,id'],
-            'message'   => ['required', 'string', 'max:1000'],
-            'active'    => ['boolean'],
+            'message' => ['required', 'string', 'max:1000'],
+            'active' => ['boolean'],
         ]);
 
         Advertising::create($data);
@@ -49,8 +49,8 @@ class AdvertisingController extends Controller
     {
         $data = $request->validate([
             'season_id' => ['nullable', 'integer', 'exists:seasons,id'],
-            'message'   => ['required', 'string', 'max:1000'],
-            'active'    => ['boolean'],
+            'message' => ['required', 'string', 'max:1000'],
+            'active' => ['boolean'],
         ]);
 
         $advertising->update($data);

@@ -12,14 +12,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'first_name'    => $this->faker->firstName(),
-            'last_name'     => $this->faker->lastName(),
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
             'email_address' => $this->faker->unique()->safeEmail(),
-            'username'      => $this->faker->unique()->userName(),
-            'algorithm'     => 'bcrypt',
-            'salt'          => null,
-            'password'      => Hash::make('password'),
-            'is_active'     => true,
+            'username' => $this->faker->unique()->userName(),
+            'algorithm' => 'bcrypt',
+            'salt' => null,
+            'password' => Hash::make('password'),
+            'is_active' => true,
             'is_super_admin' => false,
         ];
     }
@@ -37,12 +37,12 @@ class UserFactory extends Factory
     /** Create a user with a legacy SHA-1 password for migration testing */
     public function legacySha1(string $plaintext = 'password'): static
     {
-        $salt = md5(rand(100000, 999999) . 'test');
+        $salt = md5(rand(100000, 999999).'test');
 
         return $this->state([
             'algorithm' => 'sha1',
-            'salt'      => $salt,
-            'password'  => sha1($salt . $plaintext),
+            'salt' => $salt,
+            'password' => sha1($salt.$plaintext),
         ]);
     }
 }

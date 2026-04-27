@@ -11,8 +11,7 @@ If you have lost your password or wish to reset it, click on the link that follo
 
 You will then be prompted for the new password you wish to use.
 
-Your password will NOT be changed unless you click on the link above and complete the form.'
-, array("%1%" => url_for($sf_request->getUriPrefix()),
-  "%2%" => url_for("sfApply/confirm?validate=$validate", true),
-  "%USERNAME%" => $username), 'sfForkedApply') ?>
+Your password will NOT be changed unless you click on the link above and complete the form.', ['%1%' => url_for($sf_request->getUriPrefix()),
+    '%2%' => url_for("sfApply/confirm?validate=$validate", true),
+    '%USERNAME%' => $username], 'sfForkedApply') ?>
 

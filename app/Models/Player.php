@@ -23,22 +23,26 @@ class Player extends Model
     ];
 
     protected $casts = [
-        'nb_kill'   => 'integer', 'assist'   => 'integer', 'death'    => 'integer',
-        'point'     => 'integer', 'hs'       => 'integer', 'defuse'   => 'integer',
-        'bombe'     => 'integer', 'tk'       => 'integer',
-        'nb1'       => 'integer', 'nb2'      => 'integer', 'nb3'      => 'integer',
-        'nb4'       => 'integer', 'nb5'      => 'integer',
-        'nb1kill'   => 'integer', 'nb2kill'  => 'integer', 'nb3kill'  => 'integer',
-        'nb4kill'   => 'integer', 'nb5kill'  => 'integer',
-        'pluskill'  => 'integer', 'firstkill' => 'integer',
+        'nb_kill' => 'integer', 'assist' => 'integer', 'death' => 'integer',
+        'point' => 'integer', 'hs' => 'integer', 'defuse' => 'integer',
+        'bombe' => 'integer', 'tk' => 'integer',
+        'nb1' => 'integer', 'nb2' => 'integer', 'nb3' => 'integer',
+        'nb4' => 'integer', 'nb5' => 'integer',
+        'nb1kill' => 'integer', 'nb2kill' => 'integer', 'nb3kill' => 'integer',
+        'nb4kill' => 'integer', 'nb5kill' => 'integer',
+        'pluskill' => 'integer', 'firstkill' => 'integer',
     ];
 
-    const TEAM_A     = 'a';
-    const TEAM_B     = 'b';
+    const TEAM_A = 'a';
+
+    const TEAM_B = 'b';
+
     const TEAM_OTHER = 'other';
 
-    const SIDE_CT    = 'ct';
-    const SIDE_T     = 't';
+    const SIDE_CT = 'ct';
+
+    const SIDE_T = 't';
+
     const SIDE_OTHER = 'other';
 
     public function match(): BelongsTo

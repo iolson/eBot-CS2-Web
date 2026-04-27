@@ -19,9 +19,9 @@ class PlayerHeatmap extends Model
     ];
 
     protected $casts = [
-        'event_x'    => 'float', 'event_y'    => 'float', 'event_z'    => 'float',
+        'event_x' => 'float', 'event_y' => 'float', 'event_z' => 'float',
         'attacker_x' => 'float', 'attacker_y' => 'float', 'attacker_z' => 'float',
-        'round_id'   => 'integer', 'round_time' => 'integer',
+        'round_id' => 'integer', 'round_time' => 'integer',
     ];
 
     public function match(): BelongsTo

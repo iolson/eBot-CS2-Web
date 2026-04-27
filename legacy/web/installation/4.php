@@ -1,10 +1,10 @@
-<?php if ($_SESSION['mysql_connection']['status'] != 'success' || $_SESSION['createAdmin']['status'] != 'success' || $_SESSION['ebot_web_configuration']['status'] != 'success') : ?>
+<?php if ($_SESSION['mysql_connection']['status'] != 'success' || $_SESSION['createAdmin']['status'] != 'success' || $_SESSION['ebot_web_configuration']['status'] != 'success') { ?>
     <div class="alert alert-error">
         <button type="button" class="close" data-dismiss="alert">×</button>
         <h4>Error!</h4>
         Error missing data. Please restart the installation process.
     </div>
-<?php else: ?>
+<?php } else { ?>
     <h4>Configure your eBot-Server</h4>
     <form class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF'] ?>?step=4" method="POST">
         <div class="control-group">
@@ -22,14 +22,18 @@
         <div class="control-group">
             <label class="control-label" for="demo">Demo Download</label>
             <div class="controls">
-                <input type="checkbox" id="demo" value="true" name="demo" <?php if(!empty($_POST['demo'])) echo 'checked="checked"'; ?>>
+                <input type="checkbox" id="demo" value="true" name="demo" <?php if (! empty($_POST['demo'])) {
+                    echo 'checked="checked"';
+                } ?>>
                 <span class="help-inline">nextRound or instantConfirm or instantNoConfirm</span>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="delay">Delay Ready Countdown</label>
             <div class="controls">
-                <input type="checkbox" id="delay" value="true" name="delay" <?php if(!empty($_POST['delay'])) echo 'checked="checked"'; ?>>
+                <input type="checkbox" id="delay" value="true" name="delay" <?php if (! empty($_POST['delay'])) {
+                    echo 'checked="checked"';
+                } ?>>
                 <span class="help-inline">If checked, players have to ability to abort the matchstart at a 10 second countdown</span>
             </div>
         </div>
@@ -41,7 +45,7 @@
         </div>
     </form>
 
-    <?php if (!empty($_POST['pause']) && !empty($_POST['gotv'])): ?>
+    <?php if (! empty($_POST['pause']) && ! empty($_POST['gotv'])) { ?>
         <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <h4>Success!</h4>
@@ -73,7 +77,7 @@ PAUSE_METHOD = "<?php echo $_POST['pause']; ?>" ; nextRound or instantConfirm or
 [Match]
 LO3_METHOD = "csay" ; restart or csay or esl
 KO3_METHOD = "csay" ; restart or csay or esl
-DEMO_DOWNLOAD = <?php echo ($_POST['demo'] == true ? 'true' : 'false') ?> ; true or false :: whether gotv demos will be downloaded from the gameserver after matchend or not
+DEMO_DOWNLOAD = <?php echo $_POST['demo'] == true ? 'true' : 'false' ?> ; true or false :: whether gotv demos will be downloaded from the gameserver after matchend or not
 
 [MAPS]
 MAP[] = "de_dust2_se"
@@ -96,14 +100,14 @@ WORKSHOP["de_season"] = "125689191"
 [Settings]
 COMMAND_STOP_DISABLED = false
 RECORD_METHOD = "<?php echo $_POST['gotv']; ?>" ; matchstart or knifestart
-DELAY_READY = <?php echo ($_POST['delay'] == true ? 'true' : 'false') ?></pre>
+DELAY_READY = <?php echo $_POST['delay'] == true ? 'true' : 'false' ?></pre>
         <?php $_SESSION['ebot_server_configuration']['status'] = 'success'; ?>
         <button class="btn">Next Step</button>
-    <?php elseif (!empty($_POST['createServerConfig'])): ?>
+    <?php } elseif (! empty($_POST['createServerConfig'])) { ?>
         <div class="alert alert-error">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <h4>Error!</h4>
             <p>Please fill in all fields.</p>
         </div>
-    <?php endif; ?>
-<?php endif; ?>
+    <?php } ?>
+<?php } ?>

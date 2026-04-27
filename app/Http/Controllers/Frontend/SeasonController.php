@@ -12,7 +12,7 @@ class SeasonController extends Controller
     public function index()
     {
         $activeSeasons = Season::active()->orderByDesc('start')->get();
-        $pastSeasons   = Season::where('active', false)->orderByDesc('start')->limit(5)->get();
+        $pastSeasons = Season::where('active', false)->orderByDesc('start')->limit(5)->get();
 
         return view('seasons.index', compact('activeSeasons', 'pastSeasons'));
     }
@@ -25,7 +25,7 @@ class SeasonController extends Controller
 
         return match ($redirect) {
             'archived' => redirect()->route('matchs.archived'),
-            default    => redirect()->route('matchs.index'),
+            default => redirect()->route('matchs.index'),
         };
     }
 }

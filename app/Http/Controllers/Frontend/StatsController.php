@@ -13,13 +13,13 @@ class StatsController extends Controller
 {
     public function index()
     {
-        $totalKills    = Player::sum('nb_kill');
-        $totalDeaths   = Player::sum('death');
-        $totalHS       = Player::sum('hs');
-        $liveCount     = Matchs::live()->count();
+        $totalKills = Player::sum('nb_kill');
+        $totalDeaths = Player::sum('death');
+        $totalHS = Player::sum('hs');
+        $liveCount = Matchs::live()->count();
         $finishedCount = Matchs::finished()->count();
-        $pendingCount  = Matchs::notStarted()->count();
-        $serverCount   = Server::count();
+        $pendingCount = Matchs::notStarted()->count();
+        $serverCount = Server::count();
 
         return view('stats.index', compact(
             'totalKills',
@@ -44,8 +44,8 @@ class StatsController extends Controller
             DB::raw('SUM(assist) as total_assists'),
             DB::raw('SUM(hs) as total_hs')
         )
-        ->groupBy('steamid')
-        ->having('total_kills', '>', 0);
+            ->groupBy('steamid')
+            ->having('total_kills', '>', 0);
 
         if (! empty($matchIds)) {
             $playerQuery->whereHas('map', fn ($q) => $q->whereIn('match_id', $matchIds));

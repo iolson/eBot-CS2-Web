@@ -59,7 +59,7 @@
         <script>
             $(document).ready(function() {
                 $('.btn').click(function(){
-                    window.location.href = window.location.pathname + '?step=<?php echo $step+1; ?>';
+                    window.location.href = window.location.pathname + '?step=<?php echo $step + 1; ?>';
                 })
             })
         </script>
@@ -71,13 +71,27 @@
                             <img src="/images/ebot.png" style="margin: 25px 15px; width: 200px;">
                         </div>
                         <ul class="nav nav-list">
-                            <li <?php if ($step == "0") echo "class='active'"; ?>><a href="<?php echo $_SERVER['PHP_SELF'] ?>">Start</a></li>
-                            <li <?php if ($step == "1") echo "class='active'"; ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=1">Configure Database</a></li>
-                            <li <?php if ($step == "2") echo "class='active'"; ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=2">Create Account</a></li>
-                            <li <?php if ($step == "3") echo "class='active'"; ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=3">Configure eBot</a></li>
-                            <li <?php if ($step == "4") echo "class='active'"; ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=4">Configure eBot-Server</a></li>
-                            <li <?php if ($step == "5") echo "class='active'"; ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=5">Manual Steps</a></li>
-                            <li <?php if ($step == "6") echo "class='active'"; ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=6">Finish</a></li>
+                            <li <?php if ($step == '0') {
+                                echo "class='active'";
+                            } ?>><a href="<?php echo $_SERVER['PHP_SELF'] ?>">Start</a></li>
+                            <li <?php if ($step == '1') {
+                                echo "class='active'";
+                            } ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=1">Configure Database</a></li>
+                            <li <?php if ($step == '2') {
+                                echo "class='active'";
+                            } ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=2">Create Account</a></li>
+                            <li <?php if ($step == '3') {
+                                echo "class='active'";
+                            } ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=3">Configure eBot</a></li>
+                            <li <?php if ($step == '4') {
+                                echo "class='active'";
+                            } ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=4">Configure eBot-Server</a></li>
+                            <li <?php if ($step == '5') {
+                                echo "class='active'";
+                            } ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=5">Manual Steps</a></li>
+                            <li <?php if ($step == '6') {
+                                echo "class='active'";
+                            } ?>><a href="<?php echo $_SERVER['PHP_SELF']; ?>?step=6">Finish</a></li>
                         </ul>
                     </div>
                 </div>
@@ -85,13 +99,14 @@
                     <div class="well">
                         <h3 style="margin-bottom: 0px">Install and Configure the eBot Webinterface</h3>
                         <hr style="margin-top: 5px;">
-                        <?php 
-                            $invalide = array('\\','/','/\/',':','.');
-                            $step = str_replace($invalide,' ',$step);
-                            if(!file_exists($step.".php"))
-                                $step = '0';
-                            include($step.".php");
-                        ?>
+                        <?php
+                            $invalide = ['\\', '/', '/\/', ':', '.'];
+$step = str_replace($invalide, ' ', $step);
+if (! file_exists($step.'.php')) {
+    $step = '0';
+}
+include $step.'.php';
+?>
                     </div>
                 </div>
             </div>

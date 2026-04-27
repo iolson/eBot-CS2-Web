@@ -5,6 +5,5 @@ To prevent abuse of the site, we require that you activate your account by click
 
 %2%
 
-Thanks again for joining us.'
-, array("%1%" => $sf_request->getHost(),
-  "%2%" => url_for("sfApply/confirm?validate=$validate", true)), 'sfForkedApply') ?>
+Thanks again for joining us.', ['%1%' => $sf_request->getHost(),
+    '%2%' => url_for("sfApply/confirm?validate=$validate", true)], 'sfForkedApply') ?>

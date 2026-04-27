@@ -3,6 +3,7 @@
 use App\Models\Matchs;
 use App\Services\AesCtrService;
 use App\Services\EbotCommandService;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -12,17 +13,18 @@ describe('EbotCommandService', function () {
     function makeService(): EbotCommandService
     {
         return new EbotCommandService(
-            new AesCtrService(),
+            new AesCtrService,
             'http://localhost:12360',
         );
     }
 
     function makeMatch(string $authkey = 'test-auth-key-32chars-padding123', string $ip = '127.0.0.1:27015'): Matchs
     {
-        $match = new Matchs();
-        $match->id            = 42;
+        $match = new Matchs;
+        $match->id = 42;
         $match->config_authkey = $authkey;
-        $match->ip            = $ip;
+        $match->ip = $ip;
+
         return $match;
     }
 
@@ -32,7 +34,7 @@ describe('EbotCommandService', function () {
         ]);
 
         $service = makeService();
-        $match   = makeMatch();
+        $match = makeMatch();
 
         $result = $service->send($match, 'stop');
 
@@ -47,13 +49,13 @@ describe('EbotCommandService', function () {
 
     it('returns false when the eBot server is unreachable', function () {
         Http::fake([
-            'http://localhost:12360/match-command' => fn () => throw new \Illuminate\Http\Client\ConnectionException('Connection refused'),
+            'http://localhost:12360/match-command' => fn () => throw new ConnectionException('Connection refused'),
         ]);
 
         Log::spy();
 
         $service = makeService();
-        $match   = makeMatch();
+        $match = makeMatch();
 
         $result = $service->send($match, 'forcestart');
 
@@ -64,7 +66,7 @@ describe('EbotCommandService', function () {
         Log::spy();
 
         $service = makeService();
-        $match   = makeMatch('', '127.0.0.1:27015');
+        $match = makeMatch('', '127.0.0.1:27015');
 
         $result = $service->send($match, 'stop');
 
@@ -75,7 +77,7 @@ describe('EbotCommandService', function () {
         Log::spy();
 
         $service = makeService();
-        $match   = makeMatch('some-authkey', '');
+        $match = makeMatch('some-authkey', '');
 
         $result = $service->send($match, 'stop');
 
@@ -90,7 +92,7 @@ describe('EbotCommandService', function () {
         Log::spy();
 
         $service = makeService();
-        $match   = makeMatch();
+        $match = makeMatch();
 
         $result = $service->send($match, 'pauseunpause');
 
@@ -99,7 +101,7 @@ describe('EbotCommandService', function () {
 
     it('builds an encrypted JSON payload for the browser Socket.IO client', function () {
         $service = makeService();
-        $match   = makeMatch('my-secret-key-256bits-padded-here', '10.0.0.1:27015');
+        $match = makeMatch('my-secret-key-256bits-padded-here', '10.0.0.1:27015');
 
         $payload = $service->buildPayload($match, 'forceknife');
 
@@ -113,7 +115,7 @@ describe('EbotCommandService', function () {
 
     it('returns a neutral payload when match data is missing', function () {
         $service = makeService();
-        $match   = makeMatch('', '');
+        $match = makeMatch('', '');
 
         $payload = $service->buildPayload($match, 'stop');
         $decoded = json_decode($payload, true);

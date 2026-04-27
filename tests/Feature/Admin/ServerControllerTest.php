@@ -1,7 +1,5 @@
 <?php
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 use App\Models\Server;
 use App\Models\User;
 
@@ -20,7 +18,7 @@ describe('Admin server controller', function () {
         $this->actingAs($this->admin)
             ->post(route('admin.servers.store'), [
                 'ip_port' => '192.168.1.1:27015',
-                'rcon'    => 'secret',
+                'rcon' => 'secret',
             ])
             ->assertRedirect(route('admin.servers.index'))
             ->assertSessionHas('success');
@@ -32,7 +30,7 @@ describe('Admin server controller', function () {
         $this->actingAs($this->admin)
             ->post(route('admin.servers.store'), [
                 'ip_port' => '192.168.1.1-3:27015',
-                'rcon'    => 'secret',
+                'rcon' => 'secret',
             ])
             ->assertRedirect(route('admin.servers.index'));
 
@@ -43,7 +41,7 @@ describe('Admin server controller', function () {
         $this->actingAs($this->admin)
             ->post(route('admin.servers.store'), [
                 'ip_port' => '192.168.1.1:27015-27017',
-                'rcon'    => 'secret',
+                'rcon' => 'secret',
             ])
             ->assertRedirect(route('admin.servers.index'));
 
@@ -54,7 +52,7 @@ describe('Admin server controller', function () {
         $this->actingAs($this->admin)
             ->post(route('admin.servers.store'), [
                 'ip_port' => 'not-valid',
-                'rcon'    => 'secret',
+                'rcon' => 'secret',
             ])
             ->assertRedirect()
             ->assertSessionHas('error');
@@ -66,7 +64,7 @@ describe('Admin server controller', function () {
         $this->actingAs($this->admin)
             ->post(route('admin.servers.store'), [
                 'ip_port' => '192.168.1.1:27015',
-                'rcon'    => 'newpass',
+                'rcon' => 'newpass',
             ]);
 
         $this->assertEquals(1, Server::count());

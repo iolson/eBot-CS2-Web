@@ -1,10 +1,10 @@
-<?php if ($_SESSION['mysql_connection']['status'] != 'success' || $_SESSION['createAdmin']['status'] != 'success' || $_SESSION['ebot_web_configuration']['status'] != 'success' || $_SESSION['ebot_server_configuration']['status'] != 'success'): ?>
+<?php if ($_SESSION['mysql_connection']['status'] != 'success' || $_SESSION['createAdmin']['status'] != 'success' || $_SESSION['ebot_web_configuration']['status'] != 'success' || $_SESSION['ebot_server_configuration']['status'] != 'success') { ?>
     <div class="alert alert-error">
         <button type="button" class="close" data-dismiss="alert">×</button>
         <h4>Error!</h4>
         Error missing data. Please restart the installation process.
     </div>
-<?php else: ?>
+<?php } else { ?>
     <h4>Manual Steps</h4>
     <p>To complete the installation process, you have to enter some steps manually over your ssh or console. Just follow the steps, you can copy &amp; paste the commands.</p><hr>
     <ul>
@@ -37,4 +37,4 @@
         </li>
     </ul>
     <button class="btn">Next Step</button>
-<?php endif; ?>
+<?php } ?>

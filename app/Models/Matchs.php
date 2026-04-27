@@ -32,52 +32,69 @@ class Matchs extends Model
     ];
 
     protected $casts = [
-        'status'                    => 'integer',
-        'is_paused'                 => 'boolean',
-        'score_a'                   => 'integer',
-        'score_b'                   => 'integer',
-        'max_round'                 => 'integer',
-        'overtime_startmoney'       => 'integer',
-        'overtime_max_round'        => 'integer',
-        'config_full_score'         => 'boolean',
-        'config_ot'                 => 'boolean',
-        'config_streamer'           => 'boolean',
-        'config_knife_round'        => 'boolean',
-        'config_switch_auto'        => 'boolean',
+        'status' => 'integer',
+        'is_paused' => 'boolean',
+        'score_a' => 'integer',
+        'score_b' => 'integer',
+        'max_round' => 'integer',
+        'overtime_startmoney' => 'integer',
+        'overtime_max_round' => 'integer',
+        'config_full_score' => 'boolean',
+        'config_ot' => 'boolean',
+        'config_streamer' => 'boolean',
+        'config_knife_round' => 'boolean',
+        'config_switch_auto' => 'boolean',
         'config_auto_change_password' => 'boolean',
-        'config_heatmap'            => 'boolean',
-        'enable'                    => 'boolean',
-        'ingame_enable'             => 'boolean',
-        'force_zoom_match'          => 'boolean',
-        'auto_start'                => 'boolean',
-        'auto_start_time'           => 'integer',
-        'startdate'                 => 'datetime',
+        'config_heatmap' => 'boolean',
+        'enable' => 'boolean',
+        'ingame_enable' => 'boolean',
+        'force_zoom_match' => 'boolean',
+        'auto_start' => 'boolean',
+        'auto_start_time' => 'integer',
+        'startdate' => 'datetime',
     ];
 
     // -------------------------------------------------------------------------
     // Status constants — must match eBot Node.js expectations exactly
     // -------------------------------------------------------------------------
 
-    const STATUS_NOT_STARTED   = 0;
-    const STATUS_STARTING      = 1;
-    const STATUS_WU_KNIFE      = 2;
-    const STATUS_KNIFE         = 3;
-    const STATUS_END_KNIFE     = 4;
-    const STATUS_WU_1_SIDE     = 5;
-    const STATUS_FIRST_SIDE    = 6;
-    const STATUS_WU_2_SIDE     = 7;
-    const STATUS_SECOND_SIDE   = 8;
-    const STATUS_WU_OT_1_SIDE  = 9;
-    const STATUS_OT_FIRST_SIDE = 10;
-    const STATUS_WU_OT_2_SIDE  = 11;
-    const STATUS_OT_SECOND_SIDE = 12;
-    const STATUS_END_MATCH     = 13;
-    const STATUS_ARCHIVE       = 14;
+    const STATUS_NOT_STARTED = 0;
 
-    const MAP_SELECTION_BO2       = 'bo2';
+    const STATUS_STARTING = 1;
+
+    const STATUS_WU_KNIFE = 2;
+
+    const STATUS_KNIFE = 3;
+
+    const STATUS_END_KNIFE = 4;
+
+    const STATUS_WU_1_SIDE = 5;
+
+    const STATUS_FIRST_SIDE = 6;
+
+    const STATUS_WU_2_SIDE = 7;
+
+    const STATUS_SECOND_SIDE = 8;
+
+    const STATUS_WU_OT_1_SIDE = 9;
+
+    const STATUS_OT_FIRST_SIDE = 10;
+
+    const STATUS_WU_OT_2_SIDE = 11;
+
+    const STATUS_OT_SECOND_SIDE = 12;
+
+    const STATUS_END_MATCH = 13;
+
+    const STATUS_ARCHIVE = 14;
+
+    const MAP_SELECTION_BO2 = 'bo2';
+
     const MAP_SELECTION_BO3_MODEA = 'bo3_modea';
+
     const MAP_SELECTION_BO3_MODEB = 'bo3_modeb';
-    const MAP_SELECTION_NORMAL    = 'normal';
+
+    const MAP_SELECTION_NORMAL = 'normal';
 
     // -------------------------------------------------------------------------
     // Relationships
@@ -145,8 +162,8 @@ class Matchs extends Model
     public function scopeLive($query)
     {
         return $query->where('enable', true)
-                     ->where('status', '>', self::STATUS_NOT_STARTED)
-                     ->where('status', '<', self::STATUS_END_MATCH);
+            ->where('status', '>', self::STATUS_NOT_STARTED)
+            ->where('status', '<', self::STATUS_END_MATCH);
     }
 
     public function scopeNotStarted($query)
@@ -176,22 +193,22 @@ class Matchs extends Model
     public function getStatusText(): string
     {
         return match ($this->status) {
-            self::STATUS_NOT_STARTED    => 'Not started',
-            self::STATUS_STARTING       => 'Starting',
-            self::STATUS_WU_KNIFE       => 'Warmup Knife',
-            self::STATUS_KNIFE          => 'Knife Round',
-            self::STATUS_END_KNIFE      => 'Waiting choose team',
-            self::STATUS_WU_1_SIDE      => 'Warmup first side',
-            self::STATUS_FIRST_SIDE     => 'First side',
-            self::STATUS_WU_2_SIDE      => 'Warmup second side',
-            self::STATUS_SECOND_SIDE    => 'Second side',
-            self::STATUS_WU_OT_1_SIDE   => 'Warmup first side OT',
-            self::STATUS_OT_FIRST_SIDE  => 'First side OT',
-            self::STATUS_WU_OT_2_SIDE   => 'Warmup second side OT',
+            self::STATUS_NOT_STARTED => 'Not started',
+            self::STATUS_STARTING => 'Starting',
+            self::STATUS_WU_KNIFE => 'Warmup Knife',
+            self::STATUS_KNIFE => 'Knife Round',
+            self::STATUS_END_KNIFE => 'Waiting choose team',
+            self::STATUS_WU_1_SIDE => 'Warmup first side',
+            self::STATUS_FIRST_SIDE => 'First side',
+            self::STATUS_WU_2_SIDE => 'Warmup second side',
+            self::STATUS_SECOND_SIDE => 'Second side',
+            self::STATUS_WU_OT_1_SIDE => 'Warmup first side OT',
+            self::STATUS_OT_FIRST_SIDE => 'First side OT',
+            self::STATUS_WU_OT_2_SIDE => 'Warmup second side OT',
             self::STATUS_OT_SECOND_SIDE => 'Second side OT',
-            self::STATUS_END_MATCH      => 'Finished',
-            self::STATUS_ARCHIVE        => 'Archived',
-            default                     => 'Unknown',
+            self::STATUS_END_MATCH => 'Finished',
+            self::STATUS_ARCHIVE => 'Archived',
+            default => 'Unknown',
         };
     }
 

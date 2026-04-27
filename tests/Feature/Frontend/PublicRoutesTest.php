@@ -1,7 +1,5 @@
 <?php
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 use App\Models\Matchs;
 use App\Models\Season;
 

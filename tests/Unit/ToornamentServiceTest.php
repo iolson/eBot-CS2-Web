@@ -24,7 +24,7 @@ describe('ToornamentService', function () {
         Cache::flush();
 
         Http::fake([
-            '*oauth*'        => Http::response(json_encode(['access_token' => 'cached-token']), 200),
+            '*oauth*' => Http::response(json_encode(['access_token' => 'cached-token']), 200),
             '*v1/tournaments' => Http::response(json_encode([]), 200),
         ]);
 
@@ -43,7 +43,7 @@ describe('ToornamentService', function () {
         ]);
 
         $service = makeToornamentService();
-        $result  = $service->getTournaments();
+        $result = $service->getTournaments();
 
         expect($result)->toBe([['id' => 't1']]);
 
@@ -60,8 +60,8 @@ describe('ToornamentService', function () {
             ]), 200),
         ]);
 
-        $service  = makeToornamentService();
-        $matches  = $service->getTournamentMatches('t1');
+        $service = makeToornamentService();
+        $matches = $service->getTournamentMatches('t1');
 
         expect($matches)->toHaveCount(2);
         expect($matches[0]['id'])->toBe('m1');
@@ -75,7 +75,7 @@ describe('ToornamentService', function () {
         ]);
 
         $service = makeToornamentService();
-        expect(fn () => $service->getTournaments())->toThrow(\RuntimeException::class);
+        expect(fn () => $service->getTournaments())->toThrow(RuntimeException::class);
     });
 
     it('throws when OAuth2 token request fails', function () {
@@ -86,6 +86,6 @@ describe('ToornamentService', function () {
         ]);
 
         $service = makeToornamentService();
-        expect(fn () => $service->getTournaments())->toThrow(\RuntimeException::class);
+        expect(fn () => $service->getTournaments())->toThrow(RuntimeException::class);
     });
 });

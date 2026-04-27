@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
             config('ebot.websocket_secret_key', '')
         ));
 
-        $this->app->singleton(AesCtrService::class, fn () => new AesCtrService());
+        $this->app->singleton(AesCtrService::class, fn () => new AesCtrService);
 
         $this->app->singleton(ToornamentService::class, fn () => new ToornamentService(
             config('ebot.toornament.id', ''),
@@ -41,10 +41,9 @@ class AppServiceProvider extends ServiceProvider
 
         // Share a JWT token with all views so layouts can pass it to window.ebotConfig.
         View::composer('*', function ($view) {
-            /** @var \App\Services\JwtService $jwt */
-            $jwt = app(JwtService::class);
-
             try {
+                /** @var JwtService $jwt */
+                $jwt = app(JwtService::class);
                 $user = auth()->user();
                 $token = $user
                     ? $jwt->forAdmin($user->username ?? $user->getDisplayName())

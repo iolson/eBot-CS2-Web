@@ -64,7 +64,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'sfguard',
-            'model'  => User::class,
+            'model' => User::class,
         ],
     ],
 

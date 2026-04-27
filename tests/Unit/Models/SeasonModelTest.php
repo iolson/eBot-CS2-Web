@@ -2,8 +2,9 @@
 
 use App\Models\Season;
 use App\Models\Team;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 describe('Season factory', function () {
     it('creates a season with factory', function () {
@@ -21,7 +22,7 @@ describe('Season factory', function () {
 describe('Season relationships', function () {
     it('belongs to many teams via teams_in_seasons', function () {
         $season = Season::factory()->create();
-        $teams  = Team::factory(3)->create();
+        $teams = Team::factory(3)->create();
         $season->teams()->attach($teams->pluck('id'));
 
         expect($season->teams)->toHaveCount(3)

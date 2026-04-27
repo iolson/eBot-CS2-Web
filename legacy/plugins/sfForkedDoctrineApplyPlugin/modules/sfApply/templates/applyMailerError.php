@@ -3,6 +3,6 @@
 <?php echo __('<p>
 An error took place during the email delivery process. Please try
 again later.
-</p>', array(), 'sfForkedApply') ?>
+</p>', [], 'sfForkedApply') ?>
 <?php include_partial('sfApply/continue') ?>
 </div>

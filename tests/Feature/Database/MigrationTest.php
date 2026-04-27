@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Schema;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 describe('eBot database tables exist after migrations', function () {
     $tables = [
         'sf_guard_user',

@@ -28,12 +28,12 @@ class TeamController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'shorthandle' => ['required', 'string', 'max:10'],
-            'flag'        => ['nullable', 'string', 'size:2'],
-            'link'        => ['nullable', 'url', 'max:255'],
-            'seasons'     => ['nullable', 'array'],
-            'seasons.*'   => ['integer', 'exists:seasons,id'],
+            'flag' => ['nullable', 'string', 'size:2'],
+            'link' => ['nullable', 'url', 'max:255'],
+            'seasons' => ['nullable', 'array'],
+            'seasons.*' => ['integer', 'exists:seasons,id'],
         ]);
 
         $team = Team::create($data);
@@ -64,12 +64,12 @@ class TeamController extends Controller
     public function update(Request $request, Team $team): RedirectResponse
     {
         $data = $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'shorthandle' => ['required', 'string', 'max:10'],
-            'flag'        => ['nullable', 'string', 'size:2'],
-            'link'        => ['nullable', 'url', 'max:255'],
-            'seasons'     => ['nullable', 'array'],
-            'seasons.*'   => ['integer', 'exists:seasons,id'],
+            'flag' => ['nullable', 'string', 'size:2'],
+            'link' => ['nullable', 'url', 'max:255'],
+            'seasons' => ['nullable', 'array'],
+            'seasons.*' => ['integer', 'exists:seasons,id'],
         ]);
 
         $team->update($data);

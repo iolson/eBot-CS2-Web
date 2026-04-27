@@ -35,15 +35,16 @@ class EbotCommandService
     {
         if (empty($match->config_authkey) || empty($match->ip)) {
             Log::warning("EbotCommandService: match {$match->id} has no authkey or server IP.");
+
             return false;
         }
 
         $plaintext = "{$match->id} {$action} {$match->ip}";
         $encrypted = $this->aes->encrypt($plaintext, $match->config_authkey, 256);
-        $payload   = json_encode([$encrypted, $match->ip]);
+        $payload = json_encode([$encrypted, $match->ip]);
 
         try {
-            $url = rtrim($this->websocketUrl, '/') . '/match-command';
+            $url = rtrim($this->websocketUrl, '/').'/match-command';
 
             $response = Http::timeout(5)->post($url, [
                 'data' => $payload,
@@ -51,12 +52,14 @@ class EbotCommandService
 
             if (! $response->successful()) {
                 Log::warning("EbotCommandService: server returned HTTP {$response->status()} for match {$match->id} action '{$action}'.");
+
                 return false;
             }
 
             return true;
         } catch (\Throwable $e) {
             Log::warning("EbotCommandService: could not reach eBot server for match {$match->id} action '{$action}': {$e->getMessage()}");
+
             return false;
         }
     }

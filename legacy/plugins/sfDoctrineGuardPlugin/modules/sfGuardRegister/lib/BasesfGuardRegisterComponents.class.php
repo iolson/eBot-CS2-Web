@@ -2,8 +2,8 @@
 
 class BasesfGuardRegisterComponents extends sfComponents
 {
-  public function executeForm()
-  {
-    $this->form = new sfGuardRegisterForm();
-  }
+    public function executeForm()
+    {
+        $this->form = new sfGuardRegisterForm;
+    }
 }

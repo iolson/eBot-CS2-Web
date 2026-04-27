@@ -1,9 +1,8 @@
 <?php
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 use App\Models\Matchs;
 use App\Models\Server;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 
@@ -40,14 +39,14 @@ describe('Admin match controller', function () {
     });
 
     it('creates a match', function () {
-        $teamA = \App\Models\Team::factory()->create();
-        $teamB = \App\Models\Team::factory()->create();
+        $teamA = Team::factory()->create();
+        $teamB = Team::factory()->create();
 
         $this->actingAs($this->admin)
             ->post(route('admin.matchs.store'), [
-                'team_a'             => $teamA->id,
-                'team_b'             => $teamB->id,
-                'max_round'          => 15,
+                'team_a' => $teamA->id,
+                'team_b' => $teamB->id,
+                'max_round' => 15,
                 'map_selection_mode' => 1,
             ])
             ->assertRedirect(route('admin.matchs.index'));
@@ -56,13 +55,13 @@ describe('Admin match controller', function () {
     });
 
     it('rejects same team for team_a and team_b', function () {
-        $team = \App\Models\Team::factory()->create();
+        $team = Team::factory()->create();
 
         $this->actingAs($this->admin)
             ->post(route('admin.matchs.store'), [
-                'team_a'             => $team->id,
-                'team_b'             => $team->id,
-                'max_round'          => 15,
+                'team_a' => $team->id,
+                'team_b' => $team->id,
+                'max_round' => 15,
                 'map_selection_mode' => 1,
             ])
             ->assertSessionHasErrors('team_b');
@@ -170,8 +169,8 @@ describe('Admin match controller', function () {
 
     it('resets a disabled match', function () {
         $match = Matchs::factory()->create([
-            'status'  => Matchs::STATUS_END_MATCH,
-            'enable'  => 0,
+            'status' => Matchs::STATUS_END_MATCH,
+            'enable' => 0,
             'score_a' => 10,
             'score_b' => 6,
         ]);
@@ -182,8 +181,8 @@ describe('Admin match controller', function () {
             ->assertSessionHas('success');
 
         $this->assertDatabaseHas('matchs', [
-            'id'      => $match->id,
-            'status'  => Matchs::STATUS_NOT_STARTED,
+            'id' => $match->id,
+            'status' => Matchs::STATUS_NOT_STARTED,
             'score_a' => 0,
             'score_b' => 0,
         ]);
@@ -214,7 +213,7 @@ describe('Admin match controller', function () {
 
     it('start uses pre-assigned server and enables the match', function () {
         $server = Server::factory()->create();
-        $match  = Matchs::factory()->notStarted()->create(['server_id' => $server->id]);
+        $match = Matchs::factory()->notStarted()->create(['server_id' => $server->id]);
 
         $this->actingAs($this->admin)
             ->post(route('admin.matchs.start', $match))
@@ -222,17 +221,17 @@ describe('Admin match controller', function () {
             ->assertSessionHas('success');
 
         $this->assertDatabaseHas('matchs', [
-            'id'        => $match->id,
+            'id' => $match->id,
             'server_id' => $server->id,
-            'enable'    => 1,
-            'status'    => Matchs::STATUS_STARTING,
+            'enable' => 1,
+            'status' => Matchs::STATUS_STARTING,
         ]);
     });
 
     it('start picks a free server when none is pre-assigned', function () {
         // Create match without a factory-created server
         $server = Server::factory()->create();
-        $match  = Matchs::factory()->notStarted()->create(['server_id' => null, 'ip' => null]);
+        $match = Matchs::factory()->notStarted()->create(['server_id' => null, 'ip' => null]);
 
         $this->actingAs($this->admin)
             ->post(route('admin.matchs.start', $match))
@@ -240,10 +239,10 @@ describe('Admin match controller', function () {
             ->assertSessionHas('success');
 
         $this->assertDatabaseHas('matchs', [
-            'id'     => $match->id,
+            'id' => $match->id,
             'enable' => 1,
             'status' => Matchs::STATUS_STARTING,
-            'ip'     => $server->ip,
+            'ip' => $server->ip,
         ]);
     });
 
@@ -274,9 +273,9 @@ describe('Admin match controller', function () {
         Http::fake(['*' => Http::response('', 200)]);
 
         $match = Matchs::factory()->live()->create([
-            'enable'         => 1,
+            'enable' => 1,
             'config_authkey' => 'test-key',
-            'ip'             => '127.0.0.1:27015',
+            'ip' => '127.0.0.1:27015',
         ]);
 
         $this->actingAs($this->admin)
@@ -298,9 +297,9 @@ describe('Admin match controller', function () {
         Http::fake(['*' => Http::response('', 200)]);
 
         $match = Matchs::factory()->live()->create([
-            'enable'         => 1,
+            'enable' => 1,
             'config_authkey' => 'test-key',
-            'ip'             => '127.0.0.1:27015',
+            'ip' => '127.0.0.1:27015',
         ]);
 
         $this->actingAs($this->admin)
@@ -313,10 +312,10 @@ describe('Admin match controller', function () {
         Http::fake(['*' => Http::response('', 200)]);
 
         $match = Matchs::factory()->create([
-            'status'         => Matchs::STATUS_WU_1_SIDE,
-            'enable'         => 1,
+            'status' => Matchs::STATUS_WU_1_SIDE,
+            'enable' => 1,
             'config_authkey' => 'test-key',
-            'ip'             => '127.0.0.1:27015',
+            'ip' => '127.0.0.1:27015',
         ]);
 
         $this->actingAs($this->admin)
@@ -329,10 +328,10 @@ describe('Admin match controller', function () {
         Http::fake(['*' => Http::response('', 200)]);
 
         $match = Matchs::factory()->create([
-            'status'         => Matchs::STATUS_KNIFE,
-            'enable'         => 1,
+            'status' => Matchs::STATUS_KNIFE,
+            'enable' => 1,
             'config_authkey' => 'test-key',
-            'ip'             => '127.0.0.1:27015',
+            'ip' => '127.0.0.1:27015',
         ]);
 
         $this->actingAs($this->admin)

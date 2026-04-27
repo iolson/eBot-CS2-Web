@@ -3,7 +3,7 @@
         <div class="span7">
             <div class="modal" style="position:relative; top:auto; left:auto; margin:0 auto 20px; z-index:1; width: auto; max-width:100%;">
                 <div class="modal-header">
-                    <h3><?php echo __("Livemap"); ?></h3>
+                    <h3><?php echo __('Livemap'); ?></h3>
                 </div>
                 <div class="modal-body" style="text-align:center; max-height: 100%; min-height: 420px;">
                     <canvas id="livemap_canvas" width="760" height="530" ></canvas>
@@ -13,7 +13,7 @@
         <div class="span3">
             <div class="modal" style="position:relative; top:auto; left:auto; margin:0 auto 20px; z-index:1; width: auto; max-width:100%;">
                 <div class="modal-header">
-                    <h3><?php echo __("Log"); ?></h3>
+                    <h3><?php echo __('Log'); ?></h3>
                 </div>
                 <div class="modal-body" style="text-align:center; max-height: 100%; min-height: 420px; max-height: 420px;">
                     <div id="log" style="overflow:auto; padding:5px;"></div>
@@ -23,7 +23,7 @@
         <div class="span2">
             <div class="modal" style="position:relative; top:auto; left:auto; margin:0 auto 20px; z-index:1; width: auto; max-width:100%; ">
                 <div class="modal-header">
-                    <h3><?php echo __("Legende"); ?></h3>
+                    <h3><?php echo __('Legende'); ?></h3>
                 </div>
                 <div class="modal-body" style="max-height: 100%; min-height: 420px;">
                     <img src="/images/maps/csgo/livemap/_blue.png" style="width: 16px; height: 16px;"> Attacker<br>
@@ -76,14 +76,14 @@
         var context = canvas.getContext('2d');
 
         var blue = new Image();
-        blue.src = '<?php echo url_for("/images/maps/csgo"); ?>/livemap/_blue.png';
+        blue.src = '<?php echo url_for('/images/maps/csgo'); ?>/livemap/_blue.png';
         var red = new Image();
-        red.src = '<?php echo url_for("/images/maps/csgo"); ?>/livemap/_red.png';
+        red.src = '<?php echo url_for('/images/maps/csgo'); ?>/livemap/_red.png';
 
         initSocketIo(function(socket) {
             var map = new Image();
             data = mapdata["<?php echo $match->getMap()->getMapName(); ?>"];
-            map.src = '<?php echo url_for("/images/maps/csgo/overview"); ?>/'+data[7]+'.png';
+            map.src = '<?php echo url_for('/images/maps/csgo/overview'); ?>/'+data[7]+'.png';
             map.onload = function() {
                 context.drawImage(map, 0, 0, data[4], data[5]);
             };
@@ -97,7 +97,7 @@
                         context.clearRect(0, 0, canvas.width, canvas.height);
                         var map = new Image();
                         data = mapdata["<?php echo $match->getMap()->getMapName(); ?>"];
-                        map.src = '<?php echo url_for("/images/maps/csgo/overview"); ?>/'+data[7]+'.png';
+                        map.src = '<?php echo url_for('/images/maps/csgo/overview'); ?>/'+data[7]+'.png';
                         map.onload = function() {
                             context.drawImage(map, 0, 0, data[4], data[5]);
                             $("#log").prepend("<b>Round "+get[2]+"</b><br />");
@@ -122,10 +122,10 @@
                         context.drawImage(red, (coords_killed[0]-8), (coords_killed[1]-8), 16, 16);
                         // Bring it to log
                         if (headshot == '1')
-                            headshot = "<img src='<?php echo url_for("/images/kills/csgo"); ?>/headshot.png'>";
+                            headshot = "<img src='<?php echo url_for('/images/kills/csgo'); ?>/headshot.png'>";
                         else
                             headshot = "";
-                        $("#log").prepend(killer+" <img src='<?php echo url_for("/images/kills/csgo"); ?>/"+weapon+".png'> "+killed+" "+headshot+"<br />");
+                        $("#log").prepend(killer+" <img src='<?php echo url_for('/images/kills/csgo'); ?>/"+weapon+".png'> "+killed+" "+headshot+"<br />");
                         var height = $('#log')[0].scrollHeight;
                         $('#log').scrollTop(height);
                     }

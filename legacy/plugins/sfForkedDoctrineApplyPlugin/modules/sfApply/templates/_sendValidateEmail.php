@@ -12,13 +12,12 @@ To continue with your change, click on the link that follows:
 %2%
 </p><p>
 Your email will then be changed permanently.
-</p>"
-, array(
-  "%1%" => link_to($sf_request->getHost(), $sf_request->getUriPrefix()),
-  "%2%" => link_to(url_for("sfApply/confirm?validate=$validate", true), "sfApply/confirm?validate=$validate", array("absolute" => true)),
-  "%USERNAME%" => $username,
-  "%OLDEMAIL%" => $oldmail,
-  "%NEWEMAIL%" => $newmail
-  ),
+</p>", [
+    '%1%' => link_to($sf_request->getHost(), $sf_request->getUriPrefix()),
+    '%2%' => link_to(url_for("sfApply/confirm?validate=$validate", true), "sfApply/confirm?validate=$validate", ['absolute' => true]),
+    '%USERNAME%' => $username,
+    '%OLDEMAIL%' => $oldmail,
+    '%NEWEMAIL%' => $newmail,
+],
     'sfForkedApply') ?>
 

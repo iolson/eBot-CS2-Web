@@ -1,8 +1,8 @@
 <?php
 
-include(dirname(__FILE__).'/../../bootstrap/functional.php');
+include dirname(__FILE__).'/../../bootstrap/functional.php';
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new sfTestFunctional(new sfBrowser);
 
 $browser->
   get('/matchs/index')->
@@ -15,5 +15,4 @@ $browser->
   with('response')->begin()->
     isStatusCode(200)->
     checkElement('body', '!/This is a temporary page/')->
-  end()
-;
+  end();

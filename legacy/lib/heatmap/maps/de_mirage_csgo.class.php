@@ -1,8 +1,9 @@
 <?php
 
-class de_mirage_csgo extends MapsHeatmap {
-
-    public function __construct($match_id) {
+class de_mirage_csgo extends MapsHeatmap
+{
+    public function __construct($match_id)
+    {
         $this->setStartX(-2672);
         $this->setStartY(-2536);
         $this->setEndX(1472);
@@ -14,10 +15,8 @@ class de_mirage_csgo extends MapsHeatmap {
         $this->setMatchId($match_id);
     }
 
-    public function getMapImage() {
-        return "/images/maps/csgo/overview/de_mirage_go_radar.png";
+    public function getMapImage()
+    {
+        return '/images/maps/csgo/overview/de_mirage_go_radar.png';
     }
-
 }
-
-?>

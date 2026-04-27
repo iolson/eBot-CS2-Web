@@ -17,22 +17,25 @@ class RoundSummary extends Model
     ];
 
     protected $casts = [
-        'bomb_planted'    => 'boolean',
-        'bomb_defused'    => 'boolean',
-        'bomb_exploded'   => 'boolean',
-        'ct_win'          => 'boolean',
-        't_win'           => 'boolean',
-        'best_killer_fk'  => 'boolean',
-        'score_a'         => 'integer',
-        'score_b'         => 'integer',
-        'best_killer_nb'  => 'integer',
-        'round_id'        => 'integer',
+        'bomb_planted' => 'boolean',
+        'bomb_defused' => 'boolean',
+        'bomb_exploded' => 'boolean',
+        'ct_win' => 'boolean',
+        't_win' => 'boolean',
+        'best_killer_fk' => 'boolean',
+        'score_a' => 'integer',
+        'score_b' => 'integer',
+        'best_killer_nb' => 'integer',
+        'round_id' => 'integer',
     ];
 
-    const WIN_TYPE_BOMB_DEFUSED  = 'bombdefused';
+    const WIN_TYPE_BOMB_DEFUSED = 'bombdefused';
+
     const WIN_TYPE_BOMB_EXPLODED = 'bombeexploded';
-    const WIN_TYPE_NORMAL        = 'normal';
-    const WIN_TYPE_SAVED         = 'saved';
+
+    const WIN_TYPE_NORMAL = 'normal';
+
+    const WIN_TYPE_SAVED = 'saved';
 
     public function match(): BelongsTo
     {

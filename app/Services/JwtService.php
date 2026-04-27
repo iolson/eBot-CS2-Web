@@ -15,9 +15,11 @@ use RuntimeException;
  */
 class JwtService
 {
-    private const ALGO    = 'HS256';
-    private const TTL     = 60 * 60 * 24 * 31; // 31 days in seconds
-    private const LEEWAY  = 10;                 // seconds of clock skew tolerance
+    private const ALGO = 'HS256';
+
+    private const TTL = 60 * 60 * 24 * 31; // 31 days in seconds
+
+    private const LEEWAY = 10;                 // seconds of clock skew tolerance
 
     public function __construct(private readonly string $secret)
     {
@@ -33,7 +35,7 @@ class JwtService
     {
         return $this->encode([
             'admin' => true,
-            'user'  => $username,
+            'user' => $username,
         ]);
     }
 
@@ -54,8 +56,8 @@ class JwtService
             $payload['exp'] = time() + self::TTL;
         }
 
-        $header    = $this->base64UrlEncode(json_encode(['typ' => 'JWT', 'alg' => self::ALGO], JSON_THROW_ON_ERROR));
-        $body      = $this->base64UrlEncode(json_encode($payload, JSON_THROW_ON_ERROR));
+        $header = $this->base64UrlEncode(json_encode(['typ' => 'JWT', 'alg' => self::ALGO], JSON_THROW_ON_ERROR));
+        $body = $this->base64UrlEncode(json_encode($payload, JSON_THROW_ON_ERROR));
         $signature = $this->base64UrlEncode(hash_hmac('sha256', "{$header}.{$body}", $this->secret, true));
 
         return "{$header}.{$body}.{$signature}";

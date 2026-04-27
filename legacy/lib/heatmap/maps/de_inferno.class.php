@@ -1,8 +1,9 @@
 <?php
 
-class de_inferno extends MapsHeatmap {
-
-    public function __construct($match_id) {
+class de_inferno extends MapsHeatmap
+{
+    public function __construct($match_id)
+    {
         $this->setStartX(-1980);
         $this->setStartY(-808);
         $this->setEndX(2720);
@@ -14,10 +15,8 @@ class de_inferno extends MapsHeatmap {
         $this->setMatchId($match_id);
     }
 
-    public function getMapImage() {
-        return "/images/maps/csgo/overview/de_inferno.png";
+    public function getMapImage()
+    {
+        return '/images/maps/csgo/overview/de_inferno.png';
     }
-
 }
-
-?>

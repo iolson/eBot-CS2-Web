@@ -1,12 +1,13 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 describe('User model', function () {
     it('uses sf_guard_user table', function () {
-        expect((new User())->getTable())->toBe('sf_guard_user');
+        expect((new User)->getTable())->toBe('sf_guard_user');
     });
 });
 
@@ -39,8 +40,8 @@ describe('User checkLegacyPassword()', function () {
         $salt = 'testsalt';
         $user = new User([
             'algorithm' => 'sha1',
-            'salt'      => $salt,
-            'password'  => sha1($salt . 'secret'),
+            'salt' => $salt,
+            'password' => sha1($salt.'secret'),
         ]);
 
         expect($user->checkLegacyPassword('secret'))->toBeTrue()

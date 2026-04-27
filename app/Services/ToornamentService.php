@@ -16,9 +16,11 @@ use RuntimeException;
  */
 class ToornamentService
 {
-    private const BASE_URL   = 'https://api.toornament.com/';
-    private const TOKEN_TTL  = 60 * 60 * 24; // 24 hours in seconds
-    private const CACHE_KEY  = 'toornament_access_token';
+    private const BASE_URL = 'https://api.toornament.com/';
+
+    private const TOKEN_TTL = 60 * 60 * 24; // 24 hours in seconds
+
+    private const CACHE_KEY = 'toornament_access_token';
 
     public function __construct(
         private readonly string $clientId,
@@ -114,7 +116,7 @@ class ToornamentService
     private function get(string $uri, array $params = [], bool $needOAuth = false): array
     {
         $response = Http::withHeaders($this->headers($needOAuth))
-            ->get(self::BASE_URL . $uri, $params);
+            ->get(self::BASE_URL.$uri, $params);
 
         if (! $response->successful()) {
             throw new RuntimeException("Toornament GET {$uri} returned HTTP {$response->status()}");
@@ -126,7 +128,7 @@ class ToornamentService
     private function put(string $uri, array $body = [], bool $needOAuth = false): array
     {
         $response = Http::withHeaders($this->headers($needOAuth))
-            ->put(self::BASE_URL . $uri, $body);
+            ->put(self::BASE_URL.$uri, $body);
 
         if (! $response->successful()) {
             throw new RuntimeException("Toornament PUT {$uri} returned HTTP {$response->status()}");
@@ -138,7 +140,7 @@ class ToornamentService
     private function patch(string $uri, array $body = [], bool $needOAuth = false): array
     {
         $response = Http::withHeaders($this->headers($needOAuth))
-            ->patch(self::BASE_URL . $uri, $body);
+            ->patch(self::BASE_URL.$uri, $body);
 
         if (! $response->successful()) {
             throw new RuntimeException("Toornament PATCH {$uri} returned HTTP {$response->status()}");
@@ -152,7 +154,7 @@ class ToornamentService
         $headers = ['X-Api-Key' => $this->apiKey];
 
         if ($needOAuth) {
-            $headers['Authorization'] = 'Bearer ' . $this->accessToken();
+            $headers['Authorization'] = 'Bearer '.$this->accessToken();
         }
 
         return $headers;
@@ -164,15 +166,15 @@ class ToornamentService
     private function accessToken(): string
     {
         return Cache::remember(self::CACHE_KEY, self::TOKEN_TTL, function () {
-            $response = Http::asForm()->post(self::BASE_URL . 'oauth/v2/token', [
-                'grant_type'    => 'client_credentials',
-                'client_id'     => $this->clientId,
+            $response = Http::asForm()->post(self::BASE_URL.'oauth/v2/token', [
+                'grant_type' => 'client_credentials',
+                'client_id' => $this->clientId,
                 'client_secret' => $this->clientSecret,
-                'scope'         => 'organizer:admin organizer:view organizer:result',
+                'scope' => 'organizer:admin organizer:view organizer:result',
             ]);
 
             if (! $response->successful()) {
-                throw new RuntimeException('Toornament OAuth2 token request failed: HTTP ' . $response->status());
+                throw new RuntimeException('Toornament OAuth2 token request failed: HTTP '.$response->status());
             }
 
             return $response->json('access_token');

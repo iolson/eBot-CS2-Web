@@ -1,4 +1,5 @@
 <?php
+
 /**
  * JSON Web Token (JWT) implementation in PHP5.5+.
  *
@@ -9,18 +10,29 @@
  */
 class JWT
 {
-    const ERROR_KEY_EMPTY        = 10;
-    const ERROR_KEY_INVALID      = 12;
+    const ERROR_KEY_EMPTY = 10;
+
+    const ERROR_KEY_INVALID = 12;
+
     const ERROR_ALGO_UNSUPPORTED = 20;
-    const ERROR_ALGO_MISSING     = 22;
-    const ERROR_INVALID_MAXAGE   = 30;
-    const ERROR_INVALID_LEEWAY   = 32;
-    const ERROR_JSON_FAILED      = 40;
-    const ERROR_TOKEN_INVALID    = 50;
-    const ERROR_TOKEN_EXPIRED    = 52;
-    const ERROR_TOKEN_NOT_NOW    = 54;
+
+    const ERROR_ALGO_MISSING = 22;
+
+    const ERROR_INVALID_MAXAGE = 30;
+
+    const ERROR_INVALID_LEEWAY = 32;
+
+    const ERROR_JSON_FAILED = 40;
+
+    const ERROR_TOKEN_INVALID = 50;
+
+    const ERROR_TOKEN_EXPIRED = 52;
+
+    const ERROR_TOKEN_NOT_NOW = 54;
+
     const ERROR_SIGNATURE_FAILED = 60;
-    const ERROR_KID_UNKNOWN      = 70;
+
+    const ERROR_KID_UNKNOWN = 70;
 
     /** @var array Supported Signing algorithms. */
     protected $algos = [
@@ -56,12 +68,12 @@ class JWT
     /**
      * Constructor.
      *
-     * @param string|resource $key    The signature key. For RS* it should be file path or resource of private key.
-     * @param string          $algo   The algorithm to sign/verify the token.
-     * @param int             $maxAge The TTL of token to be used to determine expiry if `iat` claim is present.
-     *                                This is also used to provide default `exp` claim in case it is missing.
-     * @param int             $leeway Leeway for clock skew. Shouldnot be more than 2 minutes (120s).
-     * @param string          $pass   The passphrase (only for RS* algos).
+     * @param  string|resource  $key  The signature key. For RS* it should be file path or resource of private key.
+     * @param  string  $algo  The algorithm to sign/verify the token.
+     * @param  int  $maxAge  The TTL of token to be used to determine expiry if `iat` claim is present.
+     *                       This is also used to provide default `exp` claim in case it is missing.
+     * @param  int  $leeway  Leeway for clock skew. Shouldnot be more than 2 minutes (120s).
+     * @param  string  $pass  The passphrase (only for RS* algos).
      */
     public function __construct($key, $algo = 'HS256', $maxAge = 3600, $leeway = 0, $pass = null)
     {
@@ -72,18 +84,17 @@ class JWT
             $key = \reset($key); // use first one!
         }
 
-        $this->key        = $key;
-        $this->algo       = $algo;
-        $this->maxAge     = $maxAge;
-        $this->leeway     = $leeway;
+        $this->key = $key;
+        $this->algo = $algo;
+        $this->maxAge = $maxAge;
+        $this->leeway = $leeway;
         $this->passphrase = $pass;
     }
 
     /**
      * Register keys for `kid` support.
      *
-     * @param array $keys Use format: ['<kid>' => '<key data>', '<kid2>' => '<key data2>']
-     *
+     * @param  array  $keys  Use format: ['<kid>' => '<key data>', '<kid2>' => '<key data2>']
      * @return self
      */
     public function registerKeys(array $keys)
@@ -96,9 +107,7 @@ class JWT
     /**
      * Encode payload as JWT token.
      *
-     * @param array $payload
-     * @param array $header  Extra header (if any) to append.
-     *
+     * @param  array  $header  Extra header (if any) to append.
      * @return string URL safe JWT token.
      */
     public function encode(array $payload, array $header = [])
@@ -107,22 +116,21 @@ class JWT
 
         $this->validateKid($header);
 
-        if (!isset($payload['iat']) && !isset($payload['exp'])) {
+        if (! isset($payload['iat']) && ! isset($payload['exp'])) {
             $payload['exp'] = ($this->timestamp ?: \time()) + $this->maxAge;
         }
 
-        $header    = $this->urlSafeEncode($header);
-        $payload   = $this->urlSafeEncode($payload);
-        $signature = $this->urlSafeEncode($this->sign($header . '.' . $payload));
+        $header = $this->urlSafeEncode($header);
+        $payload = $this->urlSafeEncode($payload);
+        $signature = $this->urlSafeEncode($this->sign($header.'.'.$payload));
 
-        return $header . '.' . $payload . '.' . $signature;
+        return $header.'.'.$payload.'.'.$signature;
     }
 
     /**
      * Decode JWT token and return original payload.
      *
-     * @param string $token
-     *
+     * @param  string  $token
      * @return array
      */
     public function decode($token)
@@ -135,7 +143,7 @@ class JWT
         $this->validateHeader((array) $this->urlSafeDecode($token[0]));
 
         // Validate signature.
-        if (!$this->verify($token[0] . '.' . $token[1], $token[2])) {
+        if (! $this->verify($token[0].'.'.$token[1], $token[2])) {
             throw new JWTException('Invalid token: Signature failed', static::ERROR_SIGNATURE_FAILED);
         }
 
@@ -149,7 +157,7 @@ class JWT
     /**
      * Spoof current timestamp for testing.
      *
-     * @param int|null $timestamp
+     * @param  int|null  $timestamp
      */
     public function setTestTimestamp($timestamp = null)
     {
@@ -161,8 +169,7 @@ class JWT
     /**
      * Sign the input with configured key and return the signature.
      *
-     * @param string $input
-     *
+     * @param  string  $input
      * @return string
      */
     protected function sign($input)
@@ -182,12 +189,11 @@ class JWT
     /**
      * Verify the signature of given input.
      *
-     * @param string $input
-     * @param string $signature
+     * @param  string  $input
+     * @param  string  $signature
+     * @return bool
      *
      * @throws JWTException When key is invalid.
-     *
-     * @return bool
      */
     protected function verify($input, $signature)
     {
@@ -210,11 +216,10 @@ class JWT
      *
      * First serialized the payload as json if it is an array.
      *
-     * @param array|string $data
+     * @param  array|string  $data
+     * @return string
      *
      * @throws JWTException When JSON encode fails.
-     *
-     * @return string
      */
     protected function urlSafeEncode($data)
     {
@@ -229,16 +234,15 @@ class JWT
     /**
      * URL safe base64 decode.
      *
-     * @param array|string $data
-     * @param bool         $asJson Whether to parse as JSON (defaults to true).
+     * @param  array|string  $data
+     * @param  bool  $asJson  Whether to parse as JSON (defaults to true).
+     * @return array|stdClass|string
      *
      * @throws JWTException When JSON encode fails.
-     *
-     * @return array|\stdClass|string
      */
     protected function urlSafeDecode($data, $asJson = true)
     {
-        if (!$asJson) {
+        if (! $asJson) {
             return \base64_decode(\strtr($data, '-_', '+/'));
         }
 
@@ -254,8 +258,8 @@ class JWT
             throw new JWTException('Signing key cannot be empty', static::ERROR_KEY_EMPTY);
         }
 
-        if (!isset($this->algos[$algo])) {
-            throw new JWTException('Unsupported algo ' . $algo, static::ERROR_ALGO_UNSUPPORTED);
+        if (! isset($this->algos[$algo])) {
+            throw new JWTException('Unsupported algo '.$algo, static::ERROR_ALGO_UNSUPPORTED);
         }
 
         if ($maxAge < 1) {
@@ -287,7 +291,7 @@ class JWT
      */
     protected function validateKid(array $header)
     {
-        if (!isset($header['kid'])) {
+        if (! isset($header['kid'])) {
             return;
         }
         if (empty($this->keys[$header['kid']])) {
@@ -303,19 +307,19 @@ class JWT
     protected function validateTimestamps(array $payload)
     {
         $timestamp = $this->timestamp ?: \time();
-        $checks    = [
-            ['exp', $this->leeway /*          */ , static::ERROR_TOKEN_EXPIRED, 'Expired'],
+        $checks = [
+            ['exp', $this->leeway /* */ , static::ERROR_TOKEN_EXPIRED, 'Expired'],
             ['iat', $this->maxAge - $this->leeway, static::ERROR_TOKEN_EXPIRED, 'Expired'],
             ['nbf', $this->maxAge - $this->leeway, static::ERROR_TOKEN_NOT_NOW, 'Not now'],
         ];
 
-        foreach ($checks as list($key, $offset, $code, $error)) {
+        foreach ($checks as [$key, $offset, $code, $error]) {
             if (isset($payload[$key])) {
                 $offset += $payload[$key];
-                $fail    = $key === 'nbf' ? $timestamp <= $offset : $timestamp >= $offset;
+                $fail = $key === 'nbf' ? $timestamp <= $offset : $timestamp >= $offset;
 
                 if ($fail) {
-                    throw new JWTException('Invalid token: ' . $error, $code);
+                    throw new JWTException('Invalid token: '.$error, $code);
                 }
             }
         }
@@ -328,13 +332,13 @@ class JWT
     {
         if (\is_string($key = $this->key)) {
             if (\substr($key, 0, 7) !== 'file://') {
-                $key = 'file://' . $key;
+                $key = 'file://'.$key;
             }
 
             $this->key = \openssl_get_privatekey($key, $this->passphrase ?: '');
         }
 
-        if (!\is_resource($this->key)) {
+        if (! \is_resource($this->key)) {
             throw new JWTException('Invalid key: Should be resource of private key', static::ERROR_KEY_INVALID);
         }
     }
@@ -344,16 +348,15 @@ class JWT
      */
     protected function validateLastJson()
     {
-        if (\JSON_ERROR_NONE === \json_last_error()) {
+        if (\json_last_error() === \JSON_ERROR_NONE) {
             return;
         }
 
-        throw new JWTException('JSON failed: ' . \json_last_error_msg(), static::ERROR_JSON_FAILED);
+        throw new JWTException('JSON failed: '.\json_last_error_msg(), static::ERROR_JSON_FAILED);
     }
 }
 
-
-class JWTException extends \InvalidArgumentException
+class JWTException extends InvalidArgumentException
 {
     // ;)
 }

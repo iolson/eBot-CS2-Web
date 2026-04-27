@@ -1,7 +1,5 @@
 <?php
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 use App\Models\Season;
 use App\Models\Team;
 use App\Models\User;
@@ -20,7 +18,7 @@ describe('Admin team controller', function () {
     it('creates a team', function () {
         $this->actingAs($this->admin)
             ->post(route('admin.teams.store'), [
-                'name'        => 'Team Alpha',
+                'name' => 'Team Alpha',
                 'shorthandle' => 'ALPH',
             ])
             ->assertRedirect(route('admin.teams.index'))
@@ -34,9 +32,9 @@ describe('Admin team controller', function () {
 
         $this->actingAs($this->admin)
             ->post(route('admin.teams.store'), [
-                'name'        => 'Team Bravo',
+                'name' => 'Team Bravo',
                 'shorthandle' => 'BRV',
-                'seasons'     => [$season->id],
+                'seasons' => [$season->id],
             ])
             ->assertRedirect(route('admin.teams.index'));
 
@@ -49,7 +47,7 @@ describe('Admin team controller', function () {
 
         $this->actingAs($this->admin)
             ->put(route('admin.teams.update', $team), [
-                'name'        => 'New Name',
+                'name' => 'New Name',
                 'shorthandle' => 'NEW',
             ])
             ->assertRedirect(route('admin.teams.index'))
@@ -70,7 +68,7 @@ describe('Admin team controller', function () {
 
     it('returns teams in season as JSON', function () {
         $season = Season::factory()->create();
-        $team   = Team::factory()->create();
+        $team = Team::factory()->create();
         $team->seasons()->attach($season);
 
         $this->actingAs($this->admin)

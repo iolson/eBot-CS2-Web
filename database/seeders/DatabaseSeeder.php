@@ -18,15 +18,15 @@ class DatabaseSeeder extends Seeder
     {
         // Create a default admin user (password will be set during install wizard)
         User::factory()->create([
-            'name'  => 'Admin',
+            'name' => 'Admin',
             'email' => 'admin@example.com',
         ]);
 
         // Development-only sample data
         if (app()->environment('local', 'testing')) {
-            $season  = Season::factory()->active()->create(['name' => 'Demo Season']);
+            $season = Season::factory()->active()->create(['name' => 'Demo Season']);
             $servers = Server::factory(3)->create();
-            $teams   = Team::factory(8)->create();
+            $teams = Team::factory(8)->create();
 
             // Attach teams to season
             $season->teams()->attach($teams->pluck('id'));

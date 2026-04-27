@@ -16,8 +16,8 @@ class Season extends Model
     protected $fillable = ['name', 'event', 'start', 'end', 'link', 'logo', 'active'];
 
     protected $casts = [
-        'start'  => 'datetime',
-        'end'    => 'datetime',
+        'start' => 'datetime',
+        'end' => 'datetime',
         'active' => 'boolean',
     ];
 

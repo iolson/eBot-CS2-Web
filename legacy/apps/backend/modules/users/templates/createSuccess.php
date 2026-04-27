@@ -15,26 +15,28 @@
 </style>
 
 
-<form class="form-horizontal" id="form-users" method="post" action="<?php echo url_for("users/create"); ?>">
+<form class="form-horizontal" id="form-users" method="post" action="<?php echo url_for('users/create'); ?>">
     <?php echo $form->renderHiddenFields(); ?>
 
     <div class="modal" style="position:relative; top:auto; left:auto; margin:0 auto 20px; z-index:1; width: auto;max-width:100%;">
         <div class="modal-header">
-            <h3><?php echo __("Create new User"); ?></h3>
+            <h3><?php echo __('Create new User'); ?></h3>
         </div>
         <div class="modal-body" style="max-height: 0%;">
-            <?php foreach ($form as $widget): ?>
-                <?php if ($widget->isHidden()) continue; ?>
+            <?php foreach ($form as $widget) { ?>
+                <?php if ($widget->isHidden()) {
+                    continue;
+                } ?>
                 <div class="control-group">
-                    <?php echo $widget->renderLabel(null, array("class" => "control-label")); ?>
+                    <?php echo $widget->renderLabel(null, ['class' => 'control-label']); ?>
                     <div class="controls">
                         <?php echo $widget->render(); ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php } ?>
         </div>
         <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="<?php echo __("Create User"); ?>"/>
+            <input type="submit" class="btn btn-primary" value="<?php echo __('Create User'); ?>"/>
         </div>
     </div>
 </form>

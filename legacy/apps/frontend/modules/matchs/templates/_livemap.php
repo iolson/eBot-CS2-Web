@@ -3,7 +3,7 @@
         <div class="span7">
             <div class="modal" style="position:relative; top:auto; left:auto; margin:0 auto 20px; z-index:1; width: auto; max-width:100%;">
                 <div class="modal-header">
-                    <h3><?php echo __("Livemap"); ?></h3>
+                    <h3><?php echo __('Livemap'); ?></h3>
                 </div>
                 <div class="modal-body" style="text-align:center; max-height: 100%; min-height: 420px;" id="offline">
                     <canvas id="livemap_canvas" width="760" height="530" ></canvas>
@@ -13,7 +13,7 @@
         <div class="span3">
             <div class="modal" style="position:relative; top:auto; left:auto; margin:0 auto 20px; z-index:1; width: auto; max-width:100%;">
                 <div class="modal-header">
-                    <h3><?php echo __("Log"); ?></h3>
+                    <h3><?php echo __('Log'); ?></h3>
                 </div>
                 <div class="modal-body" style="text-align:center; max-height: 100%; min-height: 420px; max-height: 420px;">
                     <div id="log" style="overflow:auto; padding:5px;"></div>
@@ -23,7 +23,7 @@
         <div class="span2">
             <div class="modal" style="position:relative; top:auto; left:auto; margin:0 auto 20px; z-index:1; width: auto; max-width:100%; ">
                 <div class="modal-header">
-                    <h3><?php echo __("Caption"); ?></h3>
+                    <h3><?php echo __('Caption'); ?></h3>
                 </div>
                 <div class="modal-body" style="max-height: 100%; min-height: 420px;">
                     <img src="/images/maps/csgo/_blue.png" style="width: 16px; height: 16px;"> Attacker<br>

@@ -2,8 +2,9 @@
 
 use App\Models\Matchs;
 use App\Models\Player;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 describe('Player constants', function () {
     it('has team constants', function () {

@@ -37,12 +37,13 @@
 $score1 = $match->getScoreA();
 $score2 = $match->getScoreB();
 
-\ScoreColorUtils::colorForScore($score1, $score2);
+ScoreColorUtils::colorForScore($score1, $score2);
 
 $team1 = $match->getTeamA()->exists() ? $match->getTeamA() : $match->getTeamAName();
 $team2 = $match->getTeamB()->exists() ? $match->getTeamB() : $match->getTeamBName();
-if ($match->getMap() && $match->getMap()->exists())
-    \ScoreColorUtils::colorForMaps($match->getMap()->getCurrentSide(), $team1, $team2);
+if ($match->getMap() && $match->getMap()->exists()) {
+    ScoreColorUtils::colorForMaps($match->getMap()->getCurrentSide(), $team1, $team2);
+}
 ?>
 <table class="table table-striped table-condensed" style="font-size: 0.9em; margin-bottom:0px;">
     <tbody>
@@ -56,20 +57,20 @@ if ($match->getMap() && $match->getMap()->exists())
             <td width="50" style="text-align: center;"><div class="score" id="score-<?php echo $match->getId(); ?>"><?php echo $score1; ?> - <?php echo $score2; ?></div></td>
             <td width="90"><span style="float:right; text-align:right;"><?php echo $team2; ?></span></td>
             <td width="90" align="center">
-                <?php if ($match->getMap() && $match->getMap()->exists()): ?>
+                <?php if ($match->getMap() && $match->getMap()->exists()) { ?>
                     <?php echo $match->getMap()->getMapName(); ?>
-                <?php endif; ?>
+                <?php } ?>
             </td>
             <td width="35" align="center">
-                <?php if ($match->getEnable()): ?>
-                    <?php if ($match->getStatus() == Matchs::STATUS_STARTING): ?>
-                        <?php echo image_tag("/images/icons/flag_blue.png", "id='flag-" . $match->getId() . "'"); ?>
-                    <?php else: ?>
-                        <?php echo image_tag("/images/icons/flag_green.png", "id='flag-" . $match->getId() . "'"); ?>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <?php echo image_tag("/images/icons/flag_red.png", "id='flag-" . $match->getId() . "'"); ?>
-                <?php endif; ?>
+                <?php if ($match->getEnable()) { ?>
+                    <?php if ($match->getStatus() == Matchs::STATUS_STARTING) { ?>
+                        <?php echo image_tag('/images/icons/flag_blue.png', "id='flag-".$match->getId()."'"); ?>
+                    <?php } else { ?>
+                        <?php echo image_tag('/images/icons/flag_green.png', "id='flag-".$match->getId()."'"); ?>
+                    <?php } ?>
+                <?php } else { ?>
+                    <?php echo image_tag('/images/icons/flag_red.png', "id='flag-".$match->getId()."'"); ?>
+                <?php } ?>
             </td>
             <td>
                 <div class="status status-<?php echo $match->getId(); ?>">
@@ -77,17 +78,17 @@ if ($match->getMap() && $match->getMap()->exists())
                 </div>
             </td>
             <td style="padding-left: 3px;text-align:right;">
-                <a href="<?php echo url_for("matchs_view", $match); ?>" target="_blank"><button class="btn btn-inverse btn-mini"><?php echo __("Show"); ?></button></a>
+                <a href="<?php echo url_for('matchs_view', $match); ?>" target="_blank"><button class="btn btn-inverse btn-mini"><?php echo __('Show'); ?></button></a>
             </td>
         </tr>
     </tbody>
     <thead>
         <tr>
-            <th><?php echo __("#ID"); ?></th>
-            <th colspan="3"><?php echo __("Opponent - Score"); ?></th>
-            <th><?php echo ucfirst(__("Map")); ?></th>
+            <th><?php echo __('#ID'); ?></th>
+            <th colspan="3"><?php echo __('Opponent - Score'); ?></th>
+            <th><?php echo ucfirst(__('Map')); ?></th>
             <th></th>
-            <th><?php echo __("Status"); ?></th>
+            <th><?php echo __('Status'); ?></th>
             <th></th>
         </tr>
     </thead>

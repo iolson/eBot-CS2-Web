@@ -14,14 +14,14 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($teamStats as $name => $stats): ?>
+        <?php foreach ($teamStats as $name => $stats) { ?>
             <tr>
                 <td><?php echo $name; ?></td>
                 <td>
                     <?php echo $stats['count']; ?>
                 </td>
                 <td>
-                    <?php echo $stats['win']*1; ?> / <?php echo $stats['loose']*1; ?>
+                    <?php echo $stats['win'] * 1; ?> / <?php echo $stats['loose'] * 1; ?>
                 </td>
                 <td>
                     <?php echo $stats['statsGR']; ?> / <?php echo $stats['count'] * 2; ?> (<?php echo round(($stats['statsGR'] / ($stats['count'] * 2)) * 100, 2); ?> %)
@@ -39,6 +39,6 @@
                     <?php echo $stats['statsL']; ?>  
                 </td>
             </tr>
-        <?php endforeach; ?>
+        <?php } ?>
     </tbody>
 </table>

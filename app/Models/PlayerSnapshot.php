@@ -18,14 +18,14 @@ class PlayerSnapshot extends Model
     ];
 
     protected $casts = [
-        'nb_kill'   => 'integer', 'assist'    => 'integer', 'death'    => 'integer',
-        'point'     => 'integer', 'hs'        => 'integer', 'defuse'   => 'integer',
-        'bombe'     => 'integer', 'tk'        => 'integer', 'round_id' => 'integer',
-        'nb1'       => 'integer', 'nb2'       => 'integer', 'nb3'      => 'integer',
-        'nb4'       => 'integer', 'nb5'       => 'integer',
-        'nb1kill'   => 'integer', 'nb2kill'   => 'integer', 'nb3kill'  => 'integer',
-        'nb4kill'   => 'integer', 'nb5kill'   => 'integer',
-        'pluskill'  => 'integer', 'firstkill' => 'integer',
+        'nb_kill' => 'integer', 'assist' => 'integer', 'death' => 'integer',
+        'point' => 'integer', 'hs' => 'integer', 'defuse' => 'integer',
+        'bombe' => 'integer', 'tk' => 'integer', 'round_id' => 'integer',
+        'nb1' => 'integer', 'nb2' => 'integer', 'nb3' => 'integer',
+        'nb4' => 'integer', 'nb5' => 'integer',
+        'nb1kill' => 'integer', 'nb2kill' => 'integer', 'nb3kill' => 'integer',
+        'nb4kill' => 'integer', 'nb5kill' => 'integer',
+        'pluskill' => 'integer', 'firstkill' => 'integer',
     ];
 
     public function player(): BelongsTo

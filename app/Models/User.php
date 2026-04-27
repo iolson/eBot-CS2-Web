@@ -31,9 +31,9 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'is_active'      => 'boolean',
+            'is_active' => 'boolean',
             'is_super_admin' => 'boolean',
-            'last_login'     => 'datetime',
+            'last_login' => 'datetime',
         ];
     }
 
@@ -58,6 +58,6 @@ class User extends Authenticatable
     public function checkLegacyPassword(string $plain): bool
     {
         return $this->algorithm === 'sha1'
-            && hash_equals($this->password, sha1($this->salt . $plain));
+            && hash_equals($this->password, sha1($this->salt.$plain));
     }
 }

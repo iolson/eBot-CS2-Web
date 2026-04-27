@@ -45,9 +45,9 @@ class MatchController extends Controller
     public function heatmapData(Request $request, Matchs $match): JsonResponse
     {
         $request->validate([
-            'type'    => ['nullable', 'string', 'in:kill,grenade'],
-            'side'    => ['nullable', 'string', 'in:ct,t,all'],
-            'map_id'  => ['nullable', 'integer'],
+            'type' => ['nullable', 'string', 'in:kill,grenade'],
+            'side' => ['nullable', 'string', 'in:ct,t,all'],
+            'map_id' => ['nullable', 'integer'],
         ]);
 
         $query = PlayerHeatmap::where('match_id', $match->id);
@@ -94,15 +94,15 @@ class MatchController extends Controller
         foreach ($match->maps as $map) {
             foreach ($map->players as $player) {
                 $players[] = [
-                    'steamid'  => $player->steamid,
-                    'name'     => $player->pseudo,
-                    'team'     => $player->team,
-                    'kills'    => $player->nb_kill,
-                    'deaths'   => $player->death,
-                    'assists'  => $player->assist,
-                    'hs'       => $player->hs,
+                    'steamid' => $player->steamid,
+                    'name' => $player->pseudo,
+                    'team' => $player->team,
+                    'kills' => $player->nb_kill,
+                    'deaths' => $player->death,
+                    'assists' => $player->assist,
+                    'hs' => $player->hs,
                     'kd_ratio' => $player->getKdRatio(),
-                    'hs_pct'   => $player->getHsPercent(),
+                    'hs_pct' => $player->getHsPercent(),
                 ];
             }
         }
@@ -121,8 +121,8 @@ class MatchController extends Controller
         foreach ($match->maps as $map) {
             foreach ($map->roundSummaries as $summary) {
                 $rounds[] = [
-                    'map_id'   => $map->id,
-                    'team'     => $summary->team,
+                    'map_id' => $map->id,
+                    'team' => $summary->team,
                     'win_type' => $summary->win_type,
                 ];
             }
@@ -142,11 +142,11 @@ class MatchController extends Controller
         foreach ($match->maps as $map) {
             foreach ($map->playerKills as $kill) {
                 $kills[] = [
-                    'map_id'    => $map->id,
-                    'killer'    => $kill->killer_id,
-                    'killed'    => $kill->killed_id,
-                    'weapon'    => $kill->weapon,
-                    'headshot'  => $kill->headshot,
+                    'map_id' => $map->id,
+                    'killer' => $kill->killer_id,
+                    'killed' => $kill->killed_id,
+                    'weapon' => $kill->weapon,
+                    'headshot' => $kill->headshot,
                     'killer_team' => $kill->killer_team,
                     'killed_team' => $kill->killed_team,
                 ];
@@ -173,27 +173,27 @@ class MatchController extends Controller
 
         return response()->json([
             'match' => [
-                'id'       => $match->id,
-                'team_a'   => $match->teamA?->name,
-                'team_b'   => $match->teamB?->name,
-                'score_a'  => $match->score_a,
-                'score_b'  => $match->score_b,
-                'status'   => $match->getStatusText(),
-                'season'   => $match->season?->name,
+                'id' => $match->id,
+                'team_a' => $match->teamA?->name,
+                'team_b' => $match->teamB?->name,
+                'score_a' => $match->score_a,
+                'score_b' => $match->score_b,
+                'status' => $match->getStatusText(),
+                'season' => $match->season?->name,
             ],
             'maps' => $match->maps->map(fn ($map) => [
-                'id'       => $map->id,
-                'map'      => $map->map_name,
-                'score_1'  => $map->score_1,
-                'score_2'  => $map->score_2,
-                'players'  => $map->players->map(fn ($p) => [
+                'id' => $map->id,
+                'map' => $map->map_name,
+                'score_1' => $map->score_1,
+                'score_2' => $map->score_2,
+                'players' => $map->players->map(fn ($p) => [
                     'steamid' => $p->steamid,
-                    'name'    => $p->pseudo,
-                    'team'    => $p->team,
-                    'kills'   => $p->nb_kill,
-                    'deaths'  => $p->death,
+                    'name' => $p->pseudo,
+                    'team' => $p->team,
+                    'kills' => $p->nb_kill,
+                    'deaths' => $p->death,
                     'assists' => $p->assist,
-                    'hs'      => $p->hs,
+                    'hs' => $p->hs,
                 ])->toArray(),
             ])->toArray(),
         ]);

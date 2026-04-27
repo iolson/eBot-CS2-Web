@@ -24,12 +24,12 @@ class SeasonController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'name'   => ['required', 'string', 'max:255'],
-            'event'  => ['nullable', 'string', 'max:255'],
-            'link'   => ['nullable', 'url', 'max:255'],
-            'logo'   => ['nullable', 'url', 'max:255'],
-            'start'  => ['nullable', 'date'],
-            'end'    => ['nullable', 'date', 'after_or_equal:start'],
+            'name' => ['required', 'string', 'max:255'],
+            'event' => ['nullable', 'string', 'max:255'],
+            'link' => ['nullable', 'url', 'max:255'],
+            'logo' => ['nullable', 'url', 'max:255'],
+            'start' => ['nullable', 'date'],
+            'end' => ['nullable', 'date', 'after_or_equal:start'],
             'active' => ['boolean'],
         ]);
 
@@ -47,12 +47,12 @@ class SeasonController extends Controller
     public function update(Request $request, Season $season): RedirectResponse
     {
         $data = $request->validate([
-            'name'   => ['required', 'string', 'max:255'],
-            'event'  => ['nullable', 'string', 'max:255'],
-            'link'   => ['nullable', 'url', 'max:255'],
-            'logo'   => ['nullable', 'url', 'max:255'],
-            'start'  => ['nullable', 'date'],
-            'end'    => ['nullable', 'date', 'after_or_equal:start'],
+            'name' => ['required', 'string', 'max:255'],
+            'event' => ['nullable', 'string', 'max:255'],
+            'link' => ['nullable', 'url', 'max:255'],
+            'logo' => ['nullable', 'url', 'max:255'],
+            'start' => ['nullable', 'date'],
+            'end' => ['nullable', 'date', 'after_or_equal:start'],
             'active' => ['boolean'],
         ]);
 

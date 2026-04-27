@@ -1,7 +1,5 @@
 <?php
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 use App\Models\User;
 
 describe('Admin user controller', function () {
@@ -18,9 +16,9 @@ describe('Admin user controller', function () {
     it('creates a user', function () {
         $this->actingAs($this->admin)
             ->post(route('admin.users.store'), [
-                'username'              => 'newuser',
-                'email_address'         => 'new@example.com',
-                'password'              => 'password123',
+                'username' => 'newuser',
+                'email_address' => 'new@example.com',
+                'password' => 'password123',
                 'password_confirmation' => 'password123',
             ])
             ->assertRedirect(route('admin.users.index'))
@@ -34,9 +32,9 @@ describe('Admin user controller', function () {
 
         $this->actingAs($this->admin)
             ->post(route('admin.users.store'), [
-                'username'              => 'taken',
-                'email_address'         => 'other@example.com',
-                'password'              => 'password123',
+                'username' => 'taken',
+                'email_address' => 'other@example.com',
+                'password' => 'password123',
                 'password_confirmation' => 'password123',
             ])
             ->assertSessionHasErrors('username');
@@ -47,9 +45,9 @@ describe('Admin user controller', function () {
 
         $this->actingAs($this->admin)
             ->put(route('admin.users.update', $user), [
-                'username'      => $user->username,
+                'username' => $user->username,
                 'email_address' => $user->email_address,
-                'first_name'    => 'New',
+                'first_name' => 'New',
             ])
             ->assertRedirect(route('admin.users.index'))
             ->assertSessionHas('success');
@@ -63,9 +61,9 @@ describe('Admin user controller', function () {
 
         $this->actingAs($this->admin)
             ->put(route('admin.users.update', $user), [
-                'username'              => $user->username,
-                'email_address'         => $user->email_address,
-                'password'              => 'newpassword123',
+                'username' => $user->username,
+                'email_address' => $user->email_address,
+                'password' => 'newpassword123',
                 'password_confirmation' => 'newpassword123',
             ])
             ->assertRedirect(route('admin.users.index'));

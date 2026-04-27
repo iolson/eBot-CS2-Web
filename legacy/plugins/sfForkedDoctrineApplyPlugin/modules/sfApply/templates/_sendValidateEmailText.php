@@ -9,12 +9,11 @@ To continue with your change, click on the link that follows:
 
 %2%
 
-Your email will then be changed pemanently."
-, array(
-  "%1%" => $sf_request->getHost(),
-  "%2%" => url_for("sfApply/confirm?validate=$validate", true),
-  "%USERNAME%" => $username,
-  "%OLDEMAIL%" => $oldmail,
-  "%NEWEMAIL%" => $newmail
-  ),
+Your email will then be changed pemanently.", [
+    '%1%' => $sf_request->getHost(),
+    '%2%' => url_for("sfApply/confirm?validate=$validate", true),
+    '%USERNAME%' => $username,
+    '%OLDEMAIL%' => $oldmail,
+    '%NEWEMAIL%' => $newmail,
+],
     'sfForkedApply') ?>

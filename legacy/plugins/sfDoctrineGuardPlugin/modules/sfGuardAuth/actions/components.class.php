@@ -8,15 +8,11 @@
  * file that was distributed with this source code.
  */
 
-require_once(dirname(__FILE__).'/../lib/BasesfGuardAuthComponents.class.php');
+require_once dirname(__FILE__).'/../lib/BasesfGuardAuthComponents.class.php';
 
 /**
- *
- * @package    symfony
- * @subpackage plugin
  * @author     Fabien Potencier <fabien.potencier@symfony-project.com>
+ *
  * @version    SVN: $Id: components.class.php 23319 2009-10-25 12:22:23Z Kris.Wallsmith $
  */
-class sfGuardAuthComponents extends BasesfGuardAuthComponents
-{
-}
+class sfGuardAuthComponents extends BasesfGuardAuthComponents {}

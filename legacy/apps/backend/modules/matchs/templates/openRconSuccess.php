@@ -127,56 +127,56 @@
 <div class="layer" style="display:inline;">
     <div class="modal" style="position:relative; top:auto; left:auto; margin:0 auto 20px; z-index:1; width: auto; max-width:100%;">
         <div class="modal-header">
-            <h4><?php echo __("Match"); ?> #<?php echo $match->getId(); ?> - <?php echo $match->getTeamA()->exists() ? $match->getTeamA() : $match->getTeamAName(); ?> vs <?php echo $match->getTeamB()->exists() ? $match->getTeamB() : $match->getTeamBName(); ?></h4>
+            <h4><?php echo __('Match'); ?> #<?php echo $match->getId(); ?> - <?php echo $match->getTeamA()->exists() ? $match->getTeamA() : $match->getTeamAName(); ?> vs <?php echo $match->getTeamB()->exists() ? $match->getTeamB() : $match->getTeamBName(); ?></h4>
         </div>
         <ul class="nav nav-tabs" id="myTab">
-            <li class="active"><a href="#home"><?php echo __("RCON"); ?></a></li>
-            <li><a href="#server-log"><?php echo __("Server-LOG"); ?></a></li>
-            <li><a href="#chat-log"><?php echo __("Chat-LOG"); ?></a></li>
-            <li><a href="#backup"><?php echo __("Backup System"); ?></a></li>
+            <li class="active"><a href="#home"><?php echo __('RCON'); ?></a></li>
+            <li><a href="#server-log"><?php echo __('Server-LOG'); ?></a></li>
+            <li><a href="#chat-log"><?php echo __('Chat-LOG'); ?></a></li>
+            <li><a href="#backup"><?php echo __('Backup System'); ?></a></li>
         </ul>
         <div class="tab-content" style="padding-bottom: 10px; margin-bottom: 20px;">
             <div class="tab-pane active" id="home">
 
-                <div class="modal-body" style="max-height: 0%;"><h4><?php echo __("RCON-Log"); ?>:</h4>
+                <div class="modal-body" style="max-height: 0%;"><h4><?php echo __('RCON-Log'); ?>:</h4>
                     <div class="modal" style="position:relative; top:auto; left:auto; margin:0 auto 20px; z-index:1; width: auto; max-width:100%;">
                         <div class="modal-body" style="max-height: 0%;">
                             <div id="rcon" style="overflow:auto; padding:5px; height:440px; min-height:400px; max-height:440px"></div>
                         </div>
                     </div>
-                    <h4><?php echo __("Send"); ?>:</h4>
+                    <h4><?php echo __('Send'); ?>:</h4>
                     <form method="POST" id="data_form" name="data_form">
                         <input type="text" name="data" id="data" style="width: 500px;">
-						<input type="submit" class="btn btn-primary" name="Send" value="<?php echo __("Send"); ?>">
+						<input type="submit" class="btn btn-primary" name="Send" value="<?php echo __('Send'); ?>">
                     </form>
-					<h4><?php echo __("Match Brand (empty will clear it)"); ?>:</h4>
+					<h4><?php echo __('Match Brand (empty will clear it)'); ?>:</h4>
 					<form method="POST" id="data_form" name="data_form">
 						<input type="hidden" name="mode" value="mp_teammatchstat_txt"/>
                         <input type="text" name="data" id="data" style="width: 500px;">
-						<input type="submit" class="btn btn-primary" name="Send" value="<?php echo __("Send"); ?>">
+						<input type="submit" class="btn btn-primary" name="Send" value="<?php echo __('Send'); ?>">
                     </form>
-					<h4><?php echo __("Match Stats Team 1 (empty will clear it)"); ?>:</h4>
+					<h4><?php echo __('Match Stats Team 1 (empty will clear it)'); ?>:</h4>
 					<form method="POST" id="data_form" name="data_form">
 						<input type="hidden" name="mode" value="mp_teammatchstat_1"/>
                         <input type="text" name="data" id="data" style="width: 500px;">
-						<input type="submit" class="btn btn-primary" name="Send" value="<?php echo __("Send"); ?>">
+						<input type="submit" class="btn btn-primary" name="Send" value="<?php echo __('Send'); ?>">
                     </form>
-					<h4><?php echo __("Match Stats Team 2 (empty will clear it)"); ?>:</h4>
+					<h4><?php echo __('Match Stats Team 2 (empty will clear it)'); ?>:</h4>
 					<form method="POST" id="data_form" name="data_form">
 						<input type="hidden" name="mode" value="mp_teammatchstat_2"/>
                         <input type="text" name="data" id="data" style="width: 500px;">
-						<input type="submit" class="btn btn-primary" name="Send" value="<?php echo __("Send"); ?>">
+						<input type="submit" class="btn btn-primary" name="Send" value="<?php echo __('Send'); ?>">
                     </form>
                 </div>
             </div>
             <div class="tab-pane" id="server-log">
-                <?php include_partial("matchs/server_log", array("match" => $match)); ?>
+                <?php include_partial('matchs/server_log', ['match' => $match]); ?>
             </div>
             <div class="tab-pane" id="chat-log">
-                <?php include_partial("matchs/chat_log", array("match" => $match)); ?>
+                <?php include_partial('matchs/chat_log', ['match' => $match]); ?>
             </div>
             <div class="tab-pane" id="backup">
-                <?php include_partial("matchs/backup", array("match" => $match)); ?>
+                <?php include_partial('matchs/backup', ['match' => $match]); ?>
             </div>
         </div>
     </div>

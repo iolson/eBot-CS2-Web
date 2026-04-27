@@ -1,8 +1,9 @@
 <?php
 
-class de_season extends MapsHeatmap {
-
-    public function __construct($match_id) {
+class de_season extends MapsHeatmap
+{
+    public function __construct($match_id)
+    {
         $this->setStartX(-848);
         $this->setStartY(-2464);
         $this->setEndX(3760);
@@ -14,10 +15,8 @@ class de_season extends MapsHeatmap {
         $this->setMatchId($match_id);
     }
 
-    public function getMapImage() {
-        return "/images/maps/csgo/overview/de_season.png";
+    public function getMapImage()
+    {
+        return '/images/maps/csgo/overview/de_season.png';
     }
-
 }
-
-?>

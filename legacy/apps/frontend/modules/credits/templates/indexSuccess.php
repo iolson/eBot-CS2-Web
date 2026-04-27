@@ -29,7 +29,7 @@
 <div class="well" style="overflow:hidden; min-height: 497px;">
     <div class="row-fluid">
         <div class="span3" style="text-align:center;">
-            <?php echo image_tag("/images/ebot.png", "style='margin: 15px; margin-top:50px'"); ?>
+            <?php echo image_tag('/images/ebot.png', "style='margin: 15px; margin-top:50px'"); ?>
         </div>
         <div class="span9">
             <h4>Production</h4>

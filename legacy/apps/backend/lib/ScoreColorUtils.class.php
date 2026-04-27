@@ -10,19 +10,22 @@
  *
  * @author deStrO
  */
-class ScoreColorUtils {
-
+class ScoreColorUtils
+{
     /**
      * Colorise selon le side de l'équipe en bleu ou rouge
-     * @param string $side ct ou t
-     * @param int $score1
-     * @param int $score2
+     *
+     * @param  string  $side  ct ou t
+     * @param  int  $score1
+     * @param  int  $score2
      */
-    public static function colorForMaps($side, &$score1, &$score2) {
-        if (is_numeric($score1) && is_numeric($score2))
+    public static function colorForMaps($side, &$score1, &$score2)
+    {
+        if (is_numeric($score1) && is_numeric($score2)) {
             self::addZeroToScore($score1, $score2);
+        }
 
-        if ($side == "ct") {
+        if ($side == 'ct') {
             $score1 = "<font color=\"blue\">$score1</font>";
             $score2 = "<font color=\"red\">$score2</font>";
         } else {
@@ -33,15 +36,18 @@ class ScoreColorUtils {
 
     /**
      * Colorise les scores si besoin avec les couleurs rouge/vert/bleu
-     * @param int $score1
-     * @param int $score2
-     * @param bool $colorize
+     *
+     * @param  int  $score1
+     * @param  int  $score2
+     * @param  bool  $colorize
      */
-    public static function colorForScore(&$score1, &$score2, $colorize = true) {
+    public static function colorForScore(&$score1, &$score2, $colorize = true)
+    {
         self::addZeroToScore($score1, $score2);
 
-        if (!$colorize)
+        if (! $colorize) {
             return;
+        }
 
         if (($score1 == $score2)) {
             $score1 = "<font color=\"blue\">$score1</font>";
@@ -57,16 +63,17 @@ class ScoreColorUtils {
 
     /**
      * Change les scores inférieures à 10 pour mettre au format xx
-     * @param string $score1
-     * @param string $score2
+     *
+     * @param  string  $score1
+     * @param  string  $score2
      */
-    public static function addZeroToScore(&$score1, &$score2) {
-        if ($score1 < 10)
-            $score1 = "0" . $score1;
-        if ($score2 < 10)
-            $score2 = "0" . $score2;
+    public static function addZeroToScore(&$score1, &$score2)
+    {
+        if ($score1 < 10) {
+            $score1 = '0'.$score1;
+        }
+        if ($score2 < 10) {
+            $score2 = '0'.$score2;
+        }
     }
-
 }
-
-?>

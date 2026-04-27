@@ -24,7 +24,7 @@ class ConfigController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'name'    => ['required', 'string', 'max:255', 'unique:configs,name'],
+            'name' => ['required', 'string', 'max:255', 'unique:configs,name'],
             'content' => ['nullable', 'string'],
         ]);
 
@@ -42,7 +42,7 @@ class ConfigController extends Controller
     public function update(Request $request, Config $config): RedirectResponse
     {
         $data = $request->validate([
-            'name'    => ['required', 'string', 'max:255', 'unique:configs,name,' . $config->id],
+            'name' => ['required', 'string', 'max:255', 'unique:configs,name,'.$config->id],
             'content' => ['nullable', 'string'],
         ]);
 

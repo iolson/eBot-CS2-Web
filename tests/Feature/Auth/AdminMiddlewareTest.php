@@ -2,8 +2,6 @@
 
 use App\Models\User;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 describe('Admin middleware', function () {
     it('allows super admin access', function () {
         $admin = User::factory()->admin()->create();

@@ -1,4 +1,4 @@
-<h3><?php echo __("Edit Match"); ?>: <?php echo $match->getTeamA(); ?> vs <?php echo $match->getTeamB(); ?></h3>
+<h3><?php echo __('Edit Match'); ?>: <?php echo $match->getTeamA(); ?> vs <?php echo $match->getTeamB(); ?></h3>
 <hr/>
 <style>
     label.valid {
@@ -163,147 +163,160 @@
 <table border="0" cellpadding="5" cellspacing="5" width="100%">
     <tr>
         <td width="50%">
-            <h5><?php echo __("Edit Match information"); ?></h5>
-            <form class="form-horizontal" id="form-match" method="post" action="<?php echo url_for("matchs_edit", $match); ?>">
+            <h5><?php echo __('Edit Match information'); ?></h5>
+            <form class="form-horizontal" id="form-match" method="post" action="<?php echo url_for('matchs_edit', $match); ?>">
                 <?php echo $form->renderHiddenFields(); ?>
                 <div class="well">
                     <div class="control-group">
-                        <label class="control-label"><?php echo __("Match Status"); ?></label>
+                        <label class="control-label"><?php echo __('Match Status'); ?></label>
                         <div class="controls">
                             <?php echo $match->getStatusText(); ?>
                         </div>
                     </div>
 
-                    <?php foreach ($form as $name => $widget): ?>
-                        <?php if (in_array($name, array("team_a_flag", "team_b_flag", "team_a_name", "team_b_name"))) continue; ?>
-                        <?php if ($widget->isHidden()) continue; ?>
-                        <?php if ($name == "overtime_startmoney" || $name == "overtime_max_round"): ?>
+                    <?php foreach ($form as $name => $widget) { ?>
+                        <?php if (in_array($name, ['team_a_flag', 'team_b_flag', 'team_a_name', 'team_b_name'])) {
+                            continue;
+                        } ?>
+                        <?php if ($widget->isHidden()) {
+                            continue;
+                        } ?>
+                        <?php if ($name == 'overtime_startmoney' || $name == 'overtime_max_round') { ?>
                             <div class="control-group validate-field input-append" style="display:none; margin-bottom: auto;" id="<?php echo $name; ?>">
                                 <div class="alert alert-info">
-                                    <?php echo $widget->renderLabel(null, array("class" => "control-label")); ?>
+                                    <?php echo $widget->renderLabel(null, ['class' => 'control-label']); ?>
                                     <div class="controls">
                                         <?php echo $widget->render(); ?>
                                     </div>
                                 </div>
                             </div>
-                        <?php elseif ($name == "startdate" || $name == "auto_start_time"): ?>
+                        <?php } elseif ($name == 'startdate' || $name == 'auto_start_time') { ?>
                             <div class="control-group input-append" style="display:none; margin-bottom: auto;" id="<?php echo $name; ?>">
                                 <div class="alert alert-info">
-                                    <?php echo $widget->renderLabel(null, array("class" => "control-label")); ?>
+                                    <?php echo $widget->renderLabel(null, ['class' => 'control-label']); ?>
                                     <div class="controls">
                                         <?php echo $widget->render(); ?>
                                         <span class="add-on"><i class="icon-time"></i></span>
                                     </div>
                                 </div>
                             </div>
-                        <?php else: ?>
+                        <?php } else { ?>
                             <div class="control-group validate-field">
-                                <?php echo $widget->renderLabel(null, array("class" => "control-label")); ?>
+                                <?php echo $widget->renderLabel(null, ['class' => 'control-label']); ?>
                                 <div class="controls">
                                     <?php echo $widget->render(); ?>
-                                    <?php if ($name == "team_a"): ?>
+                                    <?php if ($name == 'team_a') { ?>
                                         <span id="team_a">
                                             <span class="validate-field">
-                                                <?php echo $form["team_a_name"]->render(array("placeholder" => "Team Name")); ?>
+                                                <?php echo $form['team_a_name']->render(['placeholder' => 'Team Name']); ?>
                                             </span>
                                             <span class="validate-field">
-                                                <?php echo $form["team_a_flag"]->render(); ?>
+                                                <?php echo $form['team_a_flag']->render(); ?>
                                             </span>
                                         </span>
-                                    <?php endif; ?>
-                                    <?php if ($name == "team_b"): ?>
+                                    <?php } ?>
+                                    <?php if ($name == 'team_b') { ?>
                                         <span id="team_b">
                                             <span class="validate-field">
-                                                <?php echo $form["team_b_name"]->render(array("placeholder" => "Team Name")); ?>
+                                                <?php echo $form['team_b_name']->render(['placeholder' => 'Team Name']); ?>
                                             </span>
                                             <span class="validate-field">
-                                                <?php echo $form["team_b_flag"]->render(); ?>
+                                                <?php echo $form['team_b_flag']->render(); ?>
                                             </span>
                                         </span>
-                                    <?php endif; ?>
-                                    <?php if ($name == "rules"): ?>
-                                        <span class="help-inline"><?php echo __("Enter the name of the .cfg File without the extension (esl5on5.cfg => esl5on5)"); ?></span>
-                                    <?php endif; ?>
+                                    <?php } ?>
+                                    <?php if ($name == 'rules') { ?>
+                                        <span class="help-inline"><?php echo __('Enter the name of the .cfg File without the extension (esl5on5.cfg => esl5on5)'); ?></span>
+                                    <?php } ?>
                                 </div>
                             </div>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
+                        <?php } ?>
+                    <?php } ?>
                     
                     <div class="control-group">
-                        <label class="control-label"><?php echo __("Server"); ?></label>
+                        <label class="control-label"><?php echo __('Server'); ?></label>
                         <div class="controls">
                             <select name="server_id">
-                                <option value="0"><?php echo __("Choose Random Server"); ?></option>
-                                <?php foreach ($servers as $server): ?>
-                                    <?php if (in_array($server->getIp(), $used)) continue; ?>
+                                <option value="0"><?php echo __('Choose Random Server'); ?></option>
+                                <?php foreach ($servers as $server) { ?>
+                                    <?php if (in_array($server->getIp(), $used)) {
+                                        continue;
+                                    } ?>
                                     <?php
-                                    if ($server->getId() == $match->getServerId())
-                                    echo '<option selected value="' . $server->getId() . '">' . $server->getHostname() . ' - ' . $server->getIp() . ($server->used() ? " (". __("IN USE") . ")" : "") . '</option>';
-                                else
-                                    echo '<option value="' . $server->getId() . '">' . $server->getHostname() . ' - ' . $server->getIp() . ($server->used() ? " (". __("IN USE") . ")" : "") . '</option>';
+                                    if ($server->getId() == $match->getServerId()) {
+                                        echo '<option selected value="'.$server->getId().'">'.$server->getHostname().' - '.$server->getIp().($server->used() ? ' ('.__('IN USE').')' : '').'</option>';
+                                    } else {
+                                        echo '<option value="'.$server->getId().'">'.$server->getHostname().' - '.$server->getIp().($server->used() ? ' ('.__('IN USE').')' : '').'</option>';
+                                    }
                                     ?>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
 
 
                     <div class="control-group">
-                        <label class="control-label"><?php echo __("Map"); ?></label>
+                        <label class="control-label"><?php echo __('Map'); ?></label>
                         <div class="controls">
                             <select name="maps">
-                                <?php foreach ($maps as $map): ?>
-                                    <?php if ($map == 'tba'): ?>
-                                        <option <?php if ($map == $match->getMap()->getMapName()) echo "selected"; ?> value="<?php echo $map; ?>">Choose by Mapveto</option>
-                                    <?php else: ?>
-                                        <option <?php if ($map == $match->getMap()->getMapName()) echo "selected"; ?> value="<?php echo $map; ?>"><?php echo $map; ?></option>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
+                                <?php foreach ($maps as $map) { ?>
+                                    <?php if ($map == 'tba') { ?>
+                                        <option <?php if ($map == $match->getMap()->getMapName()) {
+                                            echo 'selected';
+                                        } ?> value="<?php echo $map; ?>">Choose by Mapveto</option>
+                                    <?php } else { ?>
+                                        <option <?php if ($map == $match->getMap()->getMapName()) {
+                                            echo 'selected';
+                                        } ?> value="<?php echo $map; ?>"><?php echo $map; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <input type="submit" class="btn btn-primary" value="<?php echo __("Save Match"); ?>"/>
+                            <input type="submit" class="btn btn-primary" value="<?php echo __('Save Match'); ?>"/>
                         </div>
                     </div>
                 </div>
             </form>
         </td>
         <td width="50%" valign="top">
-            <h5><?php echo __("Edit Match Score"); ?></h5>
-            <?php foreach ($formScores as $form): ?>
-                <form class="form-horizontal" method="post" action="<?php echo url_for("matchs_score_edit", $form->getObject()); ?>">
+            <h5><?php echo __('Edit Match Score'); ?></h5>
+            <?php foreach ($formScores as $form) { ?>
+                <form class="form-horizontal" method="post" action="<?php echo url_for('matchs_score_edit', $form->getObject()); ?>">
                     <?php echo $form->renderHiddenFields(); ?>
                     <div class="well">
                         <div class="control-group">
-                            <label class="control-label"><?php echo __("Score Type"); ?></label>
+                            <label class="control-label"><?php echo __('Score Type'); ?></label>
                             <div class="controls">
                                 <?php echo $form->getObject()->getTypeScore(); ?>
                             </div>
                         </div>
 
-                        <?php foreach ($form as $widget): ?>
-                            <?php if ($widget->isHidden()) continue; ?>
+                        <?php foreach ($form as $widget) { ?>
+                            <?php if ($widget->isHidden()) {
+                                continue;
+                            } ?>
                             <div class="control-group">
-                                <?php echo $widget->renderLabel(null, array("class" => "control-label")); ?>
+                                <?php echo $widget->renderLabel(null, ['class' => 'control-label']); ?>
                                 <div class="controls">
                                     <?php echo $widget->render(); ?>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
+                        <?php } ?>
 
                         <div class="control-group">
                             <div class="controls">
-                                <input type="submit" class="btn btn-primary" value="<?php echo __("Save Scores"); ?>"/>
+                                <input type="submit" class="btn btn-primary" value="<?php echo __('Save Scores'); ?>"/>
                             </div>
                         </div>
                     </div>
                 </form>
-            <?php endforeach; ?>
+            <?php } ?>
 
             <div class="alert alert-danger">
-                <?php echo __("<b>Attention!</b> - Changing the Match Scores will recalc the match!"); ?>
+                <?php echo __('<b>Attention!</b> - Changing the Match Scores will recalc the match!'); ?>
             </div>
         </td>
     </tr>

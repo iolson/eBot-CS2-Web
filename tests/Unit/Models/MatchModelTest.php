@@ -4,8 +4,9 @@ use App\Models\Matchs;
 use App\Models\Season;
 use App\Models\Server;
 use App\Models\Team;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
+uses(RefreshDatabase::class);
 
 describe('Matchs status constants', function () {
     it('has all 15 status constants defined', function () {
@@ -36,28 +37,28 @@ describe('Matchs status constants', function () {
 
 describe('Matchs table configuration', function () {
     it('uses the matchs table', function () {
-        expect((new Matchs())->getTable())->toBe('matchs');
+        expect((new Matchs)->getTable())->toBe('matchs');
     });
 });
 
 describe('Matchs getStatusText()', function () {
     it('returns correct text for each status', function () {
         $texts = [
-            Matchs::STATUS_NOT_STARTED    => 'Not started',
-            Matchs::STATUS_STARTING       => 'Starting',
-            Matchs::STATUS_WU_KNIFE       => 'Warmup Knife',
-            Matchs::STATUS_KNIFE          => 'Knife Round',
-            Matchs::STATUS_END_KNIFE      => 'Waiting choose team',
-            Matchs::STATUS_WU_1_SIDE      => 'Warmup first side',
-            Matchs::STATUS_FIRST_SIDE     => 'First side',
-            Matchs::STATUS_WU_2_SIDE      => 'Warmup second side',
-            Matchs::STATUS_SECOND_SIDE    => 'Second side',
-            Matchs::STATUS_WU_OT_1_SIDE   => 'Warmup first side OT',
-            Matchs::STATUS_OT_FIRST_SIDE  => 'First side OT',
-            Matchs::STATUS_WU_OT_2_SIDE   => 'Warmup second side OT',
+            Matchs::STATUS_NOT_STARTED => 'Not started',
+            Matchs::STATUS_STARTING => 'Starting',
+            Matchs::STATUS_WU_KNIFE => 'Warmup Knife',
+            Matchs::STATUS_KNIFE => 'Knife Round',
+            Matchs::STATUS_END_KNIFE => 'Waiting choose team',
+            Matchs::STATUS_WU_1_SIDE => 'Warmup first side',
+            Matchs::STATUS_FIRST_SIDE => 'First side',
+            Matchs::STATUS_WU_2_SIDE => 'Warmup second side',
+            Matchs::STATUS_SECOND_SIDE => 'Second side',
+            Matchs::STATUS_WU_OT_1_SIDE => 'Warmup first side OT',
+            Matchs::STATUS_OT_FIRST_SIDE => 'First side OT',
+            Matchs::STATUS_WU_OT_2_SIDE => 'Warmup second side OT',
             Matchs::STATUS_OT_SECOND_SIDE => 'Second side OT',
-            Matchs::STATUS_END_MATCH      => 'Finished',
-            Matchs::STATUS_ARCHIVE        => 'Archived',
+            Matchs::STATUS_END_MATCH => 'Finished',
+            Matchs::STATUS_ARCHIVE => 'Archived',
         ];
 
         foreach ($texts as $status => $expected) {

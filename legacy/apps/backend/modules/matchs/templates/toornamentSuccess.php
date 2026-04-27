@@ -1,18 +1,20 @@
 <h3>Toornament Matches Manager</h3>
 
-<form method="get" action="<?php echo url_for("matchs_toornament"); ?>">
+<form method="get" action="<?php echo url_for('matchs_toornament'); ?>">
     <select name="id">
-        <?php foreach ($tournaments as $tournament): ?>
+        <?php foreach ($tournaments as $tournament) { ?>
             <option
-                value="<?php echo $tournament['id']; ?>" <?php if ($sf_request->getParameter('id') == $tournament['id']) echo 'selected'; ?>><?php echo $tournament['name']; ?></option>
-        <?php endforeach; ?>
+                value="<?php echo $tournament['id']; ?>" <?php if ($sf_request->getParameter('id') == $tournament['id']) {
+                    echo 'selected';
+                } ?>><?php echo $tournament['name']; ?></option>
+        <?php } ?>
     </select>
     <input type="submit" value="Change" class="btn btn-primary"/>
 </form>
 
 
-<?php if ($sf_request->getParameter('id')): ?>
-    <?php foreach ($matches['stages'] as $stage): ?>
+<?php if ($sf_request->getParameter('id')) { ?>
+    <?php foreach ($matches['stages'] as $stage) { ?>
         <h4><?php echo $stage['name']; ?></h4>
         <table class="table table-striped">
             <thead>
@@ -27,16 +29,17 @@
                 <th width="100"></th>
             </tr>
             </thead>
-            <?php foreach ($stage['matches'] as $match): ?>
+            <?php foreach ($stage['matches'] as $match) { ?>
                 <?php
                 $team1 = $match['opponents'][0]['participant']['name'];
                 $team2 = $match['opponents'][1]['participant']['name'];
-                if (!$team1 || !$team2)
+                if (! $team1 || ! $team2) {
                     continue;
+                }
 
-                foreach ($match['games'] as $game):
-                    $id = $sf_request->getParameter('id') . "." . $match['id'] . "." . $game['number'];
-                    $m = MatchsTable::getInstance()->createQuery()->where("identifier_id = ?", $id)->fetchOne();
+                foreach ($match['games'] as $game) {
+                    $id = $sf_request->getParameter('id').'.'.$match['id'].'.'.$game['number'];
+                    $m = MatchsTable::getInstance()->createQuery()->where('identifier_id = ?', $id)->fetchOne();
                     ?>
                     <tr>
                         <td>Group#<?php echo $match['group_number']; ?> Round#<?php echo $match['round_number']; ?></td>
@@ -54,63 +57,63 @@
                             if ($m && $m->exists()) {
                                 echo $m->getIp();
                             }
-                            ?>
+                    ?>
                         </td>
                         <td <?php if ($m && $m->exists()) { ?>id="map-<?php echo $m->getId(); ?>"<?php } ?>>
                             <?php
-                            if ($m && $m->exists()) {
-                                echo $m->getScoreA() . " - " . $m->getScoreB();
-                            }
-                            ?>
+                    if ($m && $m->exists()) {
+                        echo $m->getScoreA().' - '.$m->getScoreB();
+                    }
+                    ?>
                         </td>
                         <td>
                             <?php
-                            if ($m && $m->exists()) {
-                                ?>
-                                <?php if ($m->getEnable()):
+                    if ($m && $m->exists()) {
+                        ?>
+                                <?php if ($m->getEnable()) {
                                     ?>
-                                    <?php if ($m->getStatus() == Matchs::STATUS_STARTING): ?>
-                                    <?php echo image_tag("/images/icons/flag_blue.png", "id='flag-" . $m->getId() . "'"); ?>
-                                    <?php echo '<script> $(document).ready(function() { $("#loading_' . $m->getId() . '").show(); }); </script>'; ?>
-                                <?php elseif ($m->getIsPaused()): ?>
-                                    <?php echo image_tag("/images/icons/flag_yellow.png", "id='flag-" . $m->getId() . "'"); ?>
-                                <?php else: ?>
-                                    <?php echo image_tag("/images/icons/flag_green.png", "id='flag-" . $m->getId() . "'"); ?>
-                                <?php endif; ?>
-                                <?php else: ?>
-                                    <?php echo image_tag("/images/icons/flag_red.png", "id='flag-" . $m->getId() . "'"); ?>
-                                <?php endif; ?>
+                                    <?php if ($m->getStatus() == Matchs::STATUS_STARTING) { ?>
+                                    <?php echo image_tag('/images/icons/flag_blue.png', "id='flag-".$m->getId()."'"); ?>
+                                    <?php echo '<script> $(document).ready(function() { $("#loading_'.$m->getId().'").show(); }); </script>'; ?>
+                                <?php } elseif ($m->getIsPaused()) { ?>
+                                    <?php echo image_tag('/images/icons/flag_yellow.png', "id='flag-".$m->getId()."'"); ?>
+                                <?php } else { ?>
+                                    <?php echo image_tag('/images/icons/flag_green.png', "id='flag-".$m->getId()."'"); ?>
+                                <?php } ?>
+                                <?php } else { ?>
+                                    <?php echo image_tag('/images/icons/flag_red.png', "id='flag-".$m->getId()."'"); ?>
+                                <?php } ?>
                                 <div style="display: inline-block;" class="status status-<?php echo $m->getId(); ?>">
                                     <?php echo $m->getStatusText(); ?>
                                 </div>
                                 <?php
-                            }
-                            ?>
+                    }
+                    ?>
                         </td>
                         <td>
                             <?php
-                            if ($m && $m->exists()) {
-                                ?>
-                                <a href="<?php echo url_for("matchs_toornament_export_match", $m); ?>"
+                    if ($m && $m->exists()) {
+                        ?>
+                                <a href="<?php echo url_for('matchs_toornament_export_match', $m); ?>"
                                    class="btn btn-danger btn-mini" data-button="export">Export
                                     result</a>
                                 <?php
-                            } else {
-                                ?>
+                    } else {
+                        ?>
                                 <a class="btn btn-primary btn-mini" data-button="import"
-                                   href="<?php echo url_for("@matchs_toornament_import?toornamentId=" . $sf_request->getParameter('id') . "&toornamentMatchId=" . $match['id'] . "&gameId=" . $game['number']); ?>">
+                                   href="<?php echo url_for('@matchs_toornament_import?toornamentId='.$sf_request->getParameter('id').'&toornamentMatchId='.$match['id'].'&gameId='.$game['number']); ?>">
                                     Import
                                 </a>
 
                                 <?php
-                            }
-                            ?>
+                    }
+                    ?>
                         </td>
                     </tr>
-                <?php endforeach; ?>
-            <?php endforeach; ?>
+                <?php } ?>
+            <?php } ?>
         </table>
-    <?php endforeach; ?>
+    <?php } ?>
 
     <script>
         $(function () {
@@ -152,9 +155,9 @@
             });
         });
     </script>
-<?php else: ?>
+<?php } else { ?>
     You need to select a tournament before selecting matches to import.
-<?php endif; ?>
+<?php } ?>
 
 <script>
     function doRequest(event, ip, id, authkey) {

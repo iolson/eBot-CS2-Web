@@ -27,7 +27,7 @@
                 $("#" + id).submit();
             }
 
-            var socketIoAddress = "<?php echo sfConfig::get("app_websocket_url"); ?>";
+            var socketIoAddress = "<?php echo sfConfig::get('app_websocket_url'); ?>";
             var socket = null;
             var socketIoLoaded = false;
             var loadingSocketIo = false;
@@ -50,10 +50,10 @@
                     <?php
                     $jwt = new JWT(sfConfig::get('app_websocket_secret_key'), 'HS256', 60 * 60 * 24 * 31, 10);
 
-                    $token = $jwt->encode([
-                        'admin' => false,
-                    ]);
-                    ?>
+        $token = $jwt->encode([
+            'admin' => false,
+        ]);
+        ?>
 
                     socket = io(socketIoAddress, {
                         auth: {
@@ -82,27 +82,27 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="<?php echo url_for("homepage"); ?>">eBot-CSGO</a>
+                    <a class="brand" href="<?php echo url_for('homepage'); ?>">eBot-CSGO</a>
                     <div class="nav-collapse collapse">
                         <div style="line-height: 35px; float: right;  margin-right: 10px;">
-                            <form style="display:inline; margin-left: 5px; cursor: pointer" action="<?php echo url_for('@switch_lang?langage=fr') ?>" method="POST" id="langFr"><input type="hidden" name="referer" value="<?php echo $sf_request->getPathInfo() ?>" /><?php echo image_tag('/images/fr.png', array("onclick" => "javascript:submitForm('langFr')")); ?></form>
-                            <form style="display:inline; margin-left: 5px; cursor: pointer" action="<?php echo url_for('@switch_lang?langage=en') ?>" method="POST" id="langEn"><input type="hidden" name="referer" value="<?php echo $sf_request->getPathInfo() ?>" /><?php echo image_tag('/images/en.png', array("onclick" => "javascript:submitForm('langEn')")); ?></form>
-                            <form style="display:inline; margin-left: 5px; cursor: pointer" action="<?php echo url_for('@switch_lang?langage=de') ?>" method="POST" id="langDe"><input type="hidden" name="referer" value="<?php echo $sf_request->getPathInfo() ?>" /><?php echo image_tag('/images/de.png', array("onclick" => "javascript:submitForm('langDe')")); ?></form>
-							<form style="display:inline; margin-left: 5px; cursor: pointer" action="<?php echo url_for('@switch_lang?langage=ru') ?>" method="POST" id="langRu"><input type="hidden" name="referer" value="<?php echo $sf_request->getPathInfo() ?>" /><?php echo image_tag('/images/ru.png', array("onclick" => "javascript:submitForm('langRu')")); ?></form>
-                            <form style="display:inline; margin-left: 5px; cursor: pointer" action="<?php echo url_for('@switch_lang?langage=cn') ?>" method="POST" id="langCn"><input type="hidden" name="referer" value="<?php echo $sf_request->getPathInfo() ?>" /><?php echo image_tag('/images/cn.gif', array("onclick" => "javascript:submitForm('langCn')")); ?></form>
+                            <form style="display:inline; margin-left: 5px; cursor: pointer" action="<?php echo url_for('@switch_lang?langage=fr') ?>" method="POST" id="langFr"><input type="hidden" name="referer" value="<?php echo $sf_request->getPathInfo() ?>" /><?php echo image_tag('/images/fr.png', ['onclick' => "javascript:submitForm('langFr')"]); ?></form>
+                            <form style="display:inline; margin-left: 5px; cursor: pointer" action="<?php echo url_for('@switch_lang?langage=en') ?>" method="POST" id="langEn"><input type="hidden" name="referer" value="<?php echo $sf_request->getPathInfo() ?>" /><?php echo image_tag('/images/en.png', ['onclick' => "javascript:submitForm('langEn')"]); ?></form>
+                            <form style="display:inline; margin-left: 5px; cursor: pointer" action="<?php echo url_for('@switch_lang?langage=de') ?>" method="POST" id="langDe"><input type="hidden" name="referer" value="<?php echo $sf_request->getPathInfo() ?>" /><?php echo image_tag('/images/de.png', ['onclick' => "javascript:submitForm('langDe')"]); ?></form>
+							<form style="display:inline; margin-left: 5px; cursor: pointer" action="<?php echo url_for('@switch_lang?langage=ru') ?>" method="POST" id="langRu"><input type="hidden" name="referer" value="<?php echo $sf_request->getPathInfo() ?>" /><?php echo image_tag('/images/ru.png', ['onclick' => "javascript:submitForm('langRu')"]); ?></form>
+                            <form style="display:inline; margin-left: 5px; cursor: pointer" action="<?php echo url_for('@switch_lang?langage=cn') ?>" method="POST" id="langCn"><input type="hidden" name="referer" value="<?php echo $sf_request->getPathInfo() ?>" /><?php echo image_tag('/images/cn.gif', ['onclick' => "javascript:submitForm('langCn')"]); ?></form>
                         </div>
-                        <?php if ($sf_user->isAuthenticated()): ?>
+                        <?php if ($sf_user->isAuthenticated()) { ?>
 
                             <p class="navbar-text pull-right">
                                 Logged in as <a href="#" class="navbar-link"><?php echo $sf_user->getGuarduser()->getUsername(); ?></a>
                             </p>
                             <ul class="nav">
-                                <li class="active"><a href="<?php echo url_for("homepage"); ?>"><?php echo __("Home"); ?></a></li>
-                                <li><a href="/admin.php"><?php echo __("Admin"); ?></a></li>
-                                <li><a href="http://www.esport-tools.net/ebot"><?php echo __("Help"); ?></a></li>
-                                <li><a href="http://www.esport-tools.net/about"><?php echo __("About"); ?></a></li>
+                                <li class="active"><a href="<?php echo url_for('homepage'); ?>"><?php echo __('Home'); ?></a></li>
+                                <li><a href="/admin.php"><?php echo __('Admin'); ?></a></li>
+                                <li><a href="http://www.esport-tools.net/ebot"><?php echo __('Help'); ?></a></li>
+                                <li><a href="http://www.esport-tools.net/about"><?php echo __('About'); ?></a></li>
                             </ul>
-                        <?php endif; ?>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -110,24 +110,24 @@
 
         <div class="container-fluid">
             <div class="row-fluid">
-                <?php include_component("main", "menu"); ?>
+                <?php include_component('main', 'menu'); ?>
 
                 <div class="span10">
-                    <?php if ($sf_user->hasFlash("notification_error")): ?>
+                    <?php if ($sf_user->hasFlash('notification_error')) { ?>
                         <div class="alert alert-error">
                             <button type="button" class="close" data-dismiss="alert">×</button>
-                            <h4><?php echo __("Error"); ?> !</h4>
-                            <?php echo $sf_user->getFlash("notification_error"); ?>
+                            <h4><?php echo __('Error'); ?> !</h4>
+                            <?php echo $sf_user->getFlash('notification_error'); ?>
                         </div>
-                    <?php endif; ?>
+                    <?php } ?>
 
-                    <?php if ($sf_user->hasFlash("notification_ok")): ?>
+                    <?php if ($sf_user->hasFlash('notification_ok')) { ?>
                         <div class="alert alert-success">
                             <button type="button" class="close" data-dismiss="alert">×</button>
-                            <h4><?php echo __("Information"); ?></h4>
-                            <?php echo $sf_user->getFlash("notification_ok"); ?>
+                            <h4><?php echo __('Information'); ?></h4>
+                            <?php echo $sf_user->getFlash('notification_ok'); ?>
                         </div>
-                    <?php endif; ?>
+                    <?php } ?>
 
                     <?php echo $sf_content ?>
                 </div>
@@ -135,7 +135,7 @@
 
             <!-- Please, don't remove the brand -->
             <footer class="footer">
-                <p>&copy; <a target="_blank" href="http://www.esport-tools.net/ebot">eSport-tools</a> 2012-2023 - <?php echo (sfConfig::get("app_version") != "") ? sfConfig::get("app_version") : "3.0 RC6"; ?> - By <a target="_blank" href="https://twitter.com/deStrO_BE">deStrO</a> - Propulsed by <a target="_blank" href="http://twitter.github.com/bootstrap">Bootstrap</a> & <a target="_blank" href="http://www.symfony-project.com">Symfony</a> - Follow eBot on <a target="_blank" href="https://github.com/deStrO/eBot-CSGO">GitHub</a></p>
+                <p>&copy; <a target="_blank" href="http://www.esport-tools.net/ebot">eSport-tools</a> 2012-2023 - <?php echo (sfConfig::get('app_version') != '') ? sfConfig::get('app_version') : '3.0 RC6'; ?> - By <a target="_blank" href="https://twitter.com/deStrO_BE">deStrO</a> - Propulsed by <a target="_blank" href="http://twitter.github.com/bootstrap">Bootstrap</a> & <a target="_blank" href="http://www.symfony-project.com">Symfony</a> - Follow eBot on <a target="_blank" href="https://github.com/deStrO/eBot-CSGO">GitHub</a></p>
             </footer>
         </div>
     </body>

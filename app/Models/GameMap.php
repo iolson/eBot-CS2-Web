@@ -24,19 +24,22 @@ class GameMap extends Model
     ];
 
     protected $casts = [
-        'score_1'       => 'integer',
-        'score_2'       => 'integer',
-        'status'        => 'integer',
-        'nb_ot'         => 'integer',
+        'score_1' => 'integer',
+        'score_2' => 'integer',
+        'status' => 'integer',
+        'nb_ot' => 'integer',
         'identifier_id' => 'integer',
     ];
 
     const SIDE_CT = 'ct';
-    const SIDE_T  = 't';
+
+    const SIDE_T = 't';
 
     const FOR_DEFAULT = 'default';
-    const FOR_TEAM1   = 'team1';
-    const FOR_TEAM2   = 'team2';
+
+    const FOR_TEAM1 = 'team1';
+
+    const FOR_TEAM2 = 'team2';
 
     // -------------------------------------------------------------------------
     // Relationships

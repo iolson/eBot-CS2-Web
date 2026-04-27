@@ -29,7 +29,7 @@ class SfGuardUserProvider extends EloquentUserProvider
         if ($login) {
             $query->where(function ($q) use ($login) {
                 $q->where('username', $login)
-                  ->orWhere('email_address', $login);
+                    ->orWhere('email_address', $login);
             });
         }
 
@@ -64,9 +64,9 @@ class SfGuardUserProvider extends EloquentUserProvider
      */
     private function upgradePasswordToBcrypt(User $user, string $plain): void
     {
-        $user->password  = Hash::make($plain);
+        $user->password = Hash::make($plain);
         $user->algorithm = 'bcrypt';
-        $user->salt      = null;
+        $user->salt = null;
         $user->save();
     }
 }

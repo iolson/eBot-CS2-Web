@@ -3,7 +3,7 @@
         <?php include_stylesheets() ?>
         <?php include_javascripts() ?>
         <script>
-            var socketIoAddress = "<?php echo sfConfig::get("app_ebot_ip"); ?>:<?php echo sfConfig::get("app_ebot_port"); ?>";
+            var socketIoAddress = "<?php echo sfConfig::get('app_ebot_ip'); ?>:<?php echo sfConfig::get('app_ebot_port'); ?>";
             var socket = null;
             var socketIoLoaded = false;
             var loadingSocketIo = false;

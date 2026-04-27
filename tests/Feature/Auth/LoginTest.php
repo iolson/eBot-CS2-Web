@@ -3,8 +3,6 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 describe('Login page', function () {
     it('shows the login form', function () {
         $this->get(route('login'))
@@ -48,7 +46,7 @@ describe('Login with bcrypt password', function () {
             'username' => 'admin',
             'password' => 'wrong',
         ])->assertRedirect()
-          ->assertSessionHasErrors('username');
+            ->assertSessionHasErrors('username');
 
         $this->assertGuest();
     });
@@ -71,15 +69,15 @@ describe('Login with bcrypt password', function () {
 
 describe('Login with legacy SHA-1 password', function () {
     it('authenticates and upgrades password to bcrypt', function () {
-        $salt      = 'testsalt123';
+        $salt = 'testsalt123';
         $plaintext = 'legacypass';
-        $sha1hash  = sha1($salt . $plaintext);
+        $sha1hash = sha1($salt.$plaintext);
 
         $user = User::factory()->create([
-            'username'  => 'legacyuser',
+            'username' => 'legacyuser',
             'algorithm' => 'sha1',
-            'salt'      => $salt,
-            'password'  => $sha1hash,
+            'salt' => $salt,
+            'password' => $sha1hash,
         ]);
 
         $this->post(route('login'), [
@@ -111,8 +109,8 @@ describe('Login can authenticate by email_address', function () {
     it('authenticates using email_address field', function () {
         $user = User::factory()->create([
             'email_address' => 'admin@example.com',
-            'password'      => Hash::make('password'),
-            'algorithm'     => 'bcrypt',
+            'password' => Hash::make('password'),
+            'algorithm' => 'bcrypt',
         ]);
 
         $this->post(route('login'), [

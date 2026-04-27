@@ -32,8 +32,8 @@
     </head>
     <body>
         <div class="hero-unit">
-            <h1><?php echo "Error"; ?></h1>
-            <p><?php echo "Page could not be loaded due to an error."; ?></p>
+            <h1><?php echo 'Error'; ?></h1>
+            <p><?php echo 'Page could not be loaded due to an error.'; ?></p>
         </div>
 
 

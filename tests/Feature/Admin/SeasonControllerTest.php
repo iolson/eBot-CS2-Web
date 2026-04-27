@@ -1,7 +1,5 @@
 <?php
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 use App\Models\Season;
 use App\Models\User;
 
@@ -19,7 +17,7 @@ describe('Admin season controller', function () {
     it('creates a season', function () {
         $this->actingAs($this->admin)
             ->post(route('admin.seasons.store'), [
-                'name'   => 'Season 1',
+                'name' => 'Season 1',
                 'active' => true,
             ])
             ->assertRedirect(route('admin.seasons.index'))
@@ -33,7 +31,7 @@ describe('Admin season controller', function () {
 
         $this->actingAs($this->admin)
             ->put(route('admin.seasons.update', $season), [
-                'name'   => 'New Name',
+                'name' => 'New Name',
                 'active' => false,
             ])
             ->assertRedirect(route('admin.seasons.index'))

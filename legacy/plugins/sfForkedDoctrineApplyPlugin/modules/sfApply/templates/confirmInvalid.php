@@ -16,6 +16,6 @@ completely.
 and never confirmed your account, it is possible that your account has
 been purged from the system. In that case, you should simply apply
 for a new account.
-</p>', array(), 'sfForkedApply') ?>
+</p>', [], 'sfForkedApply') ?>
 <?php include_partial('sfApply/continue') ?>
 </div>

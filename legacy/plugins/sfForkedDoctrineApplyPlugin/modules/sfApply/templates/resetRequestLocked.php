@@ -4,6 +4,6 @@
 <div class="sf_apply_notice">
 <?php echo __('<p>
 This account is inactive. Please contact the administrator.
-</p>', array(), 'sfForkedApply') ?>
+</p>', [], 'sfForkedApply') ?>
 <?php include_partial('sfApply/continue') ?>
 </div>

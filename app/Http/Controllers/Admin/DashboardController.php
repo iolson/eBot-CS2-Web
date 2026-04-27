@@ -10,9 +10,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $liveMatches  = Matchs::live()->with(['teamA', 'teamB', 'server'])->get();
+        $liveMatches = Matchs::live()->with(['teamA', 'teamB', 'server'])->get();
         $pendingCount = Matchs::notStarted()->count();
-        $serverCount  = Server::count();
+        $serverCount = Server::count();
 
         return view('admin.dashboard', compact('liveMatches', 'pendingCount', 'serverCount'));
     }

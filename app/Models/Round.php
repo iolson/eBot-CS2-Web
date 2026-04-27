@@ -16,8 +16,8 @@ class Round extends Model
 
     protected $casts = [
         'event_time' => 'integer',
-        'kill_id'    => 'integer',
-        'round_id'   => 'integer',
+        'kill_id' => 'integer',
+        'round_id' => 'integer',
     ];
 
     public function match(): BelongsTo

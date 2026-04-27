@@ -1,7 +1,3 @@
 <?php
-/**
- */
-class PluginsfGuardForgotPasswordTable extends Doctrine_Table
-{
 
-}
+class PluginsfGuardForgotPasswordTable extends Doctrine_Table {}

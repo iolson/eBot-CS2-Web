@@ -36,7 +36,7 @@ class MatchController extends Controller
     public function create()
     {
         $seasons = Season::orderByDesc('id')->get();
-        $teams   = Team::orderBy('name')->get();
+        $teams = Team::orderBy('name')->get();
         $servers = Server::orderBy('ip')->get();
 
         return view('admin.matchs.create', compact('seasons', 'teams', 'servers'));
@@ -45,11 +45,11 @@ class MatchController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'team_a'             => ['required', 'integer', 'exists:teams,id'],
-            'team_b'             => ['required', 'integer', 'exists:teams,id', 'different:team_a'],
-            'season_id'          => ['nullable', 'integer', 'exists:seasons,id'],
-            'server_id'          => ['nullable', 'integer', 'exists:servers,id'],
-            'max_round'          => ['required', 'integer', 'in:15,25,30'],
+            'team_a' => ['required', 'integer', 'exists:teams,id'],
+            'team_b' => ['required', 'integer', 'exists:teams,id', 'different:team_a'],
+            'season_id' => ['nullable', 'integer', 'exists:seasons,id'],
+            'server_id' => ['nullable', 'integer', 'exists:servers,id'],
+            'max_round' => ['required', 'integer', 'in:15,25,30'],
             'map_selection_mode' => ['required', 'integer'],
         ]);
 
@@ -74,7 +74,7 @@ class MatchController extends Controller
         }
 
         $seasons = Season::orderByDesc('id')->get();
-        $teams   = Team::orderBy('name')->get();
+        $teams = Team::orderBy('name')->get();
         $servers = Server::orderBy('ip')->get();
 
         return view('admin.matchs.edit', compact('match', 'seasons', 'teams', 'servers'));
@@ -88,11 +88,11 @@ class MatchController extends Controller
         }
 
         $data = $request->validate([
-            'team_a'             => ['required', 'integer', 'exists:teams,id'],
-            'team_b'             => ['required', 'integer', 'exists:teams,id', 'different:team_a'],
-            'season_id'          => ['nullable', 'integer', 'exists:seasons,id'],
-            'server_id'          => ['nullable', 'integer', 'exists:servers,id'],
-            'max_round'          => ['required', 'integer', 'in:15,25,30'],
+            'team_a' => ['required', 'integer', 'exists:teams,id'],
+            'team_b' => ['required', 'integer', 'exists:teams,id', 'different:team_a'],
+            'season_id' => ['nullable', 'integer', 'exists:seasons,id'],
+            'server_id' => ['nullable', 'integer', 'exists:servers,id'],
+            'max_round' => ['required', 'integer', 'in:15,25,30'],
             'map_selection_mode' => ['required', 'integer'],
         ]);
 
@@ -148,12 +148,12 @@ class MatchController extends Controller
         }
 
         $match->update([
-            'ip'             => $server->ip,
-            'server_id'      => $server->id,
-            'enable'         => true,
-            'status'         => Matchs::STATUS_STARTING,
-            'score_a'        => 0,
-            'score_b'        => 0,
+            'ip' => $server->ip,
+            'server_id' => $server->id,
+            'enable' => true,
+            'status' => Matchs::STATUS_STARTING,
+            'score_a' => 0,
+            'score_b' => 0,
             'config_authkey' => $match->config_authkey ?: uniqid(mt_rand(), true),
         ]);
 
@@ -182,12 +182,12 @@ class MatchController extends Controller
             }
 
             $match->update([
-                'ip'             => $server->ip,
-                'server_id'      => $server->id,
-                'enable'         => true,
-                'status'         => Matchs::STATUS_STARTING,
-                'score_a'        => 0,
-                'score_b'        => 0,
+                'ip' => $server->ip,
+                'server_id' => $server->id,
+                'enable' => true,
+                'status' => Matchs::STATUS_STARTING,
+                'score_a' => 0,
+                'score_b' => 0,
                 'config_authkey' => $match->config_authkey ?: uniqid(mt_rand(), true),
             ]);
 
@@ -309,9 +309,9 @@ class MatchController extends Controller
         }
 
         $match->update([
-            'status'    => Matchs::STATUS_NOT_STARTED,
-            'score_a'   => 0,
-            'score_b'   => 0,
+            'status' => Matchs::STATUS_NOT_STARTED,
+            'score_a' => 0,
+            'score_b' => 0,
         ]);
 
         return back()->with('success', __('Match reset.'));

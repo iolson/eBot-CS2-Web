@@ -20,16 +20,16 @@ class ToornamentController extends Controller
     {
         if (! $this->toornament->isConfigured()) {
             return view('admin.toornament.index', [
-                'configured'  => false,
+                'configured' => false,
                 'tournaments' => [],
-                'matches'     => [],
+                'matches' => [],
                 'tournamentId' => null,
             ]);
         }
 
         $tournamentId = $request->query('id');
-        $tournaments  = [];
-        $matches      = [];
+        $tournaments = [];
+        $matches = [];
 
         try {
             $tournaments = $this->toornament->getTournaments();
@@ -39,11 +39,11 @@ class ToornamentController extends Controller
             }
         } catch (\Throwable $e) {
             return view('admin.toornament.index', [
-                'configured'   => true,
-                'tournaments'  => [],
-                'matches'      => [],
+                'configured' => true,
+                'tournaments' => [],
+                'matches' => [],
                 'tournamentId' => $tournamentId,
-                'apiError'     => $e->getMessage(),
+                'apiError' => $e->getMessage(),
             ]);
         }
 
@@ -61,8 +61,8 @@ class ToornamentController extends Controller
         }
 
         $tournamentId = $request->input('toornamentId');
-        $matchId      = $request->input('toornamentMatchId');
-        $gameId       = (int) $request->input('gameId', 1);
+        $matchId = $request->input('toornamentMatchId');
+        $gameId = (int) $request->input('gameId', 1);
 
         if (! $tournamentId || ! $matchId) {
             return response()->json(['status' => false, 'error' => 'missing_params']);
@@ -70,7 +70,7 @@ class ToornamentController extends Controller
 
         try {
             $matchData = $this->toornament->getMatch($tournamentId, $matchId);
-            $stage     = $this->toornament->getStage($tournamentId, $matchData['stage_number'] ?? '1');
+            $stage = $this->toornament->getStage($tournamentId, $matchData['stage_number'] ?? '1');
 
             $game = $matchData['games'][$gameId - 1] ?? null;
 
@@ -86,31 +86,31 @@ class ToornamentController extends Controller
                 return response()->json(['status' => false, 'matchId' => $existing->id]);
             }
 
-            $teamA     = $matchData['opponents'][0]['participant']['name'] ?? 'Team A';
-            $teamB     = $matchData['opponents'][1]['participant']['name'] ?? 'Team B';
+            $teamA = $matchData['opponents'][0]['participant']['name'] ?? 'Team A';
+            $teamB = $matchData['opponents'][1]['participant']['name'] ?? 'Team B';
             $teamAFlag = $matchData['opponents'][0]['participant']['country'] ?? null;
             $teamBFlag = $matchData['opponents'][1]['participant']['country'] ?? null;
-            $isGroup   = ($stage['type'] ?? '') === 'group';
+            $isGroup = ($stage['type'] ?? '') === 'group';
 
             $match = Matchs::create([
-                'team_a_name'          => $teamA,
-                'team_b_name'          => $teamB,
-                'team_a_flag'          => $teamAFlag,
-                'team_b_flag'          => $teamBFlag,
-                'max_round'            => config('ebot.default_max_round', 12),
-                'overtime_startmoney'  => config('ebot.default_overtime_startmoney', 10000),
-                'overtime_max_round'   => config('ebot.default_overtime_max_round', 3),
-                'config_ot'            => ! $isGroup,
-                'config_full_score'    => false,
-                'config_streamer'      => false,
-                'config_knife_round'   => true,
-                'map_selection_mode'   => Matchs::MAP_SELECTION_NORMAL,
-                'score_a'              => 0,
-                'score_b'              => 0,
-                'status'               => Matchs::STATUS_NOT_STARTED,
-                'config_authkey'       => uniqid(mt_rand(), true),
-                'identifier_id'        => $identifier,
-                'enable'               => false,
+                'team_a_name' => $teamA,
+                'team_b_name' => $teamB,
+                'team_a_flag' => $teamAFlag,
+                'team_b_flag' => $teamBFlag,
+                'max_round' => config('ebot.default_max_round', 12),
+                'overtime_startmoney' => config('ebot.default_overtime_startmoney', 10000),
+                'overtime_max_round' => config('ebot.default_overtime_max_round', 3),
+                'config_ot' => ! $isGroup,
+                'config_full_score' => false,
+                'config_streamer' => false,
+                'config_knife_round' => true,
+                'map_selection_mode' => Matchs::MAP_SELECTION_NORMAL,
+                'score_a' => 0,
+                'score_b' => 0,
+                'status' => Matchs::STATUS_NOT_STARTED,
+                'config_authkey' => uniqid(mt_rand(), true),
+                'identifier_id' => $identifier,
+                'enable' => false,
             ]);
 
             return response()->json(['status' => true, 'matchId' => $match->id]);
@@ -165,7 +165,7 @@ class ToornamentController extends Controller
             $match->load('maps');
             $firstMap = $match->maps->first();
 
-            $result['map']                   = $firstMap?->map_name ?? '';
+            $result['map'] = $firstMap?->map_name ?? '';
             $result['opponents'][0]['score'] = $match->score_a;
             $result['opponents'][1]['score'] = $match->score_b;
 

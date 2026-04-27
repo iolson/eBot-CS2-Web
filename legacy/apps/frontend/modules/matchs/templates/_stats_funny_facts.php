@@ -2,19 +2,19 @@
 
 
 <?php
-$query = "SELECT count(*) as nb FROM players_heatmap WHERE match_id = '" . $match->getId() . "' AND event_name = 'hegrenade'";
+$query = "SELECT count(*) as nb FROM players_heatmap WHERE match_id = '".$match->getId()."' AND event_name = 'hegrenade'";
 $rs = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($query);
 $he = $rs[0]['nb'];
 
-$query = "SELECT count(*) as nb FROM players_heatmap WHERE match_id = '" . $match->getId() . "' AND event_name = 'flashbang'";
+$query = "SELECT count(*) as nb FROM players_heatmap WHERE match_id = '".$match->getId()."' AND event_name = 'flashbang'";
 $rs = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($query);
 $flash = $rs[0]['nb'];
 
-$query = "SELECT count(*) as nb FROM players_heatmap WHERE match_id = '" . $match->getId() . "' AND event_name = 'molotov'";
+$query = "SELECT count(*) as nb FROM players_heatmap WHERE match_id = '".$match->getId()."' AND event_name = 'molotov'";
 $rs = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($query);
 $molotov = $rs[0]['nb'];
 
-$query = "SELECT count(*) as nb FROM players_heatmap WHERE match_id = '" . $match->getId() . "' AND event_name = 'decoy'";
+$query = "SELECT count(*) as nb FROM players_heatmap WHERE match_id = '".$match->getId()."' AND event_name = 'decoy'";
 $rs = Doctrine_Manager::getInstance()->getCurrentConnection()->fetchAssoc($query);
 $decoy = $rs[0]['nb'];
 ?>

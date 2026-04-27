@@ -22,7 +22,8 @@ class MapScore extends Model
     ];
 
     const TYPE_NORMAL = 'normal';
-    const TYPE_OT     = 'ot';
+
+    const TYPE_OT = 'ot';
 
     public function map(): BelongsTo
     {

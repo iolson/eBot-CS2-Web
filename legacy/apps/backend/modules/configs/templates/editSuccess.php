@@ -23,7 +23,7 @@
         }
 
         if (!files.length) {
-            $('#files_helper').text('<?php echo __("Please select a file or just drag&amp;drop the file into the textarea."); ?>').show();
+            $('#files_helper').text('<?php echo __('Please select a file or just drag&amp;drop the file into the textarea.'); ?>').show();
             return;
         }
 
@@ -31,7 +31,7 @@
 
         if (!file.size) {
             $('#config').empty();
-            $('#files_helper').text('<?php echo __("This file is empty."); ?>').show();
+            $('#files_helper').text('<?php echo __('This file is empty.'); ?>').show();
             return;
         }
 
@@ -80,31 +80,33 @@
 </script>
 
 
-<form class="form-horizontal" id="form-users" method="post" action="<?php echo url_for("config_edit", $config); ?>">
+<form class="form-horizontal" id="form-users" method="post" action="<?php echo url_for('config_edit', $config); ?>">
     <?php echo $form->renderHiddenFields(); ?>
     <div class="well">
-        <span style="font-size:24.5px; font-weight:bold;"><br><?php echo __("Edit Configfile"); ?>: <?php echo $config->getName(); ?></span>
-        <div style="float:right;"><input type="submit" class="btn btn-primary" value="<?php echo __("Edit Config"); ?>"/></div>
+        <span style="font-size:24.5px; font-weight:bold;"><br><?php echo __('Edit Configfile'); ?>: <?php echo $config->getName(); ?></span>
+        <div style="float:right;"><input type="submit" class="btn btn-primary" value="<?php echo __('Edit Config'); ?>"/></div>
         <hr>
-        <?php foreach ($form as $widget): ?>
-            <?php if ($widget->isHidden()) continue; ?>
+        <?php foreach ($form as $widget) { ?>
+            <?php if ($widget->isHidden()) {
+                continue;
+            } ?>
             <div class="control-group">
-                <?php echo $widget->renderLabel(null, array("class" => "control-label")); ?>
+                <?php echo $widget->renderLabel(null, ['class' => 'control-label']); ?>
                 <div class="controls">
                     <?php echo $widget->render(); ?>
                 </div>
             </div>
-        <?php endforeach; ?>
+        <?php } ?>
         <div class="control-group">
-            <label class="control-label"><?php echo __("Config"); ?></label>
+            <label class="control-label"><?php echo __('Config'); ?></label>
             <div class="controls">
                 <div style="margin-top: 15px;" id="dropzone">
                     <div id="dropzone_textarea">
                         <textarea name="config" id="config" style="width: 50%; height: 250px;"><?php echo $config->getContent(); ?></textarea>
                     </div>
-                    <div style="text-align:center; width:685px; margin: 20px 0px;"><p class="lead"><?php echo __("Drop your configfile above or choose it by hand:"); ?></p></div>
+                    <div style="text-align:center; width:685px; margin: 20px 0px;"><p class="lead"><?php echo __('Drop your configfile above or choose it by hand:'); ?></p></div>
                     <div id="fileReader" style="width: 685px; text-align:center;">
-                        <input type="file" id="files" name="files" style="margin-top:5px;" class="filestyle" data-classButton="btn btn-primary"><button type="button" id="readBytesButtons" class="btn btn-inverse" style="margin-left: 10px;"><?php echo __("Insert"); ?></button>
+                        <input type="file" id="files" name="files" style="margin-top:5px;" class="filestyle" data-classButton="btn btn-primary"><button type="button" id="readBytesButtons" class="btn btn-inverse" style="margin-left: 10px;"><?php echo __('Insert'); ?></button>
                     </div>
                     <div style="display:none; font-weight: bold; text-align:center; width:685px;" class="text-error" id="files_helper"></div>
                 </div>
