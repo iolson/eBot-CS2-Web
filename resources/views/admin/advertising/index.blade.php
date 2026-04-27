@@ -48,9 +48,8 @@
                                     </a>
 
                                     {{-- Deactivate / Activate Toggle --}}
-                                    <form method="POST" action="{{ route('admin.advertising.toggle-active', $ad) }}">
+                                    <form method="POST" action="{{ route('admin.advertising.deactivate', $ad) }}">
                                         @csrf
-                                        @method('PATCH')
                                         <button type="submit"
                                                 class="rounded bg-gray-600 hover:bg-gray-500 px-2 py-1 text-xs text-gray-300">
                                             {{ $ad->active ? __('Deactivate') : __('Activate') }}
