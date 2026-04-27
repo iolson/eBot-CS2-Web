@@ -16,9 +16,17 @@ use App\Http\Controllers\Frontend\SeasonController;
 use App\Http\Controllers\Frontend\StatsController;
 use App\Http\Controllers\Frontend\StreamController;
 use App\Http\Controllers\Frontend\WidgetController;
+use App\Http\Controllers\InstallController;
 use App\Http\Middleware\RequireAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+// -------------------------------------------------------------------------
+// Installation wizard (only accessible when APP_INSTALLED=false)
+// -------------------------------------------------------------------------
+
+Route::get('/install', [InstallController::class, 'index'])->name('install.index');
+Route::post('/install', [InstallController::class, 'store'])->name('install.store');
 
 // -------------------------------------------------------------------------
 // Locale switcher

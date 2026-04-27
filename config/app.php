@@ -41,6 +41,8 @@ return [
 
     'debug' => (bool) env('APP_DEBUG', false),
 
+    'installed' => (bool) env('APP_INSTALLED', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
