@@ -11,9 +11,9 @@ return new class extends Migration
         Schema::create('seasons', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
-            $table->string('event', 50);
-            $table->dateTime('start');
-            $table->dateTime('end');
+            $table->string('event', 50)->nullable();
+            $table->dateTime('start')->nullable();
+            $table->dateTime('end')->nullable();
             $table->string('link', 100)->nullable();
             $table->string('logo', 255)->nullable();
             $table->boolean('active')->nullable();
