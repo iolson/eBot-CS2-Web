@@ -456,7 +456,9 @@ Team → hasMany Matches, belongsToMany Seasons
 
 **Branch:** `modernize/12-testing`
 
-**Goal:** Comprehensive test suite replacing the minimal Symfony lime tests.
+**Goal:** Comprehensive test suite replacing the minimal Symfony lime tests. Every feature and flow — both new and existing — must be covered by tests to ensure future contributions don't break functionality.
+
+**Testing Philosophy:** Tests are not an afterthought. Every phase should include tests for its deliverables (noted as requirements here), and this phase fills any remaining gaps to achieve full coverage. The test suite serves as a living specification of all eBot-CS2-Web behavior.
 
 **Tasks:**
 1. **Unit tests** (Pest PHP):

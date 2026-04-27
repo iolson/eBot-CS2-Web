@@ -8,71 +8,84 @@ eBot-CS2-Web is the web administration panel for the eBot CS2 game server bot. I
 
 ## Framework & Stack
 
-- **Symfony 1.4** (bundled in `lib/vendor/symfony/`) with **Doctrine 1.x ORM**
-- **No modern dependency management** — no Composer, no npm. All dependencies are vendored.
-- **PHP 5.3+** with MySQL and Sockets extensions required
-- **Frontend**: Bootstrap 2.x, jQuery 1.8.2, Highcharts, Socket.IO, heatmap.js — no build tools
-- **Auth**: sfDoctrineGuardPlugin (sfGuard) with SHA1 passwords
+- **Laravel 12** with PHP 8.4+, MySQL 8.4 LTS
+- **Livewire 4** for reactive server-rendered UI
+- **Tailwind CSS 4** via Vite build pipeline
+- **Laravel Sanctum** for session + token auth
+- **Pest PHP** for testing (on PHPUnit 12)
 - **License**: Creative Commons BY 3.0
+
+Legacy Symfony 1.4 code is preserved in `legacy/` for reference during migration.
 
 ## Common Commands
 
 ```bash
-# Symfony CLI (all tasks run through this)
-php symfony cache:clear                  # Clear app cache (do this after config/code changes)
-php symfony doctrine:build-model         # Regenerate model classes from schema.yml
-php symfony doctrine:build-schema        # Generate schema from existing DB
-php symfony doctrine:insert-sql          # Create/update tables from schema
-php symfony doctrine:data-load           # Load fixtures from data/fixtures/
+# Development
+php artisan serve                        # Start dev server
+npm run dev                              # Start Vite dev server (hot reload)
+composer dev                             # Start all dev services (server, queue, logs, vite)
 
-# Tests (Symfony's lime framework)
-php symfony test:functional backend      # Run all backend functional tests
-php symfony test:functional frontend     # Run all frontend functional tests
-php symfony test:unit                    # Run unit tests
-php test/functional/backend/matchsActionsTest.php  # Run a single test
+# Testing
+./vendor/bin/pest                        # Run all tests
+./vendor/bin/pest --filter=MatchTest     # Run specific test
+./vendor/bin/pest tests/Feature/         # Run feature tests only
+./vendor/bin/pest tests/Unit/            # Run unit tests only
+./vendor/bin/pest --coverage             # Run with coverage report
+
+# Code Quality
+./vendor/bin/pint                        # Fix code style (PSR-12)
+./vendor/bin/pint --test                 # Check code style without fixing
+
+# Database
+php artisan migrate                      # Run migrations
+php artisan migrate:fresh --seed         # Reset DB and seed
+php artisan db:seed                      # Run seeders
+
+# Cache
+php artisan optimize:clear               # Clear all caches
+php artisan config:cache                 # Cache config for production
+
+# Docker
+docker compose up -d                     # Start all services
+docker compose --profile dev up -d       # Start with Vite dev server
+docker compose down                      # Stop all services
 ```
 
 ## Architecture
 
-### Two Separate Apps, Two Entry Points
-
-| Entry Point | App | Auth | Purpose |
-|---|---|---|---|
-| `web/index.php` | frontend | Public | Match viewing, stats, livemap |
-| `web/admin.php` | backend | Requires `admin` credential | Full CRUD: matches, servers, teams, seasons |
-
 ### Key Directories
 
-- `apps/backend/modules/` — Admin modules: matchs, servers, teams, seasons, configs, advertising, users, stats
-- `apps/frontend/modules/` — Public modules: matchs, stats, stream, widget, seasons
-- `config/doctrine/schema.yml` — Full ORM schema definition (source of truth for data models)
-- `config/app.yml` + `config/app_user.yml` — App settings (ebot connection, websocket URL, maps list, defaults)
-- `lib/model/doctrine/` — Doctrine model classes (Matchs, Maps, Players, Servers, Teams, etc.)
-- `web/` — Document root for Apache (static assets: css/, js/, images/)
-- `web/installation/` — Web-based installation wizard (steps 0-6)
+- `app/` — Laravel application (Models, Services, Http Controllers, Livewire components)
+- `config/ebot.php` — All eBot-specific configuration (connection, maps, defaults, Toornament)
+- `resources/views/` — Blade templates and Livewire views
+- `resources/views/components/layouts/` — Layout components (app, admin, widget, stream)
+- `routes/web.php` — Web routes (public + admin)
+- `routes/api.php` — API routes (JSON exports, Toornament webhooks)
+- `legacy/` — Original Symfony 1.4 code preserved for reference
 
 ### Configuration
 
-Copy defaults before first run:
-- `config/databases.yml.default` → `config/databases.yml` (MySQL credentials, database `ebotv3`)
-- `config/app_user.yml.default` → `config/app_user.yml` (ebot IP/port, websocket URL, JWT secret, demo paths)
+All configuration via `.env` file. Copy `.env.example` to `.env` for setup.
+
+Key eBot settings: `EBOT_IP`, `EBOT_PORT`, `EBOT_WEBSOCKET_URL`, `EBOT_WEBSOCKET_SECRET_KEY`, `EBOT_DEMO_PATH`, `EBOT_MODE`.
+
+Database must be `ebotv3` (shared with eBot Node.js server which writes directly to it).
+
+### Critical Compatibility Constraints
+
+1. **Shared database** — eBot Node.js writes match data directly to MySQL. Schema changes must be additive only.
+2. **Socket.IO protocol** — Events (`matchsHandler`, `livemapHandler`, `rconSend`, `matchCommandSend`) must match exactly.
+3. **AES-CTR encryption** — Match commands encrypted with `config_authkey`, must be decodable by eBot Node.js.
+4. **JWT tokens** — HS256, 31-day TTL, `{admin, user, exp}` payload, signed with `websocket_secret_key`.
 
 ### Core Data Model
 
-- **Matchs** — Central entity. Status progresses 0→14 (NOT_STARTED through ARCHIVE). Links to teams, server, season, maps.
-- **Maps** — Individual map within a BO1/BO3/BO5 match. Tracks scores, sides, overtime.
-- **Players** / **PlayersSnapshot** — Per-map player stats and per-round snapshots.
+- **Matchs** (note: intentional non-standard plural) — Central entity. Status 0→14 (NOT_STARTED through ARCHIVE).
+- **Maps** — Individual map within a BO1/BO3/BO5 match.
+- **Players** / **PlayersSnapshot** — Per-map stats and per-round snapshots.
 - **RoundSummary** / **Round** / **PlayerKill** — Round-level event data.
 - **Servers** — CS2 game servers (IP, RCON password, TV IP).
 - **Teams** / **Seasons** — Organizational entities.
-
-### Real-Time Communication
-
-The web panel connects to the eBot Node.js server via Socket.IO. JWT tokens (signed with `websocket_secret_key` from config) authenticate the WebSocket connection. The live map feature shows real-time player positions during matches.
-
-### Internationalization
-
-Three languages supported: English (en), Russian (ru), Chinese (cn). Translation files at `apps/*/i18n/*/messages.xml`. Language switch via POST to `/switch/lang/:langage`.
 
 ### Match Status Flow
 
@@ -83,7 +96,16 @@ NOT_STARTED(0) → STARTING(1) → WU_KNIFE(2) → KNIFE(3) → END_KNIFE(4)
 → END_MATCH(13) → ARCHIVE(14)
 ```
 
+### Testing Requirements
+
+All new features and modifications must include comprehensive tests. The test suite should cover:
+- Unit tests for services and models
+- Feature tests for all HTTP endpoints and Livewire components
+- Compatibility tests verifying JWT/AES output matches eBot Node.js expectations
+- Test coverage target: 80%+
+
 ### Third-Party Integrations
 
-- **Toornament API** (`lib/ToornamentAPI.class.php`) — Import/export matches to tournament platform
-- **JWT** (`lib/JWT.class.php`) — WebSocket authentication tokens
+- **Toornament API** — Import/export matches to tournament platform (OAuth2 client credentials)
+- **Socket.IO** — Real-time connection to eBot Node.js for match updates, RCON, live map
+- **JWT** — WebSocket authentication tokens for eBot Node.js
