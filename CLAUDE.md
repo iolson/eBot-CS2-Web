@@ -80,7 +80,7 @@ Database must be `ebotv3` (shared with eBot Node.js server which writes directly
 
 ### Core Data Model
 
-- **Matchs** (note: intentional non-standard plural) — Central entity. Status 0→14 (NOT_STARTED through ARCHIVE).
+- **Matchs** (note: intentional non-standard plural) — Central entity. Status 0→14 (NOT_STARTED through ARCHIVE). Class is named `Matchs` (not `Match`) because `match` is a reserved keyword in PHP 8+. Use `use App\Models\Matchs;` directly — no aliasing needed.
 - **Maps** — Individual map within a BO1/BO3/BO5 match.
 - **Players** / **PlayersSnapshot** — Per-map stats and per-round snapshots.
 - **RoundSummary** / **Round** / **PlayerKill** — Round-level event data.
