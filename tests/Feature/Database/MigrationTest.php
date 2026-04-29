@@ -82,9 +82,10 @@ describe('seasons table columns', function () {
 });
 
 describe('sf_guard_user table columns', function () {
-    it('has password and algorithm columns for auth', function () {
+    it('has password, algorithm, and remember token columns for auth', function () {
         expect(Schema::hasColumn('sf_guard_user', 'username'))->toBeTrue()
             ->and(Schema::hasColumn('sf_guard_user', 'password'))->toBeTrue()
+            ->and(Schema::hasColumn('sf_guard_user', 'remember_token'))->toBeTrue()
             ->and(Schema::hasColumn('sf_guard_user', 'algorithm'))->toBeTrue()
             ->and(Schema::hasColumn('sf_guard_user', 'salt'))->toBeTrue()
             ->and(Schema::hasColumn('sf_guard_user', 'is_active'))->toBeTrue()

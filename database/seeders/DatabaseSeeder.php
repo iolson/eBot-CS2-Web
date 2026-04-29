@@ -17,24 +17,19 @@ class DatabaseSeeder extends Seeder
     {
         // Admin user is created by `php artisan ebot:install`, not here.
         if (app()->environment('local', 'testing')) {
-            $season = Season::factory()->active()->create(['name' => 'Demo Season']);
-            $servers = Server::factory(3)->create();
-            $teams = Team::factory(8)->create();
+
+            // Using BHOP April 2026 as Seed Data
+            $season = Season::factory()->active()->create(['name' => 'BHOP']);
+
+            // No Servers to Test Local LAN Servers
+            $teamNames = ['Homecoming', 'Mock 2uh', 'rondon', 'Vantage Point', 'UltimateDarklordWizardz', 'Beer League Brawlers', 'Bot Squad', 'Saltcrew', 'IBUYSHOWER', 'Malort', 'Drunk Lawyers', 'Bot Brigade'];
+            $createdTeams = [];
+            foreach ($teamNames as $name) {
+                $createdTeams[] = Team::factory()->create(['name' => $name]);
+            }
 
             // Attach teams to season
-            $season->teams()->attach($teams->pluck('id'));
-
-            // Create sample matches
-            MatchModel::factory(5)
-                ->recycle($servers)
-                ->recycle($teams)
-                ->create(['season_id' => $season->id]);
-
-            MatchModel::factory(3)
-                ->finished()
-                ->recycle($servers)
-                ->recycle($teams)
-                ->create(['season_id' => $season->id]);
+            $season->teams()->attach(collect($createdTeams)->pluck('id')->toArray());
         }
     }
 }

@@ -65,6 +65,23 @@ describe('Login with bcrypt password', function () {
 
         $this->assertGuest();
     });
+
+    it('persists remember token when remember me is checked', function () {
+        $user = User::factory()->create([
+            'username' => 'admin',
+            'password' => Hash::make('secret123'),
+            'algorithm' => 'bcrypt',
+        ]);
+
+        $this->post(route('login'), [
+            'username' => 'admin',
+            'password' => 'secret123',
+            'remember' => '1',
+        ])->assertRedirect(route('admin.dashboard'));
+
+        $user->refresh();
+        expect($user->remember_token)->not->toBeNull();
+    });
 });
 
 describe('Login with legacy SHA-1 password', function () {
