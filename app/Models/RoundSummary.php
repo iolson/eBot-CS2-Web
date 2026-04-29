@@ -27,6 +27,7 @@ class RoundSummary extends Model
         'score_b' => 'integer',
         'best_killer_nb' => 'integer',
         'round_id' => 'integer',
+        'best_action_param' => 'array',
     ];
 
     const WIN_TYPE_BOMB_DEFUSED = 'bombdefused';
