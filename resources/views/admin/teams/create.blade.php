@@ -93,25 +93,25 @@
                 </div>
             </div>
 
-            {{-- Seasons --}}
-            @if($seasons->isNotEmpty())
+            {{-- Events --}}
+            @if($events->isNotEmpty())
                 <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 space-y-4">
-                    <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-400">{{ __('Seasons') }}</h2>
-                    <p class="text-xs text-gray-500">{{ __('Select the seasons this team participates in.') }}</p>
+                    <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-400">{{ __('Events') }}</h2>
+                    <p class="text-xs text-gray-500">{{ __('Select the events this team participates in.') }}</p>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                        @foreach($seasons as $season)
+                        @foreach($events as $event)
                             <label class="flex items-center gap-3 cursor-pointer rounded-lg bg-gray-700/50 border border-gray-600 px-3 py-2 hover:border-yellow-600/50">
                                 <input type="checkbox"
-                                       name="seasons[]"
-                                       value="{{ $season->id }}"
-                                       {{ in_array($season->id, old('seasons', [])) ? 'checked' : '' }}
+                                       name="events[]"
+                                       value="{{ $event->id }}"
+                                       {{ in_array($event->id, old('events', [])) ? 'checked' : '' }}
                                        class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-yellow-500 focus:ring-yellow-500 focus:ring-offset-gray-900">
-                                <span class="text-sm text-gray-300">{{ $season->name }}</span>
+                                <span class="text-sm text-gray-300">{{ $event->name }}</span>
                             </label>
                         @endforeach
                     </div>
-                    @error('seasons')
+                    @error('events')
                         <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>

@@ -50,8 +50,8 @@
                                 <div class="font-medium text-white">
                                     {{ $match->teamA?->name ?? '?' }} vs {{ $match->teamB?->name ?? '?' }}
                                 </div>
-                                @if($match->season)
-                                    <div class="text-xs text-gray-400">{{ $match->season->name }}</div>
+                                @if($match->event)
+                                    <div class="text-xs text-gray-400">{{ $match->event->name }}</div>
                                 @endif
                             </td>
                             <td class="px-4 py-3 font-mono text-white">{{ $match->score_a }} – {{ $match->score_b }}</td>

@@ -15,7 +15,7 @@ class MatchController extends Controller
     public function index()
     {
         $matches = Matchs::active()
-            ->with(['teamA', 'teamB', 'server', 'season'])
+            ->with(['teamA', 'teamB', 'server', 'event'])
             ->orderByDesc('id')
             ->paginate(12);
 
@@ -25,7 +25,7 @@ class MatchController extends Controller
     public function archived()
     {
         $matches = Matchs::archived()
-            ->with(['teamA', 'teamB', 'season'])
+            ->with(['teamA', 'teamB', 'event'])
             ->orderByDesc('id')
             ->paginate(12);
 
@@ -34,7 +34,7 @@ class MatchController extends Controller
 
     public function show(Matchs $match)
     {
-        $match->load(['teamA', 'teamB', 'server', 'season', 'maps.players']);
+        $match->load(['teamA', 'teamB', 'server', 'event', 'maps.players']);
 
         $hasHeatmap = PlayerHeatmap::where('match_id', $match->id)->exists();
 
@@ -190,7 +190,7 @@ class MatchController extends Controller
         $match->load([
             'teamA',
             'teamB',
-            'season',
+            'event',
             'server',
             'maps.players',
             'maps.rounds.roundSummaries',
@@ -205,7 +205,7 @@ class MatchController extends Controller
                 'score_a' => $match->score_a,
                 'score_b' => $match->score_b,
                 'status' => $match->getStatusText(),
-                'season' => $match->season?->name,
+                'event' => $match->event?->name,
             ],
             'maps' => $match->maps->map(fn ($map) => [
                 'id' => $map->id,

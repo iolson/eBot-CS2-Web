@@ -39,8 +39,8 @@ describe('Advertising scopeActive()', function () {
 });
 
 describe('Advertising relationships', function () {
-    it('belongs to a season', function () {
-        expect((new Advertising)->season())
+    it('belongs to an event', function () {
+        expect((new Advertising)->event())
             ->toBeInstanceOf(BelongsTo::class);
     });
 });

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Advertising;
-use App\Models\Season;
+use App\Models\Event;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
@@ -12,22 +12,22 @@ class AdvertisingController extends Controller
 {
     public function index()
     {
-        $ads = Advertising::with('season')->orderByDesc('id')->paginate(25);
+        $ads = Advertising::with('event')->orderByDesc('id')->paginate(25);
 
         return view('admin.advertising.index', compact('ads'));
     }
 
     public function create()
     {
-        $seasons = Season::orderByDesc('id')->get();
+        $events = Event::orderByDesc('id')->get();
 
-        return view('admin.advertising.create', compact('seasons'));
+        return view('admin.advertising.create', compact('events'));
     }
 
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'season_id' => ['nullable', 'integer', 'exists:seasons,id'],
+            'event_id' => ['nullable', 'integer', 'exists:events,id'],
             'message' => ['required', 'string', 'max:1000'],
             'active' => ['boolean'],
         ]);
@@ -40,15 +40,15 @@ class AdvertisingController extends Controller
 
     public function edit(Advertising $advertising)
     {
-        $seasons = Season::orderByDesc('id')->get();
+        $events = Event::orderByDesc('id')->get();
 
-        return view('admin.advertising.edit', compact('advertising', 'seasons'));
+        return view('admin.advertising.edit', compact('advertising', 'events'));
     }
 
     public function update(Request $request, Advertising $advertising): RedirectResponse
     {
         $data = $request->validate([
-            'season_id' => ['nullable', 'integer', 'exists:seasons,id'],
+            'event_id' => ['nullable', 'integer', 'exists:events,id'],
             'message' => ['required', 'string', 'max:1000'],
             'active' => ['boolean'],
         ]);

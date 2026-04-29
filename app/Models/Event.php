@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Season extends Model
+class Event extends Model
 {
     use HasFactory;
 
-    protected $table = 'seasons';
+    protected $table = 'events';
 
     protected $fillable = ['name', 'event', 'start', 'end', 'link', 'logo', 'active'];
 
@@ -23,22 +23,22 @@ class Season extends Model
 
     public function matches(): HasMany
     {
-        return $this->hasMany(Matchs::class, 'season_id');
+        return $this->hasMany(Matchs::class, 'event_id');
     }
 
     public function advertising(): HasMany
     {
-        return $this->hasMany(Advertising::class, 'season_id');
+        return $this->hasMany(Advertising::class, 'event_id');
     }
 
-    public function teamsInSeasons(): HasMany
+    public function teamsInEvents(): HasMany
     {
-        return $this->hasMany(TeamInSeason::class, 'season_id');
+        return $this->hasMany(TeamInEvent::class, 'event_id');
     }
 
     public function teams(): BelongsToMany
     {
-        return $this->belongsToMany(Team::class, 'teams_in_seasons', 'season_id', 'team_id');
+        return $this->belongsToMany(Team::class, 'teams_in_events', 'event_id', 'team_id');
     }
 
     public function scopeActive($query)

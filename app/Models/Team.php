@@ -25,13 +25,13 @@ class Team extends Model
         return $this->hasMany(Matchs::class, 'team_b');
     }
 
-    public function teamsInSeasons(): HasMany
+    public function teamsInEvents(): HasMany
     {
-        return $this->hasMany(TeamInSeason::class, 'team_id');
+        return $this->hasMany(TeamInEvent::class, 'team_id');
     }
 
-    public function seasons(): BelongsToMany
+    public function events(): BelongsToMany
     {
-        return $this->belongsToMany(Season::class, 'teams_in_seasons', 'team_id', 'season_id');
+        return $this->belongsToMany(Event::class, 'teams_in_events', 'team_id', 'event_id');
     }
 }

@@ -30,21 +30,21 @@
             <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6 space-y-4">
                 <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-400">{{ __('Ad Details') }}</h2>
 
-                {{-- Season --}}
+                {{-- Event --}}
                 <div>
-                    <label class="block text-sm font-medium text-gray-300" for="season_id">
-                        {{ __('Season') }} <span class="text-gray-500 font-normal">({{ __('optional') }})</span>
+                    <label class="block text-sm font-medium text-gray-300" for="event_id">
+                        {{ __('Event') }} <span class="text-gray-500 font-normal">({{ __('optional') }})</span>
                     </label>
-                    <select id="season_id" name="season_id"
+                    <select id="event_id" name="event_id"
                             class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 text-white px-4 py-2.5 focus:border-yellow-500 focus:outline-none">
-                        <option value="">{{ __('All Seasons / Global') }}</option>
-                        @foreach($seasons as $season)
-                            <option value="{{ $season->id }}" {{ old('season_id') == $season->id ? 'selected' : '' }}>
-                                {{ $season->name }}
+                        <option value="">{{ __('All Events / Global') }}</option>
+                        @foreach($events as $event)
+                            <option value="{{ $event->id }}" {{ old('event_id') == $event->id ? 'selected' : '' }}>
+                                {{ $event->name }}
                             </option>
                         @endforeach
                     </select>
-                    @error('season_id')
+                    @error('event_id')
                         <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                     @enderror
                 </div>

@@ -21,7 +21,7 @@ class Matchs extends Model
     protected $table = 'matchs';
 
     protected $fillable = [
-        'ip', 'server_id', 'season_id', 'team_a', 'team_a_flag', 'team_a_name',
+        'ip', 'server_id', 'event_id', 'team_a', 'team_a_flag', 'team_a_name',
         'team_b', 'team_b_flag', 'team_b_name', 'status', 'is_paused',
         'score_a', 'score_b', 'max_round', 'rules', 'overtime_startmoney',
         'overtime_max_round', 'config_full_score', 'config_ot', 'config_streamer',
@@ -115,9 +115,9 @@ class Matchs extends Model
         return $this->belongsTo(Team::class, 'team_b');
     }
 
-    public function season(): BelongsTo
+    public function event(): BelongsTo
     {
-        return $this->belongsTo(Season::class, 'season_id');
+        return $this->belongsTo(Event::class, 'event_id');
     }
 
     public function currentMap(): BelongsTo

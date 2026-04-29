@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Matchs as MatchModel;
-use App\Models\Season;
-use App\Models\Server;
+use App\Models\Event;
 use App\Models\Team;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,7 +17,7 @@ class DatabaseSeeder extends Seeder
         if (app()->environment('local', 'testing')) {
 
             // Using BHOP April 2026 as Seed Data
-            $season = Season::factory()->active()->create(['name' => 'BHOP']);
+            $event = Event::factory()->active()->create(['name' => 'BHOP']);
 
             // No Servers to Test Local LAN Servers
             $teamNames = ['Homecoming', 'Mock 2uh', 'rondon', 'Vantage Point', 'UltimateDarklordWizardz', 'Beer League Brawlers', 'Bot Squad', 'Saltcrew', 'IBUYSHOWER', 'Malort', 'Drunk Lawyers', 'Bot Brigade'];
@@ -28,8 +26,8 @@ class DatabaseSeeder extends Seeder
                 $createdTeams[] = Team::factory()->create(['name' => $name]);
             }
 
-            // Attach teams to season
-            $season->teams()->attach(collect($createdTeams)->pluck('id')->toArray());
+            // Attach teams to event
+            $event->teams()->attach(collect($createdTeams)->pluck('id')->toArray());
         }
     }
 }

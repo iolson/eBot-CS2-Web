@@ -20,7 +20,7 @@
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">#</th>
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Match') }}</th>
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Final Score') }}</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Season') }}</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Event') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-700 bg-gray-800/50">
@@ -37,7 +37,7 @@
                                 {{ $match->score_a }} &ndash; {{ $match->score_b }}
                             </td>
                             <td class="px-4 py-3 text-gray-400">
-                                {{ $match->season?->name ?? '–' }}
+                                {{ $match->event?->name ?? '–' }}
                             </td>
                         </tr>
                     @empty

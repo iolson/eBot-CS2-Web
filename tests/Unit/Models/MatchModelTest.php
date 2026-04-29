@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Event;
 use App\Models\Matchs;
-use App\Models\Season;
 use App\Models\Server;
 use App\Models\Team;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -188,9 +188,9 @@ describe('Matchs relationships', function () {
         expect($match->server)->toBeInstanceOf(Server::class);
     });
 
-    it('belongs to a season', function () {
+    it('belongs to an event', function () {
         $match = Matchs::factory()->create();
-        expect($match->season)->toBeInstanceOf(Season::class);
+        expect($match->event)->toBeInstanceOf(Event::class);
     });
 
     it('belongs to team a', function () {

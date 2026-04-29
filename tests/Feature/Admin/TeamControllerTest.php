@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Season;
+use App\Models\Event;
 use App\Models\Team;
 use App\Models\User;
 
@@ -27,19 +27,19 @@ describe('Admin team controller', function () {
         $this->assertDatabaseHas('teams', ['name' => 'Team Alpha']);
     });
 
-    it('creates a team and assigns seasons', function () {
-        $season = Season::factory()->create();
+    it('creates a team and assigns events', function () {
+        $event = Event::factory()->create();
 
         $this->actingAs($this->admin)
             ->post(route('admin.teams.store'), [
                 'name' => 'Team Bravo',
                 'shorthandle' => 'BRV',
-                'seasons' => [$season->id],
+                'events' => [$event->id],
             ])
             ->assertRedirect(route('admin.teams.index'));
 
         $team = Team::where('name', 'Team Bravo')->first();
-        $this->assertTrue($team->seasons->contains($season));
+        $this->assertTrue($team->events->contains($event));
     });
 
     it('updates a team', function () {
@@ -66,20 +66,20 @@ describe('Admin team controller', function () {
         $this->assertModelMissing($team);
     });
 
-    it('returns teams in season as JSON', function () {
-        $season = Season::factory()->create();
+    it('returns teams in event as JSON', function () {
+        $event = Event::factory()->create();
         $team = Team::factory()->create();
-        $team->seasons()->attach($season);
+        $team->events()->attach($event);
 
         $this->actingAs($this->admin)
-            ->getJson(route('admin.teams.season-members', ['season_id' => $season->id]))
+            ->getJson(route('admin.teams.event-members', ['event_id' => $event->id]))
             ->assertOk()
             ->assertJsonFragment(['id' => $team->id, 'name' => $team->name]);
     });
 
-    it('requires season_id for season-members endpoint', function () {
+    it('requires event_id for event-members endpoint', function () {
         $this->actingAs($this->admin)
-            ->getJson(route('admin.teams.season-members'))
+            ->getJson(route('admin.teams.event-members'))
             ->assertUnprocessable();
     });
 });

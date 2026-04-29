@@ -12,13 +12,13 @@ class Advertising extends Model
 
     protected $table = 'advertising';
 
-    protected $fillable = ['season_id', 'message', 'active'];
+    protected $fillable = ['event_id', 'message', 'active'];
 
     protected $casts = ['active' => 'boolean'];
 
-    public function season(): BelongsTo
+    public function event(): BelongsTo
     {
-        return $this->belongsTo(Season::class, 'season_id');
+        return $this->belongsTo(Event::class, 'event_id');
     }
 
     public function scopeActive($query)

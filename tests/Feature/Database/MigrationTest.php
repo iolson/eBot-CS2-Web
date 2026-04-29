@@ -13,10 +13,10 @@ describe('eBot database tables exist after migrations', function () {
         'sf_guard_remember_key',
         'sf_guard_forgot_password',
         'servers',
-        'seasons',
+        'events',
         'teams',
         'configs',
-        'teams_in_seasons',
+        'teams_in_events',
         'matchs',
         'maps',
         'maps_score',
@@ -39,7 +39,7 @@ describe('eBot database tables exist after migrations', function () {
 describe('matchs table columns', function () {
     it('has required columns', function () {
         $columns = [
-            'id', 'ip', 'server_id', 'season_id', 'team_a', 'team_b',
+            'id', 'ip', 'server_id', 'event_id', 'team_a', 'team_b',
             'team_a_flag', 'team_a_name', 'team_b_flag', 'team_b_name',
             'status', 'is_paused', 'score_a', 'score_b', 'max_round',
             'config_ot', 'config_knife_round', 'config_heatmap',
@@ -72,12 +72,12 @@ describe('maps table columns', function () {
     });
 });
 
-describe('seasons table columns', function () {
+describe('events table columns', function () {
     it('has required columns including logo and active', function () {
-        expect(Schema::hasColumn('seasons', 'logo'))->toBeTrue()
-            ->and(Schema::hasColumn('seasons', 'active'))->toBeTrue()
-            ->and(Schema::hasColumn('seasons', 'name'))->toBeTrue()
-            ->and(Schema::hasColumn('seasons', 'event'))->toBeTrue();
+        expect(Schema::hasColumn('events', 'logo'))->toBeTrue()
+            ->and(Schema::hasColumn('events', 'active'))->toBeTrue()
+            ->and(Schema::hasColumn('events', 'name'))->toBeTrue()
+            ->and(Schema::hasColumn('events', 'event'))->toBeTrue();
     });
 });
 

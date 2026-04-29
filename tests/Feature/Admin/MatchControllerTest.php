@@ -46,7 +46,7 @@ describe('Admin match controller', function () {
             ->post(route('admin.matchs.store'), [
                 'team_a' => $teamA->id,
                 'team_b' => $teamB->id,
-                'max_round' => 15,
+                'max_round' => 12,
                 'map_selection_mode' => 1,
             ])
             ->assertRedirect(route('admin.matchs.index'));
@@ -61,7 +61,7 @@ describe('Admin match controller', function () {
             ->post(route('admin.matchs.store'), [
                 'team_a' => $team->id,
                 'team_b' => $team->id,
-                'max_round' => 15,
+                'max_round' => 12,
                 'map_selection_mode' => 1,
             ])
             ->assertSessionHasErrors('team_b');

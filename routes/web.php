@@ -3,17 +3,17 @@
 use App\Http\Controllers\Admin\AdvertisingController;
 use App\Http\Controllers\Admin\ConfigController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
 use App\Http\Controllers\Admin\MatchController as AdminMatchController;
-use App\Http\Controllers\Admin\SeasonController as AdminSeasonController;
 use App\Http\Controllers\Admin\ServerController;
 use App\Http\Controllers\Admin\StartGgController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\ToornamentController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\MatchController;
-use App\Http\Controllers\Frontend\SeasonController;
 use App\Http\Controllers\Frontend\StatsController;
 use App\Http\Controllers\Frontend\StreamController;
 use App\Http\Controllers\Frontend\WidgetController;
@@ -71,9 +71,9 @@ Route::get('/stats/weapons', [StatsController::class, 'weapons'])->name('stats.w
 Route::get('/stats/entry-kills', [StatsController::class, 'entryKills'])->name('stats.entry-kills');
 Route::get('/stats/gunround', [StatsController::class, 'gunRound'])->name('stats.gunround');
 
-// Seasons
-Route::get('/seasons', [SeasonController::class, 'index'])->name('seasons.index');
-Route::get('/seasons/{season}/select', [SeasonController::class, 'select'])->name('seasons.select');
+// Events
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{event}/select', [EventController::class, 'select'])->name('events.select');
 
 // Stream (spectator view — uses stream layout)
 Route::get('/stream/{match}', [StreamController::class, 'show'])->name('stream.show');
@@ -125,15 +125,15 @@ Route::prefix('admin')
         Route::patch('matchs/{match}/score', [AdminMatchController::class, 'editScore'])->name('matchs.edit-score');
         Route::resource('matchs', AdminMatchController::class);
 
-        // Seasons
-        Route::post('seasons/{season}/deactivate', [AdminSeasonController::class, 'deactivate'])->name('seasons.deactivate');
-        Route::resource('seasons', AdminSeasonController::class);
+        // Events
+        Route::post('events/{event}/deactivate', [AdminEventController::class, 'deactivate'])->name('events.deactivate');
+        Route::resource('events', AdminEventController::class);
 
         // Servers
         Route::resource('servers', ServerController::class)->except(['show', 'edit', 'update']);
 
         // Teams
-        Route::get('teams/season-members', [TeamController::class, 'teamsInSeason'])->name('teams.season-members');
+        Route::get('teams/event-members', [TeamController::class, 'teamsInEvent'])->name('teams.event-members');
         Route::resource('teams', TeamController::class);
 
         // Configs

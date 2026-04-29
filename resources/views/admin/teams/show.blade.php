@@ -50,22 +50,22 @@
             </dl>
         </div>
 
-        {{-- Seasons --}}
+        {{-- Events --}}
         <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-6">
-            <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">{{ __('Seasons') }}</h2>
-            @if($team->seasons->isNotEmpty())
+            <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">{{ __('Events') }}</h2>
+            @if($team->events->isNotEmpty())
                 <div class="flex flex-wrap gap-2">
-                    @foreach($team->seasons as $season)
+                    @foreach($team->events as $event)
                         <span class="inline-flex items-center rounded-md bg-gray-700 border border-gray-600 px-3 py-1 text-sm text-gray-300">
-                            {{ $season->name }}
-                            @if($season->active)
+                            {{ $event->name }}
+                            @if($event->active)
                                 <span class="ml-2 inline-block h-1.5 w-1.5 rounded-full bg-green-400"></span>
                             @endif
                         </span>
                     @endforeach
                 </div>
             @else
-                <p class="text-sm text-gray-500">{{ __('This team is not assigned to any seasons.') }}</p>
+                <p class="text-sm text-gray-500">{{ __('This team is not assigned to any events.') }}</p>
             @endif
         </div>
     </div>

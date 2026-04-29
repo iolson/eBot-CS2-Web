@@ -46,8 +46,8 @@
                     <dd class="mt-1 text-sm text-white font-mono">{{ $match->server?->ip ?? '–' }}</dd>
                 </div>
                 <div>
-                    <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">{{ __('Season') }}</dt>
-                    <dd class="mt-1 text-sm text-white">{{ $match->season?->name ?? '–' }}</dd>
+                    <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">{{ __('Event') }}</dt>
+                    <dd class="mt-1 text-sm text-white">{{ $match->event?->name ?? '–' }}</dd>
                 </div>
                 <div>
                     <dt class="text-xs font-medium uppercase tracking-wider text-gray-500">{{ __('Max Rounds') }}</dt>

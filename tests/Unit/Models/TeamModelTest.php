@@ -30,8 +30,8 @@ describe('Team relationships', function () {
             ->toBeInstanceOf(HasMany::class);
     });
 
-    it('belongs to many seasons', function () {
-        expect((new Team)->seasons())
+    it('belongs to many events', function () {
+        expect((new Team)->events())
             ->toBeInstanceOf(BelongsToMany::class);
     });
 });

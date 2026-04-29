@@ -8,11 +8,11 @@
             </a>
         </div>
 
-        {{-- Season filter --}}
-        @if(session('selected_season_id'))
+        {{-- Event filter --}}
+        @if(session('selected_event_id'))
             <div class="flex items-center gap-3">
-                <span class="text-sm text-gray-400">{{ __('Filtered by season') }}</span>
-                <a href="{{ route('seasons.index') }}" class="text-xs text-yellow-400 hover:text-yellow-300">{{ __('Change') }}</a>
+                <span class="text-sm text-gray-400">{{ __('Filtered by event') }}</span>
+                <a href="{{ route('events.index') }}" class="text-xs text-yellow-400 hover:text-yellow-300">{{ __('Change') }}</a>
             </div>
         @endif
 
@@ -23,7 +23,7 @@
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Match') }}</th>
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Score') }}</th>
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Status') }}</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Season') }}</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Event') }}</th>
                         <th class="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Details') }}</th>
                     </tr>
                 </thead>
@@ -35,7 +35,7 @@
                             </td>
                             <td class="px-4 py-3 font-mono text-white">{{ $match->score_a }} – {{ $match->score_b }}</td>
                             <td class="px-4 py-3"><x-match-status-badge :match="$match" /></td>
-                            <td class="px-4 py-3 text-xs text-gray-400">{{ $match->season?->name ?? '–' }}</td>
+                            <td class="px-4 py-3 text-xs text-gray-400">{{ $match->event?->name ?? '–' }}</td>
                             <td class="px-4 py-3 text-right">
                                 <a href="{{ route('matchs.show', $match) }}"
                                    class="rounded bg-gray-700 hover:bg-gray-600 px-2 py-1 text-xs text-gray-300">{{ __('View') }}</a>

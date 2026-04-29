@@ -9,7 +9,7 @@ class AdvertisingFactory extends Factory
     public function definition(): array
     {
         return [
-            'season_id' => null,
+            'event_id' => null,
             'message' => $this->faker->sentence(),
             'active' => true,
         ];

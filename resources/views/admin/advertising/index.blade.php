@@ -15,7 +15,7 @@
                 <thead class="bg-gray-800">
                     <tr>
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">#</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Season') }}</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Event') }}</th>
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Message') }}</th>
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Active') }}</th>
                         <th class="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Actions') }}</th>
@@ -25,7 +25,7 @@
                     @forelse($ads as $ad)
                         <tr class="hover:bg-gray-800">
                             <td class="px-4 py-3 text-gray-400">{{ $ad->id }}</td>
-                            <td class="px-4 py-3 text-gray-300">{{ $ad->season?->name ?? '–' }}</td>
+                            <td class="px-4 py-3 text-gray-300">{{ $ad->event?->name ?? '–' }}</td>
                             <td class="px-4 py-3 text-gray-300 max-w-xs truncate">
                                 {{ \Illuminate\Support\Str::limit($ad->message, 50) }}
                             </td>

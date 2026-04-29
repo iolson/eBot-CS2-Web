@@ -3,22 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Season;
+use App\Models\Event;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class SeasonController extends Controller
+class EventController extends Controller
 {
     public function index()
     {
-        $seasons = Season::orderByDesc('id')->paginate(25);
+        $events = Event::orderByDesc('id')->paginate(25);
 
-        return view('admin.seasons.index', compact('seasons'));
+        return view('admin.events.index', compact('events'));
     }
 
     public function create()
     {
-        return view('admin.seasons.create');
+        return view('admin.events.create');
     }
 
     public function store(Request $request): RedirectResponse
@@ -33,18 +33,18 @@ class SeasonController extends Controller
             'active' => ['boolean'],
         ]);
 
-        Season::create($data);
+        Event::create($data);
 
-        return redirect()->route('admin.seasons.index')
-            ->with('success', __('Season created.'));
+        return redirect()->route('admin.events.index')
+            ->with('success', __('Event created.'));
     }
 
-    public function edit(Season $season)
+    public function edit(Event $event)
     {
-        return view('admin.seasons.edit', compact('season'));
+        return view('admin.events.edit', compact('event'));
     }
 
-    public function update(Request $request, Season $season): RedirectResponse
+    public function update(Request $request, Event $event): RedirectResponse
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -56,25 +56,25 @@ class SeasonController extends Controller
             'active' => ['boolean'],
         ]);
 
-        $season->update($data);
+        $event->update($data);
 
-        return redirect()->route('admin.seasons.index')
-            ->with('success', __('Season updated.'));
+        return redirect()->route('admin.events.index')
+            ->with('success', __('Event updated.'));
     }
 
-    public function destroy(Season $season): RedirectResponse
+    public function destroy(Event $event): RedirectResponse
     {
-        $season->delete();
+        $event->delete();
 
-        return redirect()->route('admin.seasons.index')
-            ->with('success', __('Season deleted.'));
+        return redirect()->route('admin.events.index')
+            ->with('success', __('Event deleted.'));
     }
 
-    public function deactivate(Season $season): RedirectResponse
+    public function deactivate(Event $event): RedirectResponse
     {
-        $season->update(['active' => ! $season->active]);
+        $event->update(['active' => ! $event->active]);
 
-        $message = $season->active ? __('Season activated.') : __('Season deactivated.');
+        $message = $event->active ? __('Event activated.') : __('Event deactivated.');
 
         return back()->with('success', $message);
     }

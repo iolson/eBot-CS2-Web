@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class SeasonFactory extends Factory
+class EventFactory extends Factory
 {
     public function definition(): array
     {
@@ -13,7 +13,7 @@ class SeasonFactory extends Factory
         $end = $start->copy()->addMonths(rand(1, 6));
 
         return [
-            'name' => $this->faker->words(2, true).' Season',
+            'name' => $this->faker->words(2, true).' Event',
             'event' => $this->faker->words(3, true),
             'start' => $start,
             'end' => $end,

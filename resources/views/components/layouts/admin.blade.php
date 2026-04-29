@@ -36,7 +36,7 @@
                         <a href="{{ url('/admin/matchs') }}" class="text-gray-300 hover:text-white text-sm">{{ __('Matches') }}</a>
                         <a href="{{ url('/admin/servers') }}" class="text-gray-300 hover:text-white text-sm">{{ __('Servers') }}</a>
                         <a href="{{ url('/admin/teams') }}" class="text-gray-300 hover:text-white text-sm">{{ __('Teams') }}</a>
-                        <a href="{{ url('/admin/seasons') }}" class="text-gray-300 hover:text-white text-sm">{{ __('Seasons') }}</a>
+                        <a href="{{ url('/admin/events') }}" class="text-gray-300 hover:text-white text-sm">{{ __('Events') }}</a>
                         <a href="{{ url('/admin/configs') }}" class="text-gray-300 hover:text-white text-sm">{{ __('Configs') }}</a>
                         <a href="{{ url('/admin/advertising') }}" class="text-gray-300 hover:text-white text-sm">{{ __('Advertising') }}</a>
                         <a href="{{ url('/admin/users') }}" class="text-gray-300 hover:text-white text-sm">{{ __('Users') }}</a>

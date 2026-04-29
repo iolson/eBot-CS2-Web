@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Event;
 use App\Models\Matchs as MatchModel;
-use App\Models\Season;
 use App\Models\Server;
 use App\Models\Team;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,7 +21,7 @@ class MatchsFactory extends Factory
         return [
             'ip' => $this->faker->ipv4().':27015',
             'server_id' => Server::factory(),
-            'season_id' => Season::factory(),
+            'event_id' => Event::factory(),
             'team_a' => Team::factory(),
             'team_a_flag' => $this->faker->optional()->countryCode(),
             'team_a_name' => $teamAName,

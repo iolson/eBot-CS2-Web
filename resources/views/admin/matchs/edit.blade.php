@@ -82,22 +82,22 @@
                 <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-400">{{ __('Match Settings') }}</h2>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {{-- Season --}}
+                    {{-- Event --}}
                     <div>
-                        <label class="block text-sm font-medium text-gray-300" for="season_id">
-                            {{ __('Season') }} <span class="text-gray-500 font-normal">({{ __('optional') }})</span>
+                        <label class="block text-sm font-medium text-gray-300" for="event_id">
+                            {{ __('Event') }} <span class="text-gray-500 font-normal">({{ __('optional') }})</span>
                         </label>
-                        <select id="season_id" name="season_id"
+                        <select id="event_id" name="event_id"
                                 class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 text-white px-4 py-2.5 focus:border-yellow-500 focus:outline-none">
-                            <option value="">{{ __('No Season') }}</option>
-                            @foreach($seasons as $season)
-                                <option value="{{ $season->id }}"
-                                    {{ old('season_id', $match->season_id) == $season->id ? 'selected' : '' }}>
-                                    {{ $season->name }}
+                            <option value="">{{ __('No Event') }}</option>
+                            @foreach($events as $event)
+                                <option value="{{ $event->id }}"
+                                    {{ old('event_id', $match->event_id) == $event->id ? 'selected' : '' }}>
+                                    {{ $event->name }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('season_id')
+                        @error('event_id')
                             <p class="mt-1 text-xs text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
@@ -125,16 +125,11 @@
                     {{-- Max Round --}}
                     <div>
                         <label class="block text-sm font-medium text-gray-300" for="max_round">
-                            {{ __('Max Rounds') }} <span class="text-red-400">*</span>
+                            {{ __('Max Rounds (per side)') }} <span class="text-red-400">*</span>
                         </label>
                         <select id="max_round" name="max_round"
                                 class="mt-1 block w-full rounded-lg bg-gray-700 border border-gray-600 text-white px-4 py-2.5 focus:border-yellow-500 focus:outline-none">
-                            @foreach([15, 25, 30] as $rounds)
-                                <option value="{{ $rounds }}"
-                                    {{ old('max_round', $match->max_round) == $rounds ? 'selected' : '' }}>
-                                    {{ $rounds }}
-                                </option>
-                            @endforeach
+                            <option value="12" selected>MR12</option>
                         </select>
                         @error('max_round')
                             <p class="mt-1 text-xs text-red-400">{{ $message }}</p>

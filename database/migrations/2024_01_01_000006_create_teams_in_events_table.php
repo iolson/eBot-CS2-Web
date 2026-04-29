@@ -8,19 +8,19 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('teams_in_seasons', function (Blueprint $table) {
+        Schema::create('teams_in_events', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('season_id')->nullable();
+            $table->unsignedBigInteger('event_id')->nullable();
             $table->unsignedBigInteger('team_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('season_id')->references('id')->on('seasons')->cascadeOnDelete();
+            $table->foreign('event_id')->references('id')->on('events')->cascadeOnDelete();
             $table->foreign('team_id')->references('id')->on('teams')->cascadeOnDelete();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('teams_in_seasons');
+        Schema::dropIfExists('teams_in_events');
     }
 };

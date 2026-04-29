@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Matchs;
-use App\Models\Season;
 use App\Models\Server;
 use App\Models\Team;
 use App\Services\EbotCommandService;
@@ -16,7 +16,7 @@ class MatchController extends Controller
     public function index()
     {
         $matches = Matchs::active()
-            ->with(['teamA', 'teamB', 'server', 'season'])
+            ->with(['teamA', 'teamB', 'server', 'event'])
             ->orderByDesc('id')
             ->paginate(25);
 
@@ -26,7 +26,7 @@ class MatchController extends Controller
     public function archived()
     {
         $matches = Matchs::archived()
-            ->with(['teamA', 'teamB', 'season'])
+            ->with(['teamA', 'teamB', 'event'])
             ->orderByDesc('id')
             ->paginate(25);
 
@@ -35,11 +35,11 @@ class MatchController extends Controller
 
     public function create()
     {
-        $seasons = Season::orderByDesc('id')->get();
+        $events = Event::orderByDesc('id')->get();
         $teams = Team::orderBy('name')->get();
         $servers = Server::orderBy('ip')->get();
 
-        return view('admin.matchs.create', compact('seasons', 'teams', 'servers'));
+        return view('admin.matchs.create', compact('events', 'teams', 'servers'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -47,9 +47,9 @@ class MatchController extends Controller
         $data = $request->validate([
             'team_a' => ['required', 'integer', 'exists:teams,id'],
             'team_b' => ['required', 'integer', 'exists:teams,id', 'different:team_a'],
-            'season_id' => ['nullable', 'integer', 'exists:seasons,id'],
+            'event_id' => ['nullable', 'integer', 'exists:events,id'],
             'server_id' => ['nullable', 'integer', 'exists:servers,id'],
-            'max_round' => ['required', 'integer', 'in:15,25,30'],
+            'max_round' => ['required', 'integer', 'in:12'],
             'map_selection_mode' => ['required', 'integer'],
         ]);
 
@@ -61,7 +61,7 @@ class MatchController extends Controller
 
     public function show(Matchs $match)
     {
-        $match->load(['teamA', 'teamB', 'server', 'season', 'maps.players']);
+        $match->load(['teamA', 'teamB', 'server', 'event', 'maps.players']);
 
         return view('admin.matchs.show', compact('match'));
     }
@@ -73,11 +73,11 @@ class MatchController extends Controller
                 ->with('error', __('Cannot edit a match that is currently live.'));
         }
 
-        $seasons = Season::orderByDesc('id')->get();
+        $events = Event::orderByDesc('id')->get();
         $teams = Team::orderBy('name')->get();
         $servers = Server::orderBy('ip')->get();
 
-        return view('admin.matchs.edit', compact('match', 'seasons', 'teams', 'servers'));
+        return view('admin.matchs.edit', compact('match', 'events', 'teams', 'servers'));
     }
 
     public function update(Request $request, Matchs $match): RedirectResponse
@@ -90,9 +90,9 @@ class MatchController extends Controller
         $data = $request->validate([
             'team_a' => ['required', 'integer', 'exists:teams,id'],
             'team_b' => ['required', 'integer', 'exists:teams,id', 'different:team_a'],
-            'season_id' => ['nullable', 'integer', 'exists:seasons,id'],
+            'event_id' => ['nullable', 'integer', 'exists:events,id'],
             'server_id' => ['nullable', 'integer', 'exists:servers,id'],
-            'max_round' => ['required', 'integer', 'in:15,25,30'],
+            'max_round' => ['required', 'integer', 'in:12'],
             'map_selection_mode' => ['required', 'integer'],
         ]);
 

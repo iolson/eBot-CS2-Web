@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Advertising;
-use App\Models\Season;
+use App\Models\Event;
 use App\Models\User;
 
 describe('Admin advertising controller', function () {
@@ -38,20 +38,20 @@ describe('Admin advertising controller', function () {
         ]);
     });
 
-    it('creates an advertisement linked to a season', function () {
-        $season = Season::factory()->create();
+    it('creates an advertisement linked to an event', function () {
+        $event = Event::factory()->create();
 
         $this->actingAs($this->admin)
             ->post(route('admin.advertising.store'), [
-                'season_id' => $season->id,
-                'message' => 'Season specific ad',
+                'event_id' => $event->id,
+                'message' => 'Event specific ad',
                 'active' => false,
             ])
             ->assertRedirect(route('admin.advertising.index'));
 
         $this->assertDatabaseHas('advertising', [
-            'season_id' => $season->id,
-            'message' => 'Season specific ad',
+            'event_id' => $event->id,
+            'message' => 'Event specific ad',
         ]);
     });
 

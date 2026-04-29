@@ -3,9 +3,9 @@
         <div class="flex items-center justify-between">
             <h1 class="text-2xl font-bold text-white">{{ __('Archived Matches') }}</h1>
             <div class="flex items-center gap-2">
-                <a href="{{ route('seasons.index') }}"
+                <a href="{{ route('events.index') }}"
                    class="rounded-lg bg-gray-700 hover:bg-gray-600 px-4 py-2 text-sm text-gray-300">
-                    {{ __('Filter by Season') }}
+                    {{ __('Filter by Event') }}
                 </a>
                 <a href="{{ route('matchs.index') }}"
                    class="rounded-lg bg-gray-700 hover:bg-gray-600 px-4 py-2 text-sm text-gray-300">
@@ -21,7 +21,7 @@
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">#</th>
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Match') }}</th>
                         <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Result') }}</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Season') }}</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Event') }}</th>
                         <th class="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-400">{{ __('Details') }}</th>
                     </tr>
                 </thead>

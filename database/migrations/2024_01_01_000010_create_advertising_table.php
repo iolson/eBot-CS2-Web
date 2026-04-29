@@ -10,12 +10,12 @@ return new class extends Migration
     {
         Schema::create('advertising', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('season_id')->nullable();
+            $table->unsignedBigInteger('event_id')->nullable();
             $table->string('message', 1000)->nullable();
             $table->boolean('active')->nullable();
             $table->timestamps();
 
-            $table->foreign('season_id')->references('id')->on('seasons')->cascadeOnDelete();
+            $table->foreign('event_id')->references('id')->on('events')->cascadeOnDelete();
         });
     }
 

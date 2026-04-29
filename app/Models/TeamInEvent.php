@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class TeamInSeason extends Model
+class TeamInEvent extends Model
 {
-    protected $table = 'teams_in_seasons';
+    protected $table = 'teams_in_events';
 
-    protected $fillable = ['season_id', 'team_id'];
+    protected $fillable = ['event_id', 'team_id'];
 
-    public function season(): BelongsTo
+    public function event(): BelongsTo
     {
-        return $this->belongsTo(Season::class, 'season_id');
+        return $this->belongsTo(Event::class, 'event_id');
     }
 
     public function team(): BelongsTo

@@ -1,8 +1,8 @@
 <?php
 
+use App\Models\Event;
 use App\Models\GameMap;
 use App\Models\Matchs;
-use App\Models\Season;
 
 describe('Public frontend routes', function () {
     it('shows homepage', function () {
@@ -31,8 +31,8 @@ describe('Public frontend routes', function () {
         $this->get(route('stats.global'))->assertOk();
     });
 
-    it('shows seasons index', function () {
-        $this->get(route('seasons.index'))->assertOk();
+    it('shows events index', function () {
+        $this->get(route('events.index'))->assertOk();
     });
 
     it('shows stream view', function () {
@@ -94,20 +94,20 @@ describe('Match export endpoints', function () {
     });
 });
 
-describe('Season select', function () {
-    it('selects a season and redirects to match list', function () {
-        $season = Season::factory()->create();
+describe('Event select', function () {
+    it('selects an event and redirects to match list', function () {
+        $event = Event::factory()->create();
 
-        $this->get(route('seasons.select', $season))
+        $this->get(route('events.select', $event))
             ->assertRedirect(route('matchs.index'));
 
-        $this->assertEquals($season->id, session('selected_season_id'));
+        $this->assertEquals($event->id, session('selected_event_id'));
     });
 
     it('redirects to archived matches when site=archived', function () {
-        $season = Season::factory()->create();
+        $event = Event::factory()->create();
 
-        $this->get(route('seasons.select', [$season, 'site' => 'archived']))
+        $this->get(route('events.select', [$event, 'site' => 'archived']))
             ->assertRedirect(route('matchs.archived'));
     });
 });

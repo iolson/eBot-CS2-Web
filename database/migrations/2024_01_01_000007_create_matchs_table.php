@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->string('ip', 50)->nullable();
             $table->unsignedBigInteger('server_id')->nullable();
-            $table->unsignedBigInteger('season_id')->nullable();
+            $table->unsignedBigInteger('event_id')->nullable();
             $table->unsignedBigInteger('team_a')->nullable();
             $table->string('team_a_flag', 2)->nullable();
             $table->string('team_a_name', 25)->nullable();
@@ -56,12 +56,12 @@ return new class extends Migration
             $table->index('team_a');
             $table->index('team_b');
             $table->index('current_map');
-            $table->index('season_id');
+            $table->index('event_id');
 
             $table->foreign('server_id')->references('id')->on('servers')->nullOnDelete();
             $table->foreign('team_a')->references('id')->on('teams')->nullOnDelete();
             $table->foreign('team_b')->references('id')->on('teams')->nullOnDelete();
-            $table->foreign('season_id')->references('id')->on('seasons')->nullOnDelete();
+            $table->foreign('event_id')->references('id')->on('events')->nullOnDelete();
         });
     }
 
